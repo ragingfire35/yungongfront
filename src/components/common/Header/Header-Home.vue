@@ -30,6 +30,11 @@
     			<router-link to="/">
     				成功案例
     			</router-link>
+	        </Col> 
+    		<Col :xs="24" :sm="6" :md="6" :lg="2" class="aboutMoney">
+    			<router-link to="/">
+    				担保交易*
+    			</router-link>
 	        </Col>      
 			<Col :xs="20" :sm="24" :md="24" :lg="6" >
 				<span class="login" @click="$store.state.show_loginUpBox = true">
@@ -57,9 +62,6 @@
 			}
 		},
 		watch:{
-/*			modalShow(aa)  {
-				console.log(aa)
-			}*/
 		},
 		mounted(){
 		},

@@ -57,7 +57,15 @@ const routes = [
               meta : {
                 title : "PersonalInfo"
               }
-            }
+            },
+            {
+              path: '/Pay',
+              name: 'Pay',
+              component: (resolve) => require(['@/components/common/Pay/Pay.vue'], resolve),
+              meta : {
+                title : "Pay"
+              }
+            }            
           ]
         },       
 ]

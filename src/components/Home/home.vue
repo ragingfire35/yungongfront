@@ -113,6 +113,80 @@
       }
     }
   }
+  .guarantee{
+    width: 70%;
+    min-height: 212px;
+    height: auto;
+    background: #3091f2; 
+    margin: 30px auto 0 auto;
+    position: relative;
+    box-shadow: 0px 2px 2px #ccc;
+    .styleBox{
+      display: block;
+      background: #3091f2;;
+      width: 100%;
+      height: 10px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+      overflow: hidden;
+      box-shadow: 0px 0px 1px #fff;
+      &:before,
+      &:after
+      {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        border: 5px solid #fff4f4; 
+        border-bottom-color: #2a71b8;
+      }
+      &:before{
+        border-right-color: #2a71b8;
+        float: left;
+      }
+      &:after{
+        border-left-color: #2a71b8;
+        float: right;
+      }
+    }
+    .infoSc{
+      color: #fff;
+      text-align: left;
+      padding: 0 2%;
+      margin-left: 4%;
+      &:nth-of-type(1){
+        position: relative;
+        &:before{
+          content: "";
+          display: block;
+          height: 50%;
+          width: 2px;
+          background: #fff;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin: auto 0;
+          right: 0;
+        }
+      }
+      h2{
+        margin-bottom: 10px;
+      }
+      p{
+        margin-top: 4px;
+        width: 90%;
+        &:nth-of-type(2){
+          margin-top: 8px;
+        }
+      }
+    }
+    .medal{
+      width: 20%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
   @media (max-width: 1200px){
     .carousel{
       width: 80%;
@@ -125,6 +199,11 @@
     .works{
       width: 40%;
     }
+
+    .guarantee{
+      width: 80%;
+    }
+
   }
   @media (max-width: 992px){
     .carousel{
@@ -154,6 +233,29 @@
       li{
         width: 100%;
         margin: 30px 0 30px 0!important;
+      }
+    }
+    .guarantee{
+      width: 100%;
+      .infoSc{
+        padding: 0;
+        padding-bottom: 30px;
+        &:nth-of-type(1){
+          position: relative;
+          &:before{
+            height: 2px;
+            width: 50%;
+            left: 0;
+            bottom: 0;
+            top: 100%;
+          }
+        }
+        &:nth-of-type(2){
+          padding-top: 30px;
+        }
+      }
+      .medal{
+        display: none;  
       }
     }
   }
@@ -245,6 +347,30 @@
           </Card>
         </li>
     </ul>
+    
+    <Row class="guarantee">
+      <span class="styleBox"></span>
+      <Col :md="10" :lg="10" push="1" class="infoSc">
+        <h2>线下交易有风险</h2>
+        <p>
+          如人才要求不通过云工网进行交易，请警惕以下风险：
+        </p>
+        <p>1.付了钱却得不到满意的服务</p>
+        <p>2.出现争议，云工网因证据不足，无法仲裁</p>
+        <p>3.售后服务无法保障</p>
+      </Col>
+      <Col :md="10" :lg="10" push="1" class="infoSc">
+        <h2>云工网担保交易，安全放心！</h2>
+        <p>
+          为保障您的资金安全，务必先将资金托管到云工网，待您验收服务满意后，再由云工网打款给人才。
+        </p>
+        <p>1.资金安全</p>
+        <p>2.出现争议，云工网公平仲裁</p>
+        <p>3.服务到满意为止</p>
+        <img src="./image/medal.png" alt="" class="medal">
+      </Col>
+    </Row>
+    
     <home-footer/>
 	</div>
 </template>
