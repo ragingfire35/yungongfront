@@ -1,0 +1,72 @@
+/* customColor */
+@customColor : #3399ff;
+@customHoverColor : #084b8d;
+
+.head-home{
+	width: 100%;
+    padding: 20px 60px 20px;
+    background: @customColor;
+	.nav-bar{
+		background: @customColor;
+		width: 100%;
+		min-height: 60px;
+		color: #fff;
+		margin: 0 auto;
+		a{
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+			font-size: 14px;
+			&:not([hover="false"]){
+				&:hover{
+					border-bottom: 0px;
+					color: @customHoverColor;
+					&:after{
+						width: 100%;
+						left: 0;
+						background: @customHoverColor;
+					}
+				}
+				&:after{
+					position: absolute;
+					display: block;
+				    content: "";
+				    height: 2px;
+				    width: 0;
+				    left: 50%;
+				    bottom: -16px;
+				    background-color: #4fc1e9;
+				    -webkit-transition: .2s;
+				    -o-transition: .2s;
+				    transition: .2s;
+				}
+			}
+
+		}
+		.login{
+			font-size: 14px;
+			cursor: pointer;
+			&:hover{
+				color: @customHoverColor;
+				text-decoration: underline;
+			}
+			
+		}
+		.logo{
+			text-align: center;
+			a:hover{
+				color: #fff;
+			}
+	    	img{
+	    		max-width: 100px;
+	    	}
+	    	span{
+	    		display: inline-block;
+	    		min-height: 64px;
+	    		line-height: 64px;
+	    		vertical-align: top;
+	    	}
+		}	
+	}
+}
