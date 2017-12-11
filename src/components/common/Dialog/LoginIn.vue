@@ -10,14 +10,37 @@
                 font-size: 16px;
             }
         }
+        .ivu-modal-footer{
+            button{
+                width: 45%;
+            }
+        }
+        .phone{
+            display: inline-block;
+            width: 39%!important;
+            margin-right: 0;
+        }
+        .send{
+            display: inline-block;
+            width: 20%!important;
+            margin-right: 0;
+            button{
+                width: 100%;
+                height: 32px;
+            }
+        }
+        .validate-code{
+            display: inline-block;
+            width: 20%!important;
+        }
     }
 </style>
 <template>
 	<div>
 	    <Modal
             :mask-closable="false"
-	        v-model="modalShow.loginUp"
-	        title="注册"
+	        v-model="$store.state.show_loginInBox"
+	        title="登录"
             class="modalBox"
         >
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
@@ -31,10 +54,16 @@
                         <Icon type="ios-locked-outline" slot="prepend" class="icon"></Icon>
                     </Input>
                 </Form-item>
-                <Form-item prop="passwdCheck">
-                    <Input type="password" v-model="formInline.passwdCheck" placeholder="请再次输入密码">
-                        <Icon type="ios-locked-outline" slot="prepend" class="icon"></Icon>
-                        <Icon type="ios-locked-outline" slot="prepend" class="icon"></Icon>
+                <Form-item prop="phone" class="phone">
+                    <Input type="text"  v-model="formInline.phone" placeholder="请输入手机号" number>
+                        <Icon type="iphone" slot="prepend" class="icon"></Icon>
+                    </Input>                    
+                </Form-item>
+                <Form-item class="send">
+                    <Button type="default" size="large">发送</Button>
+                </Form-item>
+                <Form-item prop="validateCode" class="validate-code">
+                    <Input type="text"  v-model="formInline.validateCode" placeholder="请输入验证码" :disabled="isPhoneRule" number>
                     </Input>
                 </Form-item>
             </Form>
@@ -48,33 +77,26 @@
 </template>
 <script>
     export default {
-        props: ['modalShow'],
         data () {
-            const validatePass = (rule, value, callback) => {
+            const validatePhone = (rule, value, callback) => {
                 if (value === '') {
-                    callback(new Error('请输入密码'));
+                    callback(new Error('请输入手机号'));
                 } else {
-                    if (this.formInline.passwdCheck !== '') {
-                        // 对第二个密码框单独验证
-                        this.$refs.formInline.validateField('passwdCheck');
+                    if (!/^1[3|4|5|7|8][0-9]{9}$/.test(value)) {
+                        callback(new Error('手机号输入不正确'));
+                    } else{
+                         this.isPhoneRule = false;
                     }
                     callback();
                 }
-            };
-            const validatePassCheck = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请再次输入密码'));
-                } else if (value !== this.formInline.passwd) {
-                    callback(new Error('两次输入密码不一致!'));
-                } else {
-                    callback();
-                }
-            };
+            };            
             return {
+                isPhoneRule : true,
                 formInline: {
                     user: '',
                     passwd: '',
-                    passwdCheck: ''
+                    phone: '',
+                    validateCode: ''
                 },
                 ruleInline: {
                     user: [
@@ -82,10 +104,14 @@
                         { type: 'string', max: 10, message: '用户名不能多于10字符', trigger: 'blur' }
                     ],
                     passwd: [
-                        { validator: validatePass, trigger: 'blur' }
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { type: 'string', min: 6, message: '密码不能少于6字符', trigger: 'blur' }
                     ],
-                    passwdCheck: [
-                        { validator: validatePassCheck, trigger: 'blur' }
+                    phone: [
+                        { validator: validatePhone, trigger: 'blur' }
+                    ],
+                    validateCode: [
+                        { required: true, message: '请输入手机验证码', trigger: 'blur' }
                     ]
                 }
             }

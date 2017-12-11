@@ -32,31 +32,28 @@
     			</router-link>
 	        </Col>      
 			<Col :xs="20" :sm="24" :md="24" :lg="6" >
-				<span class="login" @click="modalShow.loginUp = true">
+				<span class="login" @click="$store.state.show_loginUpBox = true">
 					账号注册
 				</span>
 				&nbsp;/&nbsp;
-				<span class="login">
+				<span class="login" @click="$store.state.show_loginInBox = true">
 					登录
 				</span>
 			</Col>
 
 	    </Row>
-	    <dialog-box :modalShow="modalShow"> </dialog-box>	
-
+		<login-in/>
+		<login-up/>
 	</div>
 </template>
 <script>
-	import DialogBox from "@/components/common/Dialog/Dialog.vue";
+	import loginIn from "@/components/common/Dialog/loginIn.vue";
+	import loginUp from "@/components/common/Dialog/loginUp.vue";
 	export default({
 		name : "HomeHeader",
 
 		data(){
 			return{
-				modalShow : {
-					loginUp : false,
-					loginIn : false
-				}
 			}
 		},
 		watch:{
@@ -67,7 +64,8 @@
 		mounted(){
 		},
 		components:{
-			DialogBox : DialogBox
+			loginIn : loginIn,
+			loginUp : loginUp
 		},
 		methods:{
 		}
