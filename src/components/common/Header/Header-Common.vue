@@ -69,15 +69,11 @@
 					                <Menu-item name="6-3">聘用方认证</Menu-item>
 					            </Menu-group>
 					            <Menu-group title="个人">
-					            	<Menu-item name="6-4">
-					            		<router-link to="/Pay">
-					            			账户充值
-					            		</router-link>	
+					            	<Menu-item name="6-4" @click.native="$router.push({'path': '/Pay'})">
+					            		账户充值
 					            	</Menu-item>
-					            	<Menu-item name="6-5">
-					            		<router-link to="/PersonalInfo">
-					            			修改个人资料
-					            		</router-link>	
+					            	<Menu-item name="6-5" @click.native="$router.push({'path': '/PersonalInfo'})">
+					            		修改个人资料
 					            	</Menu-item>
 					                <Menu-item name="6-6">退出</Menu-item>
 					            </Menu-group>
@@ -99,10 +95,14 @@
 			}
 		},
 		mounted(){
+
 		},
 		methods:{
 			selected(name){
 				this.active = name;
+			},
+			aa(){
+				alert(1)
 			}
 		}
 	})

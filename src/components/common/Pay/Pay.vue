@@ -1,11 +1,15 @@
 <style lang="less" scope>
-	
+	.Pay{
+	    width: 75%;
+	    height: 500px;
+	    margin: 30px auto 0 auto;
+	}
 </style>
 
 <template>
-	<div class="Pay">
+	<Card class="Pay">
 		
-	</div>
+	</Card>
 </template>
 <script>
 	export default({
