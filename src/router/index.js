@@ -61,7 +61,7 @@ const routes = [
             {
               path: '/Pay',
               name: 'Pay',
-              component: (resolve) => require(['@/components/common/Pay/Pay.vue'], resolve),
+              component: (resolve) => require(['@/components/Pay/Pay.vue'], resolve),
               meta : {
                 title : "Pay"
               }

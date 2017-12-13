@@ -4,12 +4,6 @@
 .left-section{
 	margin-top: 30px;
 }
-.right-section{
-	margin-top: 30px;
-	div{
-	}
-	
-} 
 .conditions{
 	.artic{
 		height: 32px;
@@ -19,7 +13,6 @@
 			[slot=title]{
 				margin-right: 8px;
 			}
-			
 		}
 	}
 	[slot=title]{
@@ -95,8 +88,8 @@ div.job-main{
 		&>span{
 			float: left;
 			margin: 0 20px;
-			color: #19be6b;
-		}	
+			color: #2d8cf0;
+		}
 		&>i{
 			float: left;
 		}
@@ -112,13 +105,13 @@ hr.split-line{
 
 .rt-det{
 
-}	
+}
 .about-num{
 	padding-left: 10%;
 	text-align: left;
 	&>p{
 		font-size: 18px;
-		color: #19be6b;
+		color: #2d8cf0;
 		margin-top: 5px;
 		word-break: break-all;
 	}
@@ -138,19 +131,7 @@ hr.split-line{
 		font-size: 14px;
 	}
 }
-.situation{
-	p{
-		margin: 15px 0;
-		font-size: 16px;
-		color: #ccc;
-	}
-	button{
-		font-size: 15px;
-	}	
-}
-.situation-2{
-	margin: 30px 0;
-}
+
 @media (max-width : 1200px) {
 	.about-num{
 		&>ol{
@@ -181,20 +162,20 @@ hr.split-line{
 </style>
 <template>
 	<Row type="flex" class="job" justify="center" :gutter="16">
-		<Col 
+		<Col
 			class="left-section"
 			:xs="24"
 			:sm="13"
-			:md="13" 
+			:md="13"
 			:lg="13"
 		>
   			<Card class="card conditions">
   				<div class="artic city">
   					<p slot="title"><b>工作省份</b></p>
   					<p class="listBtn">
-  						<Button 
+  						<Button
   							v-for="(item, index) in Place"
-  							:type="index == PlaceIndex ? 'primary' : 'text'" 
+  							:type="index == PlaceIndex ? 'success' : 'text'"
   							:key="index"
   							@click="PlaceIndex = index, secPlaceIndex = -1"
   						>{{item.provinces}}</Button>
@@ -202,8 +183,8 @@ hr.split-line{
   				</div>
 
   				<div
-	  				class="artic region" 
-	  				v-for="(item, index) in Place" 
+	  				class="artic region"
+	  				v-for="(item, index) in Place"
 	  				:key="index"
 	  				v-if="PlaceIndex == index && item.area.length != 0"
   				>
@@ -212,22 +193,21 @@ hr.split-line{
   						<Button
   							size="small"
   							v-for="(ITEM, INDEX) in item.area"
-							:key="INDEX"	
-  							:type="INDEX == secPlaceIndex ? 'primary' : 'text'" 
+							:key="INDEX"
+  							:type="INDEX == secPlaceIndex ? 'success' : 'text'"
   							@click="secPlaceIndex = INDEX"
   						>{{ITEM}}</Button>
-  						
   					</p>
-  				</div> 
+  				</div>
 
 				<div class="artic jobClass">
   					<p slot="title"><b>顾问角色</b></p>
   					<p class="listBtn">
-						<Button 
+						<Button
 							v-for="(item, index) in jobClass"
 							:key="index"
-							:type="index == jobIndex ? 'primary' : 'text'"
-							@click="jobIndex = index" 
+							:type="index == jobIndex ? 'success' : 'text'"
+							@click="jobIndex = index"
 						>
 							{{item}}
 						</Button>
@@ -237,11 +217,11 @@ hr.split-line{
 				<div class="artic jobClass">
   					<p slot="title"><b>排序方式</b></p>
   					<p class="listBtn">
-						<Button 
+						<Button
 							v-for="(item, index) in sortRule"
 							:key="index"
-							:type="index == ruleIndex ? 'primary' : 'text'"
-							@click="ruleIndex = index" 
+							:type="index == ruleIndex ? 'success' : 'text'"
+							@click="ruleIndex = index"
 						>
 							{{item}}
 						</Button>
@@ -250,11 +230,11 @@ hr.split-line{
             </Card>
             <Card class="card jobDetail">
 				<Row type="flex" justify="center" class="detail-inner">
-					<Col 
+					<Col
 						class="lt-det"
 						:xs="24"
 						:sm="24"
-						:md="16" 
+						:md="16"
 						:lg="16"
 					>
 						<div class="job-main">
@@ -277,12 +257,12 @@ hr.split-line{
 						</div>
 
 					</Col>
-					
-					<Col 
+
+					<Col
 						class="rt-det"
 						:xs="24"
 						:sm="24"
-						:md="8" 
+						:md="8"
 						:lg="8"
 					>
 						<hr class="split-line"/>
@@ -302,43 +282,23 @@ hr.split-line{
 									<span>2017-12-05</span>
 								</li>
 							</ol>
-							<Button type="success">投递职位</Button>
+							<Button type="primary">投递职位</Button>
 						</div>
 					</Col>
 				</Row>
             </Card>
 		</Col>
 
-		<Col
-			:xs="24"
-			:sm="5"
-			:md="5" 
-			:lg="5"
-			class="right-section"
-		>
-			<Card class="situation">
-				<div class="situation-1">
-					<p>我是技术人才<br/>我在寻找兼职工作</p>
-					 <i-button type="primary" style="width:80%;">申请成为技术顾问</i-button>
-				</div>
-				<div class="situation-2">
-					<p>我是创业者<br/>我在寻找技术人才</p>
-					<router-link to="/PublicJob">
-						<i-button type="success" style="width:80%;">发布用人需求</i-button>
-					</router-link>	
-				</div>
-			</Card>
-		</Col>
-
+		<switch-process/>
 	</Row>
 </template>
 <script>
-  
+  import switchProcess from "@/components/common/SwitchClass/switchProcess.vue";
   export default {
   	data(){
   		return {
   			PlaceIndex : 0,
-			secPlaceIndex : -1, 
+			secPlaceIndex : -1,
 			jobIndex : 0,
 			ruleIndex : 0,
   			Place : [
@@ -354,7 +314,7 @@ hr.split-line{
   				{
   					provinces : "上海",
   					area : ["1212"]
-  				}, 				
+  				},
   			],
 
   			jobClass : ["全部", "iOS工程师", "Android工程师"],
@@ -365,6 +325,7 @@ hr.split-line{
     mounted(){
     },
     components:{
+    	switchProcess : switchProcess
     }
   }
 </script>

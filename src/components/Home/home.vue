@@ -49,7 +49,7 @@
       .author
       {
         overflow: hidden;
-        color: #000;    
+        color: #000;
         .ivu-tag{
           margin: 10px auto;
         }
@@ -115,12 +115,18 @@
   }
   .guarantee{
     width: 70%;
-    min-height: 212px;
+    min-height: 240px;
     height: auto;
-    background: #3091f2; 
+    background: #3091f2;
     margin: 30px auto 0 auto;
     position: relative;
     box-shadow: 0px 2px 2px #ccc;
+    ul{
+      list-style: decimal inside;
+      li{
+        margin-top: 5px;
+      }
+    }
     .styleBox{
       display: block;
       background: #3091f2;;
@@ -137,7 +143,7 @@
         display: block;
         width: 0;
         height: 0;
-        border: 5px solid #fff4f4; 
+        border: 5px solid #fff4f4;
         border-bottom-color: #2a71b8;
       }
       &:before{
@@ -212,7 +218,7 @@
       .author{
         float: none;
         margin: 0 auto;
-      } 
+      }
       .works{
         width: 70%;
         float: none;
@@ -255,14 +261,14 @@
         }
       }
       .medal{
-        display: none;  
+        display: none;
       }
     }
   }
 </style>
 <template>
 	<div>
-		<home-header/> 
+		<home-header/>
     <div class="home-main">
       <h1 class="title">按需雇佣 BAT 工程师、设计师</h1>
       <ol>
@@ -276,7 +282,7 @@
                 <Tag color="green" type="border">成功案例</Tag>
                 <img src="./image/11.png" alt="">
               </div>
-              
+
               <div class="author">
                 <Tag color="green" type="border">项目作者</Tag>
                 <img src="./image/1.png" alt="">
@@ -287,7 +293,7 @@
                 <Tag color="green" type="border">成功案例</Tag>
                 <img src="./image/12.png" alt="">
               </div>
-              
+
               <div class="author">
                 <Tag color="green" type="border">项目作者</Tag>
                 <img src="./image/2.png" alt="">
@@ -298,7 +304,7 @@
                 <Tag color="green" type="border">成功案例</Tag>
                 <img src="./image/13.png" alt="">
               </div>
-              
+
               <div class="author">
                 <Tag color="green" type="border">项目作者</Tag>
                 <img src="./image/3.png" alt="">
@@ -309,7 +315,7 @@
                 <Tag color="green" type="border">成功案例</Tag>
                 <img src="./image/14.png" alt="">
               </div>
-              
+
               <div class="author">
                 <Tag color="green" type="border">项目作者</Tag>
                 <img src="./image/4.png" alt="">
@@ -347,30 +353,37 @@
           </Card>
         </li>
     </ul>
-    
-    <Row class="guarantee">
+
+    <Row class="guarantee" id="guarantee">
       <span class="styleBox"></span>
       <Col :md="10" :lg="10" push="1" class="infoSc">
         <h2>线下交易有风险</h2>
         <p>
           如人才要求不通过云工网进行交易，请警惕以下风险：
         </p>
-        <p>1.付了钱却得不到满意的服务</p>
-        <p>2.出现争议，云工网因证据不足，无法仲裁</p>
-        <p>3.售后服务无法保障</p>
+        <ul>
+          <li>付了钱却得不到满意的服务</li>
+          <li>出现争议，云工网因证据不足，无法仲裁</li>
+          <li>售后服务无法保障</li>
+        </ul>
       </Col>
       <Col :md="10" :lg="10" push="1" class="infoSc">
         <h2>云工网担保交易，安全放心！</h2>
         <p>
           为保障您的资金安全，务必先将资金托管到云工网，待您验收服务满意后，再由云工网打款给人才。
         </p>
-        <p>1.资金安全</p>
-        <p>2.出现争议，云工网公平仲裁</p>
-        <p>3.服务到满意为止</p>
+        <ul>
+          <li>资金安全</li>
+          <li>出现争议，云工网公平仲裁</li>
+          <li style='padding-right:65px;'>除了软件开发可以走担保交易，生活上合法交易，都可以走担保交易</li>
+          <li>服务到满意为止</li>
+        </ul>
+
+
         <img src="./image/medal.png" alt="" class="medal">
       </Col>
     </Row>
-    
+
     <home-footer/>
 	</div>
 </template>
@@ -384,7 +397,7 @@
       }
     },
     mounted(){
-      
+
     },
     components:{
        HomeHeader : HomeHeader,

@@ -9,8 +9,8 @@
 				<router-link to="/" hover="false">
 					<img width="100%" alt="云工网" title="云工网" src="./image/logo.png">
 					<span>云工网</span>
-				</router-link>				
-			</Col>	      
+				</router-link>
+			</Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
     			<router-link to="/Consultant">
     				技术顾问
@@ -30,12 +30,12 @@
     			<router-link to="/">
     				成功案例
     			</router-link>
-	        </Col> 
+	        </Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="aboutMoney">
-    			<router-link to="/">
+    			<a href="#guarantee">
     				担保交易*
-    			</router-link>
-	        </Col>      
+    			</a>
+	        </Col>
 			<Col :xs="20" :sm="24" :md="24" :lg="6" >
 				<span class="login" @click="$store.state.show_loginUpBox = true">
 					账号注册
@@ -47,13 +47,16 @@
 			</Col>
 
 	    </Row>
+	    <login-up/>
 		<login-in/>
-		<login-up/>
+		<login-success/>
 	</div>
 </template>
 <script>
 	import loginIn from "@/components/common/Dialog/loginIn.vue";
 	import loginUp from "@/components/common/Dialog/loginUp.vue";
+	import loginSuccess from "@/components/common/Dialog/SuccessLogin.vue";
+
 	export default({
 		name : "HomeHeader",
 
@@ -67,8 +70,10 @@
 		},
 		components:{
 			loginIn : loginIn,
-			loginUp : loginUp
+			loginUp : loginUp,
+			loginSuccess : loginSuccess
 		},
+
 		methods:{
 		}
 	})

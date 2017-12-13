@@ -4,11 +4,11 @@
 <template>
 	<div class='head-common'>
 		<Row type="flex" justify="center" align="middle" class="nav-bar">
-			<Col 
+			<Col
 				:xs="24"
 				:sm="{span: 2, pull: 1, class:'logo'}"
-				:md="{span: 2, pull: 1}" 
-				:lg="{span: 2, pull: 1}" 
+				:md="{span: 2, pull: 1}"
+				:lg="{span: 2, pull: 1}"
 				class="logo"
 			>
 				<router-link to="/">
@@ -22,46 +22,43 @@
 			<Col :xs="24" :sm="20" :md="18" :lg="18">
 				<Row type="flex" justify="center" align="middle" class="nav-menu">
 
-				    <Menu mode="horizontal" theme="primary" :active-name="active" @on-select="selected">
+				    <Menu mode="horizontal" theme="primary" :active-name="active" @on-select="locaHref">
 				    	<Col :xs="24" :sm="4" :md="4" :lg="3">
 					        <Menu-item name="/Consultant">
-					        	<router-link to="/Consultant">
-					            	技术顾问
-					            </router-link>
+					            技术顾问
 					        </Menu-item>
-				        </Col>	
-				        <Col :xs="24" :sm="4" :md="3" :lg="3">	
-				        	<router-link to="/Job">
-						        <Menu-item name="/Job">
-						            兼职需求
-						        </Menu-item>
-					        </router-link>
 				        </Col>
-				        <Col :xs="24" :sm="4" :md="3" :lg="3">	
+				        <Col :xs="24" :sm="4" :md="3" :lg="3">
+					        <Menu-item name="/Job">
+					            兼职需求
+					        </Menu-item>
+				        </Col>
+				        <Col :xs="24" :sm="4" :md="3" :lg="3">
 					        <Menu-item name="3">
 					            标准服务
 					        </Menu-item>
 				        </Col>
-				        <Col :xs="24" :sm="4" :md="3" :lg="3">	
+				        <Col :xs="24" :sm="4" :md="3" :lg="3">
 					        <Menu-item name="4">
 					            小团队
 					        </Menu-item>
 				        </Col>
-				        <Col :xs="24" :sm="4" :md="3" :lg="3">		
+				        <Col :xs="24" :sm="4" :md="3" :lg="3">
 					        <Menu-item name="5">
 					            成功案例
-					        </Menu-item>	
+					        </Menu-item>
 						</Col>
-						<Col 
-							:xs="{span: 24, push: 0, class:'personal'}" 
-							:sm="{span: 4, pull: 0}" 
-							:md="{span: 4, push: 3}" 
-							:lg="{span: 3, push: 4}" 
+						<Col
+							:xs="{span: 24, push: 0, class:'personal'}"
+							:sm="{span: 4, pull: 0}"
+							:md="{span: 4, push: 4}"
+							:lg="{span: 4, push: 4}"
 							class="menu-personal"
-						>	
+						>
 					        <Submenu name="6" :open-names="this.$route.path">
 					            <template slot="title">
-					                个人信息
+					            	<img src="../../Job/image/user.png" alt="">
+					            	<span>云工网之最</span>
 					            </template>
 					            <Menu-group title="使用" >
 					                <Menu-item name="6-1">成为技术顾问</Menu-item>
@@ -69,10 +66,10 @@
 					                <Menu-item name="6-3">聘用方认证</Menu-item>
 					            </Menu-group>
 					            <Menu-group title="个人">
-					            	<Menu-item name="6-4" @click.native="$router.push({'path': '/Pay'})">
+					            	<Menu-item name="/Pay">
 					            		账户充值
 					            	</Menu-item>
-					            	<Menu-item name="6-5" @click.native="$router.push({'path': '/PersonalInfo'})">
+					            	<Menu-item name="/PersonalInfo">
 					            		修改个人资料
 					            	</Menu-item>
 					                <Menu-item name="6-6">退出</Menu-item>
@@ -80,7 +77,7 @@
 					        </Submenu>
 				        </Col>
 				    </Menu>
-				</Row>    
+				</Row>
 			</Col>
 		</Row>
 	</div>
@@ -95,14 +92,11 @@
 			}
 		},
 		mounted(){
-
+			this.active = this.$route.path;
 		},
 		methods:{
-			selected(name){
-				this.active = name;
-			},
-			aa(){
-				alert(1)
+			locaHref(name){
+				this.$router.push({"path" : name});
 			}
 		}
 	})
