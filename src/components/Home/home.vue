@@ -336,7 +336,7 @@
                   <h3>我是创业者</h3>
                   <span>我在寻找技术人才</span>
                </p>
-               <Button type="success" long>发布需求</Button>
+               <Button type="success" long @click="$router.push({'path' : '/PublicJob'})">发布需求</Button>
             </div>
           </Card>
         </li>
@@ -348,7 +348,7 @@
                   <h3>我是技术人才</h3>
                   <span>我在找兼职工作</span>
                </p>
-               <Button type="success" long>我要入驻</Button>
+               <Button type="success" long @click="$router.push({'path' : '/PartTime'})">我要入驻</Button>
             </div>
           </Card>
         </li>

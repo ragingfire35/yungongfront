@@ -45,12 +45,12 @@
         >
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
                 <Form-item prop="user">
-                    <Input type="text" v-model="formInline.user" placeholder="请输入用户名">
+                    <Input type="text" v-model="formInline.user" placeholder="请输入真实姓名">
                         <Icon type="ios-person-outline" slot="prepend" class="icon"></Icon>
                     </Input>
                 </Form-item>
                 <Form-item prop="phone" class="phone">
-                    <Input type="number"  v-model="formInline.phone" placeholder="请输入手机号" number>
+                    <Input type="text"  v-model="formInline.phone" placeholder="请输入手机号" number>
                         <Icon type="iphone" slot="prepend" class="icon"></Icon>
                     </Input>
                 </Form-item>
@@ -58,7 +58,7 @@
                     <Button type="default" size="large">发送</Button>
                 </Form-item>
                 <Form-item prop="validateCode" class="validate-code">
-                    <Input type="number"  v-model="formInline.validateCode" placeholder="请输入验证码" :disabled="isPhoneRule">
+                    <Input type="text"  v-model="formInline.validateCode" placeholder="请输入验证码" :disabled="isPhoneRule" number>
                     </Input>
                 </Form-item>
             </Form>
@@ -95,8 +95,7 @@
                 },
                 ruleInline: {
                     user: [
-                        { required: true, message: '请填写用户名', trigger: 'blur' },
-                        { type: 'string', max: 10, message: '用户名不能多于10字符', trigger: 'blur' }
+                        { required: true, message: '请填写用户名', trigger: 'blur' }
                     ],
                     phone: [
                         { validator: validatePhone, trigger: 'blur' }

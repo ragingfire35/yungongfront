@@ -1,37 +1,26 @@
-<style lang="less" scope>
+<style lang="less" >
 	.modalBox{
         text-align: center;
         .ivu-form-item{
-            width: 80%;
+        	width: 80%;
         }
         .ivu-input-group-prepend{
             width: 20%;
-            .icon{
-                font-size: 16px;
-            }
         }
+        .ivu-input{
+            width: 100%;
+        }
+        .ivu-icon{
+			font-size: 16px;
+        }
+        .phone{
+
+        }
+
         .ivu-modal-footer{
             button{
                 width: 45%;
             }
-        }
-        .phone{
-            display: inline-block;
-            width: 39%!important;
-            margin-right: 0;
-        }
-        .send{
-            display: inline-block;
-            width: 20%!important;
-            margin-right: 0;
-            button{
-                width: 100%;
-                height: 32px;
-            }
-        }
-        .validate-code{
-            display: inline-block;
-            width: 20%!important;
         }
     }
 </style>
@@ -39,33 +28,26 @@
 	<div>
 	    <Modal
             :mask-closable="false"
-	        v-model="$store.state.show_loginInBox"
-	        title="登录"
+	        v-model="value1"
+	        title="这是您第一次申请兼职，请先完善您的个人信息"
             class="modalBox"
         >
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
                 <Form-item prop="user">
-                    <Input type="text" v-model="formInline.user" placeholder="请输入用户名">
+                    <Input type="text" v-model="formInline.user" placeholder="请输入真实姓名">
                         <Icon type="ios-person-outline" slot="prepend" class="icon"></Icon>
                     </Input>
                 </Form-item>
-                <Form-item prop="passwd">
-                    <Input type="password" v-model="formInline.passwd" placeholder="请输入密码">
-                        <Icon type="ios-locked-outline" slot="prepend" class="icon"></Icon>
-                    </Input>
-                </Form-item>
                 <Form-item prop="phone" class="phone">
-                    <Input type="text"  v-model="formInline.phone" placeholder="请输入手机号" number>
+                    <Input type="text"  v-model="formInline.phone" placeholder="请输入手机号" number long>
                         <Icon type="iphone" slot="prepend" class="icon"></Icon>
                     </Input>
                 </Form-item>
-                <Form-item class="send">
-                    <Button type="default" size="large">发送</Button>
-                </Form-item>
-                <Form-item prop="validateCode" class="validate-code">
-                    <Input type="text"  v-model="formInline.validateCode" placeholder="请输入验证码" :disabled="isPhoneRule" number>
+				<Form-item  prop="mail">
+		            <Input v-model="formInline.mail" placeholder="请输入邮箱">
+                        <Icon type="android-mail" slot="prepend" class="icon"></Icon>
                     </Input>
-                </Form-item>
+		        </Form-item>
             </Form>
             <div slot="footer">
                 <Button type="text" size="large" @click="cancel">重置</Button>
@@ -91,27 +73,23 @@
                 }
             };
             return {
-                isPhoneRule : true,
+            	value1 : true,
+            	isPhoneRule : true,
                 formInline: {
                     user: '',
-                    passwd: '',
                     phone: '',
-                    validateCode: ''
+                    mail : ''
                 },
                 ruleInline: {
                     user: [
-                        { required: true, message: '请填写用户名', trigger: 'blur' },
-                        { type: 'string', max: 10, message: '用户名不能多于10字符', trigger: 'blur' }
-                    ],
-                    passwd: [
-                        { required: true, message: '请输入密码', trigger: 'blur' },
-                        { type: 'string', min: 6, message: '密码不能少于6字符', trigger: 'blur' }
+                        { required: true, message: '请填写用户名', trigger: 'blur' }
                     ],
                     phone: [
                         { validator: validatePhone, trigger: 'blur' }
                     ],
-                    validateCode: [
-                        { required: true, message: '请输入手机验证码', trigger: 'blur' }
+                    mail: [
+                        { required: true, message: '邮箱不能为空', trigger: 'blur' },
+                        { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
                     ]
                 }
             }
@@ -122,6 +100,7 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
+
                         this.$Message.success('提交成功!');
 
                     } else {

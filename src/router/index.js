@@ -51,6 +51,14 @@ const routes = [
               }
             },
             {
+              path: '/PartTime',
+              name: 'PartTime',
+              component: (resolve) => require(['@/components/PartTime/PartTime.vue'], resolve),
+              meta : {
+                title : "PartTime"
+              }
+            },
+            {
               path: '/PersonalInfo',
               name: 'PersonalInfo',
               component: (resolve) => require(['@/components/PersonalInfo/PersonalInfo.vue'], resolve),
@@ -65,9 +73,9 @@ const routes = [
               meta : {
                 title : "Pay"
               }
-            }            
+            }
           ]
-        },       
+        },
 ]
 const RouterConfig = {
     //mode: 'history',
