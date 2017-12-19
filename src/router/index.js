@@ -29,7 +29,7 @@ const routes = [
             {
               path: '/Consultant',
               name: 'Consultant',
-              component: (resolve) => require(['@/components/Consultant/Consultant.vue'], resolve),
+              component: (resolve) => require(['@/components/website/Consultant/Consultant.vue'], resolve),
               meta : {
                 title : "Consultant"
               }
@@ -37,7 +37,7 @@ const routes = [
             {
               path: '/Job',
               name: 'Job',
-              component: (resolve) => require(['@/components/Job/Job.vue'], resolve),
+              component: (resolve) => require(['@/components/personal/Job/Job.vue'], resolve),
               meta : {
                 title : "Job"
               }
@@ -45,7 +45,7 @@ const routes = [
             {
               path: '/PublicJob',
               name: 'PublicJob',
-              component: (resolve) => require(['@/components/PublicJob/PublicJob.vue'], resolve),
+              component: (resolve) => require(['@/components/website/PublicJob/PublicJob.vue'], resolve),
               meta : {
                 title : "PublicJob"
               }
@@ -53,27 +53,27 @@ const routes = [
             {
               path: '/PartTime',
               name: 'PartTime',
-              component: (resolve) => require(['@/components/PartTime/PartTime.vue'], resolve),
+              component: (resolve) => require(['@/components/personal/PartTime/PartTime.vue'], resolve),
               meta : {
                 title : "PartTime"
               }
             },
             {
-              path: '/PersonalInfo',
-              name: 'PersonalInfo',
-              component: (resolve) => require(['@/components/PersonalInfo/PersonalInfo.vue'], resolve),
+              path: '/PersonalHome',
+              name: 'PersonalHome',
+              component: (resolve) => require(['@/components/personal/PersonalHome/PersonalHome.vue'], resolve),
               meta : {
                 title : "PersonalInfo"
               }
             },
-            {
-              path: '/Pay',
-              name: 'Pay',
-              component: (resolve) => require(['@/components/Pay/Pay.vue'], resolve),
+/*            {
+              path: '/PersonalPay',
+              name: 'PersonalPay',
+              component: (resolve) => require(['@/components/personal/PersonalPay/PersonalPay.vue'], resolve),
               meta : {
                 title : "Pay"
               }
-            }
+            }*/
           ]
         },
 ]

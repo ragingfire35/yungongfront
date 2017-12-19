@@ -291,7 +291,7 @@ hr.split-line{
 					>
 						<div class="user-info">
 							<router-link to="">
-								<img src="../Job/image/user.png" alt="">
+								<img src="../../personal/Job/image/user.png" alt="">
 								<span>大好时光</span>
 								<span><Icon type="settings"></Icon>&nbsp;web前端工程师</span>
 								<span>6年</span>

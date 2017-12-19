@@ -57,22 +57,29 @@
 						>
 					        <Submenu name="6" :open-names="this.$route.path">
 					            <template slot="title">
-					            	<img src="../../Job/image/user.png" alt="">
+					            	<img src="../../personal/Job/image/user.png" alt="">
 					            	<span>云工网之最</span>
 					            </template>
 					            <Menu-group title="使用" >
-					                <Menu-item name="6-1">成为技术顾问</Menu-item>
-					                <Menu-item name="6-2">发布兼职需求</Menu-item>
-					                <Menu-item name="6-3">聘用方认证</Menu-item>
+					                <Menu-item name="/PartTime" v-if="$store.state.userClassify == 'website'">成为技术顾问</Menu-item>
+					                <Menu-item name="/PublicJob" v-else-if="$store.state.userClassify == 'personal'">发布兼职需求</Menu-item>
 					            </Menu-group>
 					            <Menu-group title="个人">
-					            	<Menu-item name="/Pay">
+					            	<Menu-item name="/webistePay" v-if="$store.state.userClassify == 'website'">
 					            		账户充值
 					            	</Menu-item>
-					            	<Menu-item name="/PersonalInfo">
-					            		修改个人资料
+					            	<Menu-item name="/PersonalPay" v-else-if="$store.state.userClassify == 'personal'">
+					            		账户充值
 					            	</Menu-item>
-					                <Menu-item name="6-6">退出</Menu-item>
+					            	<Menu-item name="/WebsiteHome" v-if="$store.state.userClassify == 'website'">
+					            		修改账户资料
+					            	</Menu-item>
+
+					            	<Menu-item name="/PersonalHome?name=personalInfo" v-else-if="$store.state.userClassify == 'personal'">
+					            		修改账户资料
+					            	</Menu-item>
+
+					                <Menu-item name="/">退出</Menu-item>
 					            </Menu-group>
 					        </Submenu>
 				        </Col>

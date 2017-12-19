@@ -1,8 +1,8 @@
-<style lang="less" >
+<style lang="less" scoped>
 	.modalBox{
         text-align: center;
         .ivu-form-item{
-        	width: 80%;
+        	width: 80%!important;
         }
         .ivu-input-group-prepend{
             width: 20%;
