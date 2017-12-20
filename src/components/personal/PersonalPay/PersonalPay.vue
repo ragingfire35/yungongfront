@@ -1,4 +1,4 @@
-<style lang="less" scope>
+<style lang="less" scoped>
 	.Pay{
 	    width: 75%;
 	    height: auto;

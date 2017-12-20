@@ -28,16 +28,16 @@
 		class="right-section"
 	>
 		<Card class="situation">
-			<div class="situation-1" v-if="$store.state.userClassify == 'website'">
+			<div class="situation-1" v-if="$store.state.userClassify == 'personal'">
 				<p>我是技术人才<br/>我在寻找兼职工作</p>
 				<router-link to="/PartTime">
-				 <i-button type="primary" style="width:80%;">申请成为技术顾问</i-button>
+				 <i-button type="success" style="width:80%;">申请成为技术顾问</i-button>
 				</router-link>
 			</div>
-			<div class="situation-2" v-else-if="$store.state.userClassify == 'personal'">
+			<div class="situation-2" v-else-if="$store.state.userClassify == 'website'">
 				<p>我是创业者<br/>我在寻找技术人才</p>
 				<router-link to="/PublicJob">
-					<i-button type="success" style="width:80%;">发布用人需求</i-button>
+					<i-button type="primary" style="width:80%;">发布用人需求</i-button>
 				</router-link>
 			</div>
 		</Card>

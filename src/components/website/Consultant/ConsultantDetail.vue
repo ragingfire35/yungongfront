@@ -1,0 +1,131 @@
+<style lang="less" scoped>
+	@import "ConsultantDetail.less";
+</style>
+<template>
+	<Row type="flex" class="ConDetail" justify="center" :gutter="16">
+		<Col
+			class="left-section"
+			:xs="24"
+			:sm="13"
+			:md="13"
+			:lg="13"
+		>
+			<Card class="ltCard">
+				<p class="importantInfo">
+					我：<span>深圳</span>&nbsp;&nbsp;/&nbsp;<span>Android工程师</span>
+				</p>
+				<div class="about-me">
+					<img src="../../personal/Job/image/user.png" height="50" width="50" alt="" class="lt-img">
+					<div class="rt-content">
+						<ul>
+							<li>
+								<span>大好时光</span>
+							</li>
+							<li>
+								<span>1000</span>&nbsp;/&nbsp;8小时
+							</li>
+							<li>
+								5年工作经验
+							</li>
+							<li>
+								web前端高级工程师
+							</li>
+						</ul>
+						<Button
+							:type="focusOn === false ? 'default' : 'error'"
+							class="focusOn"
+							long
+							@click="focusOn = !focusOn"
+							v-html="focusOn === false ? '关注' : '已关注'"
+						>
+
+						</Button>
+					</div>
+				</div>
+				<div class="skills">
+					<h4 class="my-tt">擅长技能</h4>
+					<Tag type="dot" class="skills-tag">Javascript</Tag>
+					<Tag type="dot" class="skills-tag">Php</Tag>
+					<div class="skills-main">
+						主修前端，辅修 Web 开发相关的各种技能，认同 RoR 的开发理念；<br/>
+						热爱开源，为多个开源项目提过 PR，如 Vue[1]、jQuery[2]、Async[3]；<br/>
+						能胜任任何技术栈的开发，已有经验的包括常规前端技术外还有 Ruby(RoR)、PHP、Nodejs、Java 等；<br/>
+						另外同样可以接受手机客户端开发或者 UI 设计工作，有与我类似资历的朋友可以随时代劳。<br/>
+
+						[1]: https://github.com/vuejs/vue/pulls?q=is%3Apr+author%3Arhyzx+is%3Aclosed <br/>
+						[2]: https://github.com/jquery/jquery/pull/1888 <br/>
+						[3]: https://github.com/caolan/async/pull/216<br/>
+					</div>
+				</div>
+				<div class="exe">
+					<h4 class="my-tt">项目经验</h4>
+					<div class="exe-main">
+						Treation https://treation.com<br/>
+						主导该项目的前端工作，基于 Vue、BS4、Actioncable，主要精力花在表格的编辑功能开发与性能优化上；<br/>
+						参与部分后端任务，基于 Rails。<br/><br/>
+
+						有道云笔记 https://note.youdao.com<br/>
+						参与云笔记 2.0 改版任务，推进部分技术迭代 (比如 SVG icons、组件化[1]等)，<br/>
+						独立负责部分功能 (比如 PDF 预览、任务管理、日历等)，并使用 Node 完成其中一些功能的接口；<br/>
+						负责一些效率工具的开发 (比如基于 mincer[2]) 的一个静态资源构建系统，<br/>
+						用于快速开发静态网页)。<br/><br/>
+
+						WolfeCareer https://angel.co/wolfe-career<br/>
+						一个工作外参与的创业项目，主要负责部分技术选型和前后端开发任务。<br/>
+						该项目后端主要基于 Pyramid (Python)，前端则是 Angular 和 Grunt，<br/>
+						另外还使用了 Docker 进行开发环境部署[3]。<br/><br/>
+
+						酷盘 https://kanbox.com<br/>
+						类 Dropbox，基于 Rails 开发，负责前端开发和部分后端工作 (主要是 VC 层) 。<br/>
+						前端技术上主要继承了 Rails 默认的体系，如 CoffeeScript、Sass、jQuery + UJS、Turbolinks、Sprockets (前端工具链)，<br/>
+						另外主要还使用了 Backbone 和 Bootstrap，并使用 rails-assets 进行 Bower 的组件管理。<br/><br/>
+
+						[1]: https://speakerdeck.com/rhyzx/xie-angular-de-zui-jia-shi-jian<br/>
+						[2]: https://github.com/nodeca/mincer<br/>
+						[3]: https://github.com/rhyzx/sample-pyramid-app-with-docker-and-fig
+					</div>
+				</div>
+				<div class="works">
+					<h4 class="my-tt">作品介绍</h4>
+					<div class="works-main">
+						<a href="https://github.com/rhyzx">https://github.com/rhyzx</a>
+					</div>
+				</div>
+	
+			</Card>
+		</Col>
+		<Col
+			class="left-section"
+			:xs="24"
+			:sm="5"
+			:md="5"
+			:lg="5"
+		>
+			<Card class="rt-card">
+				<p class="other-num">被预约：<span>1</span></p>
+				<p class="other-num">被收藏：<span>2</span></p>
+				<p class="other-info">可兼职时间<span class="span-ts">自由职业者，时间充裕</span></p>
+				<p class="other-info">可兼职地点：<span>西湖</span></p>
+
+				<Button type="primary" long class="yuyue">
+					立即预约
+				</Button>
+			</Card>
+		</Col>
+	</Row>
+</template>
+<script>
+	export default({
+		data(){
+			return{
+				focusOn : false
+			}
+		},
+		mounted(){
+
+		},
+		methods:{
+
+		}
+	})
+</script>

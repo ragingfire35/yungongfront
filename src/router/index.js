@@ -35,11 +35,27 @@ const routes = [
               }
             },
             {
+              path: '/ConsultantDetail',
+              name: 'ConsultantDetail',
+              component: (resolve) => require(['@/components/website/Consultant/ConsultantDetail.vue'], resolve),
+              meta : {
+                title : "ConsultantDetail"
+              }
+            },
+            {
               path: '/Job',
               name: 'Job',
               component: (resolve) => require(['@/components/personal/Job/Job.vue'], resolve),
               meta : {
                 title : "Job"
+              }
+            },
+            {
+              path: '/JobDetail',
+              name: 'JobDetail',
+              component: (resolve) => require(['@/components/personal/Job/JobDetail.vue'], resolve),
+              meta : {
+                title : "JobDetail"
               }
             },
             {
@@ -66,14 +82,14 @@ const routes = [
                 title : "PersonalInfo"
               }
             },
-/*            {
+            {
               path: '/PersonalPay',
               name: 'PersonalPay',
               component: (resolve) => require(['@/components/personal/PersonalPay/PersonalPay.vue'], resolve),
               meta : {
-                title : "Pay"
+                title : "PersonalPay"
               }
-            }*/
+            }
           ]
         },
 ]

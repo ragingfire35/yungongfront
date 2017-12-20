@@ -41,7 +41,7 @@
       <Button
         v-for= "(item, index) in btnInto.btnNum"
         :key= "index"
-        :type="userClassFiy == '' ? btnInto.type[index] : fixBtn.type" 
+        :type="userClassFiy == '' ? btnInto.type[index] : fixBtn.type"
         @click="switchClass(btnInto.name)"
         class="affixBtn"
         style="right: 10px;"
