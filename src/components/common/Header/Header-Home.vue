@@ -13,12 +13,12 @@
 			</Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
     			<router-link to="/Consultant">
-    				技术顾问
+    				我要雇佣
     			</router-link>
 	        </Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
     			<router-link to="/Job">
-    				兼职需求
+    				我要兼职
     			</router-link>
 	        </Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
@@ -32,9 +32,9 @@
     			</router-link>
 	        </Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="aboutMoney">
-    			<a href="#guarantee">
+    			<router-link to="/DanBao">
     				担保交易*
-    			</a>
+    			</router-link>
 	        </Col>
 			<Col :xs="20" :sm="24" :md="24" :lg="6" >
 				<span class="login" @click="$store.state.show_loginUpBox = true">

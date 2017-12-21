@@ -89,6 +89,22 @@ const routes = [
               meta : {
                 title : "PersonalPay"
               }
+            },
+            {
+              path: '/DanBao',
+              name: 'DanBao',
+              component: (resolve) => require(['@/components/danbao/danbao.vue'], resolve),
+              meta : {
+                title : "DanBao"
+              }
+            },
+            {
+              path: '/DBsteps',
+              name: 'DBsteps',
+              component: (resolve) => require(['@/components/danbao/danbaoSteps.vue'], resolve),
+              meta : {
+                title : "DBsteps"
+              }
             }
           ]
         },

@@ -29,7 +29,7 @@
 <template>
 	<div>
 		<h1 class="tt">个人主页</h1>
-		<Tabs type="card" class="personalHome" @on-click="info">
+		<Tabs type="card" class="personalHome" @on-click="info" :value="$route.query.name">
 			<Tab-pane label="账户资料" name="personalInfo">
 				<personal-info/>
 			</Tab-pane>

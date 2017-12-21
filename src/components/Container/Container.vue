@@ -9,7 +9,7 @@
 	<div class="container">
     <header-common/>
 		<router-view></router-view>
-    <switch-class/>
+<!--     <switch-class/> -->
     <home-footer/>
 	</div>
 </template>

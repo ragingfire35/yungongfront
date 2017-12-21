@@ -3,6 +3,7 @@
     width: 40px;
     height: auto;
     position: fixed;
+    z-index:3;
     top:40%;
     right: 10px;
     border-radius: 0;
