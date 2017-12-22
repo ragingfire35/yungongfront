@@ -161,14 +161,20 @@
 					<Card>
 						<img src="./image/escrow_01.png">
 						<h4>交易安全-保护甲方</h4>
-						<p class="tishi">只要在云工网确认收到项目后甲方才会被通知付款</p>
+						<p class="tishi">
+							<!-- 只要在云工网确认收到项目后甲方才会被通知付款 -->
+							乙方项目完成后，经过甲方同意，钱才会进入乙方账户。
+						</p>
 					</Card>
 				</Col>
 				<Col :lg="6" :md="12" :sm="12" :xs="24" class="card" >
 					<Card>
 						<img src="./image/escrow_02.png">
 						<h4>交易安全-保护乙方</h4>
-						<p class="tishi">只有在乙方确认收到付款后云工网才会把项目转交给甲方</p>
+						<p class="tishi">
+							<!-- 只有在乙方确认收到付款后云工网才会把项目转交给甲方 -->
+							只有甲方的钱托管在平台账户了，才会通知乙方开工。
+						</p>
 					</Card>
 				</Col>
 				<Col :lg="6" :md="12" :sm="12" :xs="24" class="card">

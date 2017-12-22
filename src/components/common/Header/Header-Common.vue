@@ -67,6 +67,7 @@
 					                <Menu-item name="/personalHome?name=personalPartTime" v-else>兼职详情</Menu-item>
 					            </Menu-group>
 					            <Menu-group title="个人">
+
 					            	<Menu-item name="/webistePay" v-if="$store.state.userClassify == 'website'">
 					            		账户充值
 					            	</Menu-item>
@@ -80,7 +81,9 @@
 					            	<Menu-item name="/PersonalHome?name=personalInfo" v-else-if="$store.state.userClassify == 'personal'">
 					            		修改账户资料
 					            	</Menu-item>
-
+					            	<Menu-item name="/PersonalHome?name=personalLevel" v-if="$store.state.userClassify == 'personal'">
+					            		职业等级
+					            	</Menu-item>
 					                <Menu-item name="/">退出</Menu-item>
 					            </Menu-group>
 					        </Submenu>

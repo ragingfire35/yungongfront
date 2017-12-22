@@ -33,6 +33,9 @@
 			<Tab-pane label="账户资料" name="personalInfo">
 				<personal-info/>
 			</Tab-pane>
+			<Tab-pane label="职业等级" name="personalLevel">
+				<personal-level/>
+			</Tab-pane>
 			<Tab-pane label="真实信息" name="personalReal">
 				<personal-real/>
 			</Tab-pane>
@@ -48,6 +51,7 @@
 	import PersonalInfo from "@/components/personal/PersonalInfo/PersonalInfo.vue";
 	import PersonalReal from "@/components/personal/PersonalReal/PersonalReal.vue";
 	import PersonalPartTime from "@/components/personal/PersonalPartTime/PersonalPartTime.vue";
+	import PersonalLevel from "@/components/personal/PersonalLevel/PersonalLevel.vue";
 
 
 	export default({
@@ -58,7 +62,8 @@
 		components:{
 			PersonalInfo : PersonalInfo,
 			PersonalReal : PersonalReal,
-			PersonalPartTime : PersonalPartTime
+			PersonalPartTime : PersonalPartTime,
+			PersonalLevel : PersonalLevel
 		},
 		mounted(){
 
