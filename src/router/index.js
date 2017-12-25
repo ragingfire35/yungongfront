@@ -83,11 +83,11 @@ const routes = [
               }
             },
             {
-              path: '/PersonalPay',
-              name: 'PersonalPay',
-              component: (resolve) => require(['@/components/personal/PersonalPay/PersonalPay.vue'], resolve),
+              path: '/Pay',
+              name: 'Pay',
+              component: (resolve) => require(['@/components/PersonalPay/Pay.vue'], resolve),
               meta : {
-                title : "PersonalPay"
+                title : "Pay"
               }
             },
             {
@@ -104,6 +104,14 @@ const routes = [
               component: (resolve) => require(['@/components/danbao/danbaoSteps.vue'], resolve),
               meta : {
                 title : "DBsteps"
+              }
+            },
+            {
+              path: '/Comment',
+              name: 'Comment',
+              component: (resolve) => require(['@/components/common/Comments/Comments.vue'], resolve),
+              meta : {
+                title : "Comment"
               }
             }
           ]

@@ -58,7 +58,6 @@
       return{
         userClassFiy : this.$store.state.userClassify,
         fixBtn : "",
-
         btnInto  : {
           btnNum : 2,
           text : ["进入企业版", "进入个人版"],
@@ -67,7 +66,7 @@
         },
 
         info: {
-            webiste : {
+            website : {
               "type" : "success",
               "text" : "切换到个人版"
             },
@@ -83,14 +82,14 @@
         this.fixBtn
         = name
         == "website" ?
-        this.info.webiste : this.info.personal;
+        this.info.website : this.info.personal;
       }
     },
     mounted(){
       this.fixBtn
       = this.userClassFiy
       == "website"?
-      this.info.webiste : this.info.personal;
+      this.info.website : this.info.personal;
     },
     methods:{
       switchClass(name){

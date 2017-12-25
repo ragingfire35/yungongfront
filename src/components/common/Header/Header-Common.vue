@@ -68,10 +68,7 @@
 					            </Menu-group>
 					            <Menu-group title="个人">
 
-					            	<Menu-item name="/webistePay" v-if="$store.state.userClassify == 'website'">
-					            		账户充值
-					            	</Menu-item>
-					            	<Menu-item name="/PersonalPay" v-else-if="$store.state.userClassify == 'personal'">
+					            	<Menu-item name="/Pay">
 					            		账户充值
 					            	</Menu-item>
 					            	<Menu-item name="/WebsiteHome" v-if="$store.state.userClassify == 'website'">

@@ -115,9 +115,9 @@
 							<img src="../../personal/Job/image/user.png" alt="">
 							<span>大好时光</span>
 							<span><Icon type="settings"></Icon>&nbsp;web前端工程师</span>
+							<span>高级顾问</span>
 							<span>6年</span>
 						</div>
-
 						<div class="job-main">
 							<div class="title">
 								<h5>擅长技能</h5>

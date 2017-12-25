@@ -1,4 +1,4 @@
-<style lang="less" scope>
+<style lang="less" scoped>
 	.modalBox{
         text-align: center;
         .ivu-form-item{

@@ -9,8 +9,18 @@
 	<div class="container">
     <header-common/>
 		<router-view></router-view>
-<!--     <switch-class/> -->
+    <switch-class/>
     <home-footer/>
+    <div>
+      <p>{{count}}</p>
+      <p>
+        <button @click="increment">+</button>
+        <button @click="decrement">-</button>
+      </p>
+      <small>
+        Check out your cookies to see the updates.
+      </small>
+    </div>
 	</div>
 </template>
 <script>
@@ -27,6 +37,19 @@
        HeaderCommon : HeaderCommon,
        SwitchClass : SwitchClass,
        HomeFooter : HomeFooter
-    }
+    },
+    methods:{
+      increment() {
+         this.$store.commit('increment');
+      },
+      decrement() {
+         this.$store.commit('decrement');
+      }
+    },
+    computed: {
+      count() {
+        return this.$store.state.count;
+      }
+    },
   }
 </script>

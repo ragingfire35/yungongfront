@@ -1,4 +1,4 @@
-<style lang="less" scope>
+<style lang="less" scoped>
     .scLogin{
         text-align: center;
         .ivu-modal-body{

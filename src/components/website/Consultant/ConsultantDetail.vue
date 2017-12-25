@@ -28,7 +28,10 @@
 								5年工作经验
 							</li>
 							<li>
-								web前端高级工程师
+								Android工程师
+							</li>
+							<li>
+								高级顾问
 							</li>
 						</ul>
 						<Button
@@ -91,7 +94,36 @@
 						<a href="https://github.com/rhyzx">https://github.com/rhyzx</a>
 					</div>
 				</div>
-	
+				<div class="comments">
+					<h4 class="my-tt">
+						雇主评论<span class="beizhu">*只有在订单确认完工后，雇主才能评价兼职者</span>
+						<p class="commentsNum"><strong>2</strong>条评论</p>
+					</h4>
+					<ul class="comments-main" v-if="comments.length !== 0">
+						<li v-for="(item, index) in comments">
+							<img :src="item.head" height="50" width="50" alt="">
+							<div class="detail">
+								<p class="other"><span>{{item.name}}</span> <time>{{item.time}}</time></p>
+								<p class="content">
+									{{item.content}}
+								</p>
+							</div>
+						</li>
+					</ul>
+					<p v-else class="not-comment">暂无评论~</p>
+					<div class="comment-textarea" style="display:none;">
+						<Input
+							v-model="value7"
+							type="textarea"
+							:rows=3
+							:maxlength=100
+							:autosize="true"
+							placeholder="请输入..."
+							disabled
+						></Input>
+						<Button type="default" class="publicBtn">发表评论</Button>
+					</div>
+				</div>
 			</Card>
 		</Col>
 		<Col
@@ -102,6 +134,7 @@
 			:lg="5"
 		>
 			<Card class="rt-card">
+				<p class="other-rate">雇主评分：<span><Rate show-text allow-half disabled v-model="valueDisabled"></Rate></span></p>
 				<p class="other-num">被预约：<span>1</span></p>
 				<p class="other-num">被收藏：<span>2</span></p>
 				<p class="other-info">可兼职时间<span class="span-ts">自由职业者，时间充裕</span></p>
@@ -118,7 +151,17 @@
 	export default({
 		data(){
 			return{
-				focusOn : false
+				focusOn : false,
+				valueDisabled : 4.2,
+				value7 : "",
+				comments:[
+						{
+							head : "./src/components/personal/Job/image/user.png",
+							name : "王鹏",
+							time : "2015-12-22 11:58",
+							content : "经验丰富，工作效率高，非常超值"
+						}
+				]
 			}
 		},
 		mounted(){
