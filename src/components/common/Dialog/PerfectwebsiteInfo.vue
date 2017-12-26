@@ -1,43 +1,8 @@
-<style lang="less" scoped>
-	.modalBox{
-        text-align: center;
-        .ivu-form-item{
-            width: 80%;
-        }
-        .ivu-input-group-prepend{
-            width: 20%;
-            .icon{
-                font-size: 16px;
-            }
-        }
-        .phone{
-            display: inline-block;
-            width: 39%!important;
-            margin-right: 0;
-        }
-        .send{
-            display: inline-block;
-            width: 20%!important;
-            margin-right: 0;
-            button{
-                width: 100%;
-                height: 32px;
-            }
-        }
-        .validate-code{
-            display: inline-block;
-            width: 20%!important;
-        }
-        .ivu-modal-footer{
-            button{
-                width: 45%;
-            }
-        }
-    }
-</style>
+
 <template>
 	<div>
 	    <Modal
+            :closable="false"
             :mask-closable="false"
 	        v-model="value1"
 	        title="这是您第一次发布用户需求，请先完善您的个人信息"
@@ -132,3 +97,40 @@
         }
     }
 </script>
+<style lang="less" scoped>
+    .modalBox{
+        text-align: center;
+        .ivu-form-item{
+            width: 80%;
+        }
+        .ivu-input-group-prepend{
+            width: 20%;
+            .icon{
+                font-size: 16px;
+            }
+        }
+        .phone{
+            display: inline-block;
+            width: 39%!important;
+            margin-right: 0;
+        }
+        .send{
+            display: inline-block;
+            width: 20%!important;
+            margin-right: 0;
+            button{
+                width: 100%;
+                height: 32px;
+            }
+        }
+        .validate-code{
+            display: inline-block;
+            width: 20%!important;
+        }
+        .ivu-modal-footer{
+            button{
+                width: 45%;
+            }
+        }
+    }
+</style>

@@ -43,7 +43,7 @@
         v-for= "(item, index) in btnInto.btnNum"
         :key= "index"
         :type="userClassFiy == '' ? btnInto.type[index] : fixBtn.type"
-        @click="switchClass(btnInto.name)"
+        @click="switchClass(btnInto.name[index])"
         class="affixBtn"
         style="right: 10px;"
       >
@@ -61,18 +61,18 @@
         btnInto  : {
           btnNum : 2,
           text : ["进入企业版", "进入个人版"],
-          type : ["success","primary"],
+          type : ["primary","success"],
           name : ["personal", "website"]
         },
 
         info: {
-            website : {
-              "type" : "success",
-              "text" : "切换到个人版"
-            },
             personal : {
+              "type" : "success",
+              "text" : "进入个人版"
+            },
+            website : {
               "type" : "primary",
-              "text" : "切换到企业版"
+              "text" : "进入企业版"
             }
         }
       }
@@ -97,8 +97,13 @@
           = this.userClassFiy
           = this.userClassFiy == '' ?
               name : this.userClassFiy == "website" ?
-                'personal' : 'website'
-      },
+                'personal' : 'website';
+
+          switch(this.$route.path){
+              case "/PersonalHome" : this.$router.push({'path':'/WebsiteHome'}); break;
+              case "/WebsiteHome" : this.$router.push({'path':'/PersonalHome'}); break;
+          }
+      }
     }
   }
 </script>

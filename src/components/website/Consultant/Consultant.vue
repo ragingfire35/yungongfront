@@ -42,7 +42,7 @@
   				</div>
 
 				<div class="artic jobClass">
-  					<p slot="title"><b>顾问角色</b></p>
+  					<p slot="title"><b>雇佣角色</b></p>
   					<p class="listBtn">
 						<Button
 							v-for="(item, index) in jobClass"
@@ -86,11 +86,11 @@
 					</div>
 				</div>
 
-				<div class="artic websiteGroup">
-  					<p slot="title"><b>知名企业</b></p>
+				<div class="artic level">
+  					<p slot="title"><b>雇佣级别</b></p>
   					<p class="listBtn">
 						<Button
-							v-for="(item, index) in websiteGroup"
+							v-for="(item, index) in level"
 							:key="index"
 							:type="index == websiteIndex ? 'primary' : 'text'"
 							@click="websiteIndex = index"
@@ -215,7 +215,7 @@
   				}
   			],
 
-  			websiteGroup: ["不限", "百度", "阿里", "腾讯", "新浪", "华为", "京东", "小米", "网易", "360"]
+  			level: ["不限", "初级", "中级", "高级", "专家", "高级顾问"]
   		}
   	},
     mounted(){

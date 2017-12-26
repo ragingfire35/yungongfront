@@ -52,46 +52,70 @@
 							:sm="{span: 4, pull: 0}"
 							:md="{span: 4, push: 4}"
 							:lg="{span: 4, push: 4}"
-							class="menu-personal"
 						>
-					        <Submenu name="6" :open-names="this.$route.path">
+					        <Submenu
+						        name="6"
+						        :open-names="this.$route.path"
+						        class="menu-personal"
+						        v-if="$store.state.is_login === true"
+					        >
 					            <template slot="title">
 					            	<img src="../../personal/Job/image/user.png" alt="">
 					            	<span>云工网之最</span>
 					            </template>
-					            <Menu-group title="使用" >
-					                <Menu-item name="/PartTime" v-if="$store.state.userClassify == 'website'">我要兼职</Menu-item>
-					                <Menu-item name="/PublicJob" v-else>我要雇佣</Menu-item>
+					            <div v-if="$store.state.userClassify !== ''">
+						            <Menu-group title="使用">
+						                <Menu-item name="/PartTime" v-if="$store.state.userClassify == 'website'">我要兼职</Menu-item>
+						                <Menu-item name="/PublicJob" v-else>我要雇佣</Menu-item>
 
-					                <Menu-item name="/PublicJob" v-if="$store.state.userClassify == 'website'">雇佣详情</Menu-item>
-					                <Menu-item name="/personalHome?name=personalPartTime" v-else>兼职详情</Menu-item>
-					            </Menu-group>
-					            <Menu-group title="个人">
+						                <Menu-item name="/personalHome?name=personalPartTime" v-if="$store.state.userClassify == 'website'">兼职详情</Menu-item>
+						            	<Menu-item name="/PublicJob" v-else>雇佣详情</Menu-item>
+						            </Menu-group>
+						            <Menu-group title="个人">
 
-					            	<Menu-item name="/Pay">
-					            		账户充值
-					            	</Menu-item>
-					            	<Menu-item name="/WebsiteHome" v-if="$store.state.userClassify == 'website'">
-					            		修改账户资料
-					            	</Menu-item>
+						            	<Menu-item name="/Pay">
+						            		账户充值
+						            	</Menu-item>
+						            	<Menu-item name="/WebsiteHome?name=websiteInfo" v-if="$store.state.userClassify == 'personal'">
+						            		修改账户资料
+						            	</Menu-item>
 
-					            	<Menu-item name="/PersonalHome?name=personalInfo" v-else-if="$store.state.userClassify == 'personal'">
-					            		修改账户资料
-					            	</Menu-item>
-					            	<Menu-item name="/PersonalHome?name=personalLevel" v-if="$store.state.userClassify == 'personal'">
-					            		职业等级
-					            	</Menu-item>
-					                <Menu-item name="/">退出</Menu-item>
-					            </Menu-group>
+						            	<Menu-item name="/PersonalHome?name=personalInfo" v-else>
+						            		修改账户资料
+						            	</Menu-item>
+						            	<Menu-item name="/PersonalHome?name=personalLevel" v-if="$store.state.userClassify == 'website'">
+						            		职业等级
+						            	</Menu-item>
+						                <Menu-item name="/">退出</Menu-item>
+						            </Menu-group>
+					            </div>
+								<div v-else>
+<!--  										<Button  @click.native="$store.state.userClassify = 'peronal'">进入个人版</Button>
+<Button @click.native="$store.state.userClassify = 'website'">进入企业版</Button> -->
+ 										<p style="color:#999;">选择一个版本进入</p>
+								</div>
 					        </Submenu>
+							<div class="loginBox" v-else>
+								<span class="login" @click="$store.state.show_loginUpBox = true">
+									账号注册
+								</span>
+								&nbsp;/&nbsp;
+								<span class="login" @click="$store.state.show_loginInBox = true">
+									登录
+								</span>
+							</div>
 				        </Col>
 				    </Menu>
 				</Row>
 			</Col>
 		</Row>
+	    <login-up/>
+		<login-in/>
 	</div>
 </template>
 <script>
+	import loginIn from "@/components/common/Dialog/loginIn.vue";
+	import loginUp from "@/components/common/Dialog/loginUp.vue";
 	export default({
 		name : "HomeHeader",
 
@@ -99,6 +123,10 @@
 			return{
 				active :  ""
 			}
+		},
+		components:{
+			loginIn : loginIn,
+			loginUp : loginUp
 		},
 		mounted(){
 			this.active = this.$route.path;

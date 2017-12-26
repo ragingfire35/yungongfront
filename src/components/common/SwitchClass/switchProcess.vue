@@ -34,7 +34,7 @@
 				 <i-button type="success" style="width:80%;">申请成为技术顾问</i-button>
 				</router-link>
 			</div>
-			<div class="situation-2" v-if="$store.state.userClassify == 'website'">
+			<div class="situation-2" v-if="$store.state.userClassify == 'personal'">
 				<p>我是创业者<br/>我在寻找技术人才</p>
 				<router-link to="/PublicJob">
 					<i-button type="primary" style="width:80%;">发布用人需求</i-button>

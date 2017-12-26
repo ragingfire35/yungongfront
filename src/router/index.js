@@ -79,13 +79,21 @@ const routes = [
               name: 'PersonalHome',
               component: (resolve) => require(['@/components/personal/PersonalHome/PersonalHome.vue'], resolve),
               meta : {
-                title : "PersonalInfo"
+                title : "PersonalHome"
+              }
+            },
+            {
+              path: '/WebsiteHome',
+              name: 'WebsiteHome',
+              component: (resolve) => require(['@/components/website/WebsiteHome/WebsiteHome.vue'], resolve),
+              meta : {
+                title : "WebsiteHome"
               }
             },
             {
               path: '/Pay',
               name: 'Pay',
-              component: (resolve) => require(['@/components/PersonalPay/Pay.vue'], resolve),
+              component: (resolve) => require(['@/components/Pay/Pay.vue'], resolve),
               meta : {
                 title : "Pay"
               }

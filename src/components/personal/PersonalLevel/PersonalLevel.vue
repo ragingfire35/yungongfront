@@ -1,7 +1,6 @@
 <style lang="less" >
 	.level{
 		background: #fff;
-		height: 3000px;
 	}
 	.sliderBar{
 		width: 80%;

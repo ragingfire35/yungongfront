@@ -112,16 +112,15 @@
             <i-button type="primary" @click="next" :disabled="sendXM === '' ? false : true">下一步</i-button>
         </Form>
         <Form class="form-steps" label-position="top" v-if="current == 4">
-                <Button
-                    :type="pay === true ? 'default' : pay === '' ? 'success' : 'warning'"
-                    long
-                    size="large"
-                    @click="pay = true, $router.push({'path': '/PersonalPay'})"
-                    v-html="pay === true ? '付款中...' : pay === '' ? '交易完成' : '去付款'"
-                    :disabled="pay === true ? true : false"
-                >
-                </Button>
-
+            <Button
+                :type="pay === true ? 'default' : pay === '' ? 'success' : 'warning'"
+                long
+                size="large"
+                @click="pay = true, $router.push({'path': '/Pay'})"
+                v-html="pay === true ? '付款中...' : pay === '' ? '交易完成' : '去付款'"
+                :disabled="pay === true ? true : false"
+            >
+            </Button>
         </Form>
         <i-button type="primary" v-if="current !== 0" @click="prev">上一步</i-button>
 

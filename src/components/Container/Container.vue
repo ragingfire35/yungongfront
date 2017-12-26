@@ -7,20 +7,13 @@
 </style>
 <template>
 	<div class="container">
+    <Button @click="$store.state.is_login = !$store.state.is_login">
+      临时切换登录状态
+    </Button>
     <header-common/>
 		<router-view></router-view>
-    <switch-class/>
+    <switch-class v-if="$store.state.is_login === true"></switch-class>
     <home-footer/>
-    <div>
-      <p>{{count}}</p>
-      <p>
-        <button @click="increment">+</button>
-        <button @click="decrement">-</button>
-      </p>
-      <small>
-        Check out your cookies to see the updates.
-      </small>
-    </div>
 	</div>
 </template>
 <script>
@@ -37,19 +30,6 @@
        HeaderCommon : HeaderCommon,
        SwitchClass : SwitchClass,
        HomeFooter : HomeFooter
-    },
-    methods:{
-      increment() {
-         this.$store.commit('increment');
-      },
-      decrement() {
-         this.$store.commit('decrement');
-      }
-    },
-    computed: {
-      count() {
-        return this.$store.state.count;
-      }
-    },
+    }
   }
 </script>

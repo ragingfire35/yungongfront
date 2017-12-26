@@ -1,32 +1,8 @@
-<style lang="less" scoped>
-	.modalBox{
-        text-align: center;
-        .ivu-form-item{
-        	width: 80%!important;
-        }
-        .ivu-input-group-prepend{
-            width: 20%;
-        }
-        .ivu-input{
-            width: 100%;
-        }
-        .ivu-icon{
-			font-size: 16px;
-        }
-        .phone{
 
-        }
-
-        .ivu-modal-footer{
-            button{
-                width: 45%;
-            }
-        }
-    }
-</style>
 <template>
 	<div>
 	    <Modal
+            :closable="false"
             :mask-closable="false"
 	        v-model="value1"
 	        title="这是您第一次申请兼职，请先完善您的个人信息"
@@ -120,3 +96,29 @@
         }
     }
 </script>
+<style lang="less" scoped>
+    .modalBox{
+        text-align: center;
+        .ivu-form-item{
+            width: 80%!important;
+        }
+        .ivu-input-group-prepend{
+            width: 20%;
+        }
+        .ivu-input{
+            width: 100%;
+        }
+        .ivu-icon{
+            font-size: 16px;
+        }
+        .phone{
+
+        }
+
+        .ivu-modal-footer{
+            button{
+                width: 45%;
+            }
+        }
+    }
+</style>
