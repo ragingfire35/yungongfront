@@ -66,13 +66,15 @@
         },
 
         info: {
-            personal : {
-              "type" : "success",
-              "text" : "进入个人版"
-            },
             website : {
+              "type" : "success",
+              "text" : "进入个人版",
+              "text1" : "当前版本：企业版"
+            },
+            personal : {
               "type" : "primary",
-              "text" : "进入企业版"
+              "text" : "进入企业版",
+              "text1" : "当前版本：个人版"
             }
         }
       }
@@ -82,17 +84,24 @@
         this.fixBtn
         = name
         == "website" ?
-        this.info.website : this.info.personal;
+        this.info.personal : this.info.website;
+
+        this.$Notice.success({
+            title: this.fixBtn.text1,
+            duration : 1,
+            key: 'aa'
+        });
       }
     },
     mounted(){
       this.fixBtn
       = this.userClassFiy
       == "website"?
-      this.info.website : this.info.personal;
+      this.info.personal : this.info.website;
     },
     methods:{
       switchClass(name){
+
           this.$store.state.userClassify
           = this.userClassFiy
           = this.userClassFiy == '' ?

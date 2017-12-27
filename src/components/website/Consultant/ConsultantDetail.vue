@@ -140,7 +140,7 @@
 				<p class="other-info">可兼职时间<span class="span-ts">自由职业者，时间充裕</span></p>
 				<p class="other-info">可兼职地点：<span>西湖</span></p>
 
-				<Button type="primary" long class="yuyue">
+				<Button type="primary" long class="yuyue" @click="$router.push({'path': '/GetTalent'})">
 					立即预约
 				</Button>
 			</Card>

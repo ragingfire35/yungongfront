@@ -43,6 +43,14 @@ const routes = [
               }
             },
             {
+              path: '/GetTalent',
+              name: 'GetTalent',
+              component: (resolve) => require(['@/components/website/Consultant/GetTalent.vue'], resolve),
+              meta : {
+                title : "GetTalent"
+              }
+            },
+            {
               path: '/Job',
               name: 'Job',
               component: (resolve) => require(['@/components/personal/Job/Job.vue'], resolve),

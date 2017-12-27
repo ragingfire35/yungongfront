@@ -1,28 +1,80 @@
+<style lang="less">
+	.userHead{
+		width: 100px;
+		height: 100px;
+		display: block;
+		border-radius: 50%;
+		border: 1px solid #ccc;
+		margin: 30px auto;
+
+	}
+	.vue-image-crop-upload{
+		.vicp-wrap{
+			width: 100%!important;
+			height: 80%!important;
+		}
+		.vicp-step1{
+			margin-top: 10%;
+		}
+		.vicp-crop{
+			text-align: center;
+			.vicp-crop-left{
+				float: none!important;
+				.vicp-img-container,
+				.vicp-range,
+				.vicp-rotate
+				{
+					margin: 15px auto!important;
+				}
+			}
+			.vicp-crop-right{
+				float: none!important;
+				display: inline-block!important;
+			}
+		}
+		.vicp-operate{
+			width: 30%;
+			left: 0;
+			right: 0!important;
+			margin: 0 auto;
+			text-align: center;
+			&>a{
+				float: none!important;
+				display: inline-block!important;
+			}
+		}
+	}
+
+</style>
 <template>
-	<div id="app">
-		<a class="btn" @click="toggleShow">设置头像</a>
-		<my-upload field="img"
+	<div id="crppper">
+		<img :src="imgDataUrl || './src/components/personal/Job/image/user.png'" class="userHead">
+		<Button class="btn" @click="toggleShow">点击设置头像</Button>
+		<my-upload
+			v-if="show === true"
+			field="img"
 	        @crop-success="cropSuccess"
 	        @crop-upload-success="cropUploadSuccess"
 	        @crop-upload-fail="cropUploadFail"
 	        v-model="show"
 			:width="300"
 			:height="300"
-			url="/upload"
+			url=""
 			:params="params"
 			:headers="headers"
+			:noRotate="false"
 			img-format="png"></my-upload>
-		<img :src="imgDataUrl">
+		
 	</div>
-</template>
-
+</template
+>
 
 <script>
 	import myUpload from 'vue-image-crop-upload';
 	export default({
 		data() {
 			return{
-				show: true,
+				show: false,
 				params: {
 					token: '123456798',
 					name: 'avatar'

@@ -154,7 +154,7 @@
 									<span>海淀</span>
 								</li>
 							</ol>
-							<Button type="success">立即预约</Button>
+							<Button type="success" @click="$router.push({'path': '/GetTalent'})">立即预约</Button>
 						</div>
 					</Col>
 				</Row>

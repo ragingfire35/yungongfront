@@ -24,14 +24,6 @@
 	            <Input v-model="formValidate.weixinNum" placeholder="仅用于运营人员联系您"></Input>
 	        </Form-item>
 	        <Form-item label="头像" prop="userImg">
-<!-- 				<Upload
-			        type="drag"
-			        action="//jsonplaceholder.typicode.com/posts/">
-			        <div style="padding: 20px 0">
-			            <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-			            <p>点击或将文件拖拽到这里上传</p>
-			        </div>
-			    </Upload> -->
 			    <crpopper/>
 	        </Form-item>
 			<Form-item>
@@ -41,7 +33,6 @@
 	</Card>
 </template>
 <script>
-	//import crpopper from 'crpopper.vue';
 	import crpopper from '@/components/personal/PersonalInfo/crpopper.vue';
 	export default({
 		data(){
