@@ -7,7 +7,6 @@ import '../static/my-theme/index.less';
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
-
 new Vue({
     el: '#app',
     router: router,

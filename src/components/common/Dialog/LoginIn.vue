@@ -86,8 +86,7 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('提交成功!');
-
+                        this.loginIn();
                     } else {
                         this.$Message.error('表单验证失败!');
                     }
@@ -101,6 +100,44 @@
             },
             cancel () {
                 this.handleReset("formInline");
+            },
+            bcrypt () {
+               let bcrypt = require('bcryptjs');    //引入bcryptjs库
+               let salt = bcrypt.genSaltSync(12);    //定义密码加密的计算强度,默认10
+               let hash = bcrypt.hashSync(this.formInline.passwd, salt);    //把自己的密码(this.formInline.passWord)带进去,变量hash就是加密后的密码
+               return {hash, bcrypt};
+            },
+            loginIn() {
+                const _this = this;
+                const pass = _this.bcrypt();
+                _this.qs = require('querystring')
+                 _this.$ajax.post(
+                    'api/loginIn.php',
+                    _this.qs.stringify({"username": _this.formInline.user, "pass" : pass.hash })
+                ).then((response) => {
+                    if(response.data.status == "nameerror"){
+                        _this.$Message.error(response.data.msg)
+                    } else{
+                        if( pass.bcrypt.compareSync(_this.formInline.passwd, pass.hash) ){
+                             //若是密码相同则返回true
+                             //this.formInline.passWord为用户输入的密码,hash为后台返回的密码
+                              _this.checkLoginin();
+                        } else {
+                              _this.$Message.error("密码输入不正确");
+                        }
+                    }
+                })
+            },
+            checkLoginin (){
+                this.$ajax.post(
+                    'api/CheckLogin.php',
+                    this.qs.stringify({"username": this.formInline.user, "checkLogin" : "1" })
+                ).then((response) => {
+                    if(response.data.status == "success"){
+                        this.$Message.success(response.data.msg);
+                        this.$store.state.show_loginInBox = false;
+                    }
+                })
             }
         }
     }

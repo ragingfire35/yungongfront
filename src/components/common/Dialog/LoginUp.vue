@@ -68,10 +68,12 @@
                         { type: 'string', max: 10, message: '用户名不能多于10字符', trigger: 'blur' }
                     ],
                     passwd: [
-                        { validator: validatePass, trigger: 'blur' }
+                        { validator: validatePass, trigger: 'blur' },
+                        { type: 'string', min: 6, message: '密码不能少于6字符', trigger: 'blur' }
                     ],
                     passwdCheck: [
-                        { validator: validatePassCheck, trigger: 'blur' }
+                        { validator: validatePassCheck, trigger: 'blur' },
+                        { type: 'string', min: 6, message: '密码不能少于6字符', trigger: 'blur' }
                     ]
                 }
             }
@@ -82,8 +84,7 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('提交成功!');
-
+                        this.loginUp();
                     } else {
                         this.$Message.error('表单验证失败!');
                     }
@@ -97,6 +98,27 @@
             },
             cancel () {
                 this.handleReset("formInline");
+            },
+            bcrypt () {
+                var bcrypt = require('bcryptjs');    //引入bcryptjs库
+                var salt = bcrypt.genSaltSync(12);    //定义密码加密的计算强度,默认10
+                var hash = bcrypt.hashSync(this.formInline.passwd, salt);    //把自己的密码(this.formInline.passWord)带进去,变量hash就是加密后的密码
+                return hash;
+            },
+            loginUp() {
+                const _this = this;
+                var qs = require('querystring');
+                 _this.$ajax.post(
+                    'api/loginUp.php',
+                    qs.stringify({"username": _this.formInline.user, "pass" : _this.bcrypt() })
+                ).then((response) => {
+                    if(response.data.status == "repeat"){
+                        _this.$Message.error(response.data.msg)
+                    } else{
+                        _this.$Message.success(response.data.msg);
+                        _this.$store.state.show_loginUpBox = false;
+                    }
+                })
             }
         }
     }
