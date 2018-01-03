@@ -1,4 +1,22 @@
-
+<style lang="less" scoped>
+    .modalBox{
+        text-align: center;
+        .ivu-form-item{
+            width: 80%;
+        }
+        .ivu-input-group-prepend{
+            width: 20%;
+            .icon{
+                font-size: 16px;
+            }
+        }
+        .ivu-modal-footer{
+            button{
+                width: 45%;
+            }
+        }
+    }
+</style>
 <template>
 	<div>
 	    <Modal
@@ -123,22 +141,3 @@
         }
     }
 </script>
-<style lang="less" scoped>
-    .modalBox{
-        text-align: center;
-        .ivu-form-item{
-            width: 80%;
-        }
-        .ivu-input-group-prepend{
-            width: 20%;
-            .icon{
-                font-size: 16px;
-            }
-        }
-        .ivu-modal-footer{
-            button{
-                width: 45%;
-            }
-        }
-    }
-</style>

@@ -11,7 +11,7 @@
 				:lg="{span: 2, pull: 1}"
 				class="logo"
 			>
-				<router-link to="/">
+				<router-link :to="$store.state.is_login==='true' ? '/Consultant' : '/'" >
 					<div class="logoInner">
 						<img width="70%" alt="云工网" title="云工网" src="./image/logo.png">
 						<span>云工网</span>
@@ -21,7 +21,7 @@
 			<Col :xs="24" :sm="20" :md="18" :lg="18">
 				<Row type="flex" justify="center" align="middle" class="nav-menu">
 
-				    <Menu mode="horizontal" theme="primary" :active-name="active" @on-select="locaHref">
+				    <Menu mode="horizontal" theme="primary" :active-name="$route.path" @on-select="locaHref">
 				    	<Col :xs="24" :sm="4" :md="4" :lg="3">
 					        <Menu-item name="/Consultant">
 					            我要雇佣
@@ -57,18 +57,18 @@
 						        name="6"
 						        :open-names="this.$route.path"
 						        class="menu-personal"
-						        v-if="$store.state.is_login === true"
+						        v-if="$store.state.is_login === 'true'"
 					        >
 					            <template slot="title">
-					            	<img src="../../personal/Job/image/user.png" alt="">
-					            	<span>云工网之最</span>
+					            	<img :src="this.$store.state.LoginedUser.userhead" alt="">
+					            	<span>{{this.$store.state.LoginedUser.username}}</span>
 					            </template>
-					            <div v-if="$store.state.userClassify !== ''">
+					            <div v-if="$store.state.userClassify.userClass">
 						            <Menu-group title="使用">
-						                <Menu-item name="/PartTime" v-if="$store.state.userClassify == 'website'">我要兼职</Menu-item>
+						                <Menu-item name="/PartTime" v-if="$store.state.userClassify.userClass == 'personal'">我要兼职</Menu-item>
 						                <Menu-item name="/PublicJob" v-else>我要雇佣</Menu-item>
 
-						                <Menu-item name="/personalHome?name=personalPartTime" v-if="$store.state.userClassify == 'website'">兼职详情</Menu-item>
+						                <Menu-item name="/personalHome?name=personalPartTime" v-if="$store.state.userClassify.userClass == 'personal'">兼职详情</Menu-item>
 						            	<Menu-item name="/PublicJob" v-else>雇佣详情</Menu-item>
 						            </Menu-group>
 						            <Menu-group title="个人">
@@ -76,23 +76,21 @@
 						            	<Menu-item name="/Pay">
 						            		账户充值
 						            	</Menu-item>
-						            	<Menu-item name="/WebsiteHome?name=websiteInfo" v-if="$store.state.userClassify == 'personal'">
+						            	<Menu-item name="/WebsiteHome?name=websiteInfo" v-if="$store.state.userClassify.userClass == 'website'">
 						            		修改账户资料
 						            	</Menu-item>
 
 						            	<Menu-item name="/PersonalHome?name=personalInfo" v-else>
 						            		修改账户资料
 						            	</Menu-item>
-						            	<Menu-item name="/PersonalHome?name=personalLevel" v-if="$store.state.userClassify == 'website'">
+						            	<Menu-item name="/PersonalHome?name=personalLevel" v-if="$store.state.userClassify.userClass == 'personal'">
 						            		职业等级
 						            	</Menu-item>
-						                <Menu-item name="/">退出</Menu-item>
+						                <Menu-item name="/" @click.native=" loginOut">退出</Menu-item>
 						            </Menu-group>
 					            </div>
 								<div v-else>
-<!--  										<Button  @click.native="$store.state.userClassify = 'peronal'">进入个人版</Button>
-<Button @click.native="$store.state.userClassify = 'website'">进入企业版</Button> -->
- 										<p style="color:#999;">选择一个版本进入</p>
+ 									<p style="color:#999;">选择一个版本进入</p>
 								</div>
 					        </Submenu>
 							<div class="loginBox" v-else>
@@ -121,19 +119,34 @@
 
 		data(){
 			return{
-				active :  ""
 			}
+		},
+		watch:{
+
 		},
 		components:{
 			loginIn : loginIn,
 			loginUp : loginUp
 		},
 		mounted(){
-			this.active = this.$route.path;
+
 		},
 		methods:{
 			locaHref(name){
+				if (name == '/') return;
 				this.$router.push({"path" : name});
+			},
+			loginOut(){
+				let _this = this;
+				_this.qs = require('querystring');
+	            _this.$ajax.post(
+	                'api/CheckLogin.php',
+	                _this.qs.stringify({"username": _this.$store.state.LoginedUser.username, "checkLogin" : "0" })
+	            ).then((response) => {
+	                if(response.data.status == "success"){
+						_this.$store.dispatch('logout');
+	                }
+	            })
 			}
 		}
 	})

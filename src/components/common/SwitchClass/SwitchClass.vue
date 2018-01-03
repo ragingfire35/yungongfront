@@ -1,5 +1,5 @@
 <style lang="less" scope>
-  .affixBtn{
+  .afnowBtn{
     width: 40px;
     height: auto;
     position: fixed;
@@ -19,7 +19,7 @@
     }
   }
   @media (max-width: 768px){
-    .affixBtn{
+    .afnowBtn{
       background: transparent;
       color: #000;
       border-top: 0;
@@ -40,14 +40,14 @@
 <template>
 	<div>
       <Button
-        v-for= "(item, index) in btnInto.btnNum"
+        v-for= "(item, index) in btnInto.name"
         :key= "index"
-        :type="userClassFiy == '' ? btnInto.type[index] : fixBtn.type"
+        :type="nowBtn && nowBtn.type || btnInto.type[index]"
         @click="switchClass(btnInto.name[index])"
-        class="affixBtn"
+        class="afnowBtn"
         style="right: 10px;"
       >
-      {{userClassFiy == '' ? btnInto.text[index] : fixBtn.text}}
+      {{ nowBtn && nowBtn.text || btnInto.text[index]}}
       </Button>
 	</div>
 </template>
@@ -56,63 +56,60 @@
   export default {
     data(){
       return{
-        userClassFiy : this.$store.state.userClassify,
-        fixBtn : "",
+        userClassify : "",//'string'
+        nowBtn : JSON.parse(sessionStorage.getItem('userClassify') || '[]') || null, /*personal or website : {"type" : "","text" : "","text1" : "" }*/
         btnInto  : {
-          btnNum : 2,
           text : ["进入企业版", "进入个人版"],
           type : ["primary","success"],
           name : ["personal", "website"]
-        },
-
-        info: {
-            website : {
-              "type" : "success",
-              "text" : "进入个人版",
-              "text1" : "当前版本：企业版"
-            },
-            personal : {
-              "type" : "primary",
-              "text" : "进入企业版",
-              "text1" : "当前版本：个人版"
-            }
         }
       }
     },
     watch:{
-      userClassFiy(name){
-        this.fixBtn
-        = name
-        == "website" ?
-        this.info.personal : this.info.website;
 
-        this.$Notice.success({
-            title: this.fixBtn.text1,
-            duration : 1,
-            key: 'aa'
-        });
-      }
     },
     mounted(){
-      this.fixBtn
-      = this.userClassFiy
-      == "website"?
-      this.info.personal : this.info.website;
+      let t = this.$store.state.userClassify.text1;
+      switch (t){
+        case undefined :
+              this.$Notice.warning({
+                  title: "选择一个版本进入",
+                  duration : 1,
+                  key: 'bb'
+              });
+              break;
+        default :
+              this.$Notice.success({
+                  title: t,
+                  duration : 1,
+                  key: 'cc'
+              });
+      }
+
     },
     methods:{
       switchClass(name){
-
-          this.$store.state.userClassify
-          = this.userClassFiy
-          = this.userClassFiy == '' ?
-              name : this.userClassFiy == "website" ?
-                'personal' : 'website';
-
-          switch(this.$route.path){
-              case "/PersonalHome" : this.$router.push({'path':'/WebsiteHome'}); break;
-              case "/WebsiteHome" : this.$router.push({'path':'/PersonalHome'}); break;
+          switch(this.$store.state.userClassify.userClass || name){
+              case "personal" :
+                  if (this.$route.path == "/PersonalHome")
+                    this.$router.push({'path':'/WebsiteHome?name=personalInfo'});
+                  this.userClassify = 'website';
+                  break;
+              case "website" :
+                  if (this.$route.path == "/WebsiteHome")
+                    this.$router.push({'path':'/PersonalHome?name=personalInfo'});
+                  this.userClassify = 'personal';
+                  break;
           }
+          this.$store.dispatch('userClassify', this.userClassify);
+          this.nowBtn = JSON.parse(sessionStorage.getItem('userClassify'));
+          this.$Notice.success({
+              title: this.nowBtn.text1,
+              duration : 1,
+              key: 'aa'
+          });
       }
+
     }
   }
 </script>

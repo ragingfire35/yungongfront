@@ -27,11 +27,19 @@
         }
     }
 </style>
+<style lang="less">
+.scLogin{
+    .ivu-modal-mask{
+        background-color: rgba(51, 51, 51, 1);
+    }
+}
+
+</style>
 <template>
     <div>
         <Modal
-            v-model="isLogin"
-            :closable="true"
+            v-model="$store.state.is_login === 'true'"
+            :closable="false"
             :mask-closable="false"
             class="scLogin"
         >
@@ -40,8 +48,8 @@
                &nbsp;登录成功
             </div>
             <div slot="footer">
-                <Button type="primary" class="webisteBtn" size="large" @click="webiste">进入企业版</Button>
-                <Button type="success" class="personalBtn" size="large" @click="personal">进入个人版</Button>
+                <Button type="primary" class="webisteBtn" size="large" @click="webisteFn">进入企业版</Button>
+                <Button type="success" class="personalBtn" size="large" @click="personalFn">进入个人版</Button>
             </div>
         </Modal>
     </div>
@@ -50,21 +58,19 @@
     export default {
         data () {
             return {
-                isLogin : false
-                //
+
             }
         },
         mounted(){
-            this.isLogin = this.$store.state.is_login
         },
 
         methods:{
-            webiste () {
-                this.$store.state.userClassify = "website";
+            webisteFn () {
+                this.$store.dispatch("userClassify", 'website');
                 this.$router.push({"path" : "/Consultant"});
             },
-            personal () {
-                this.$store.state.userClassify = "personal";
+            personalFn () {
+                this.$store.dispatch("userClassify", 'personal');
                 this.$router.push({"path" : "/Job"});
             }
         }

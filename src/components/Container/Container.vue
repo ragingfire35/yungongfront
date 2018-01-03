@@ -7,12 +7,9 @@
 </style>
 <template>
 	<div class="container">
-    <Button @click="$store.state.is_login = !$store.state.is_login">
-      临时切换登录状态
-    </Button>
     <header-common/>
 		<router-view></router-view>
-    <switch-class v-if="$store.state.is_login === true"></switch-class>
+    <switch-class v-if="$store.state.is_login === 'true'"></switch-class>
     <home-footer/>
 	</div>
 </template>

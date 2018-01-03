@@ -48,7 +48,7 @@
 </style>
 <template>
 	<div id="crppper">
-		<img :src="imgDataUrl || './src/components/personal/Job/image/user.png'" class="userHead">
+		<img :src="imgDataUrl" class="userHead">
 		<Button class="btn" @click="toggleShow">点击设置头像</Button>
 		<my-upload
 			v-if="show === true"
@@ -57,14 +57,13 @@
 	        @crop-upload-success="cropUploadSuccess"
 	        @crop-upload-fail="cropUploadFail"
 	        v-model="show"
-			:width="300"
-			:height="300"
+			:width="100"
+			:height="100"
 			url=""
 			:params="params"
 			:headers="headers"
 			:noRotate="false"
 			img-format="png"></my-upload>
-		
 	</div>
 </template
 >
@@ -82,11 +81,13 @@
 				headers: {
 					smail: '*_~'
 				},
-				imgDataUrl: '' // the datebase64 url of created image
+				imgDataUrl: this.$store.state.LoginedUser.userhead // the datebase64 url of created image
 			}
 		},
 		components: {
 			'my-upload': myUpload
+		},
+		watch:{
 		},
 		methods: {
 			toggleShow() {

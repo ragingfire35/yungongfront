@@ -17,14 +17,14 @@
 <template>
 	<Card class="info bt0"  dis-hover>
 		<Form label-position="top" ref="formValidate" :model="formValidate" :rules="ruleValidate" >
-	        <Form-item label="昵称" prop="name">
+	        <Form-item label="用户登录名" prop="name">
 	            <Input v-model="formValidate.name" placeholder="请输入姓名"></Input>
 	        </Form-item>
 	        <Form-item label="微信号" prop="weixinNum">
 	            <Input v-model="formValidate.weixinNum" placeholder="仅用于运营人员联系您"></Input>
 	        </Form-item>
-	        <Form-item label="头像" prop="userImg">
-			    <crpopper/>
+	        <Form-item label="头像" prop="userhead">
+			   <crpopper ref="crpopper" ></crpopper>
 	        </Form-item>
 			<Form-item>
 	            <Button type="success" @click="handleSubmit('formValidate')">保存修改</Button>
@@ -38,13 +38,14 @@
 		data(){
 			return{
                 formValidate: {
-                    name: '',
-                    weixinNum: '',
-/*                    userImg: ''*/
+                    name: this.$store.state.LoginedUser.username,
+                    weixinNum: this.$store.state.LoginedUser.weixinNum,
+                    userhead: this.$store.state.LoginedUser.userhead
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: '姓名不能为空', trigger: 'blur' }
+                        { required: true, message: '用户登录名不能为空', trigger: 'blur' },
+                        { type: 'string', max: 7, message: '用户名不能多于6字符', trigger: 'blur' }
                     ],
                     weixinNum: [
                         { required: true, message: '请输入微信号', trigger: 'blur' },
@@ -53,20 +54,47 @@
                 }
 			}
 		},
+		created(){
+		},
 		mounted(){
-
 		},
 		components:{
 			crpopper : crpopper
 		},
 		methods:{
-     		 handleSubmit (name) {
+     		handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('提交成功!');
+                        this.savePersonalInfo();
                     } else {
                         this.$Message.error('表单验证失败!');
                     }
+                })
+            },
+            savePersonalInfo (){
+            	var _this = this;
+                var qs = require('querystring');
+                 _this.$ajax.post(
+                    'api/common/personalInfo.php',
+                    qs.stringify(
+                    	{
+                    		"username": _this.formValidate.name,
+                    		"weixinNum" : _this.formValidate.weixinNum,
+                    		"userhead" : _this.$refs.crpopper.imgDataUrl
+                    	}
+                    )
+                ).then((response) => {
+                    if(response.data.code == 1){
+                        if(response.data.status == 'success'){
+                            this.$store.dispatch("username", response.data.userinfo.username);
+                            this.$store.dispatch("userhead", response.data.userinfo.userhead);
+                            this.$store.dispatch("weixinNum", response.data.userinfo.weixinNum);
+                            this.$Message.success(response.data.msg);
+                        }
+                    } else {
+                         this.$Message.error(response.data.msg);
+                    }
+
                 })
             }
 		}

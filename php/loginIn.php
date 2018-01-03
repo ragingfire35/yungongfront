@@ -2,12 +2,9 @@
     /**
      ** lohin in
     **/
-    @header("content-type:text/html;charset=utf8");
-    $conne = mysqli_connect("localhost","root","yungong") or die("数据库用户名或密码错误".@mysqli_error());
-    $select = mysqli_select_db($conne,"yungong") or die("数据库用户名或密码错误".@mysqli_error());
-    $utf = mysqli_query($conne,"set names utf8");
+    require_once 'common/connectvars.php';
+
     $username= $_REQUEST['username'];
-    $pass = $_REQUEST['pass'];
     $sqlname = mysqli_query($conne, "select count(*) from user where username= '$username'");
     $row = mysqli_fetch_row($sqlname);
     $num = $row[0];
@@ -19,7 +16,7 @@
         $sqlpass = mysqli_query($conne, "select pass from user where username='$username'");//返回一个句柄；
         $passarray = mysqli_fetch_row($sqlpass);//获得一个只有一行数据的数族
         $passval = $passarray[0];//这里才是对应用户的密码
-        $isPass = array('code' => 1, 'pass' => $pass);
+        $isPass = array('code' => 1, 'pass' => $passval);
         echo json_encode($isPass);
         //判断该用户的密码是否正确
 /*        if($passval!=$pass){

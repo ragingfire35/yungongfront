@@ -70,7 +70,10 @@
 		},
 		methods:{
 			info(name){
-				this.$router.push({path:'/personalHome', query: {name:name}})
+				if(this.$route.query.name ){
+					console.log(1)
+				}
+				this.$router.push({path:'/PersonalHome', query: {name:name}})
 			}
 		}
 	})
