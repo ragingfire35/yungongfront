@@ -6,7 +6,7 @@
             :mask-closable="false"
 	        v-model="value1"
 	        title="这是您第一次发布用户需求，请先完善您的个人信息"
-            class="modalBox"
+            class="modalBox2"
         >
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
                 <Form-item prop="user">
@@ -98,7 +98,7 @@
     }
 </script>
 <style lang="less" scoped>
-    .modalBox{
+    .modalBox2{
         text-align: center;
         .ivu-form-item{
             width: 80%;

@@ -84,6 +84,7 @@
                   duration : 1,
                   key: 'cc'
               });
+              break;
       }
 
     },

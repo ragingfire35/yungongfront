@@ -36,18 +36,6 @@
 <script>
     export default {
         data () {
-            const validatePhone = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入手机号'));
-                } else {
-                    if (!/^1[3|4|5|7|8][0-9]{9}$/.test(value)) {
-                        callback(new Error('手机号输入不正确'));
-                    } else{
-                         this.isPhoneRule = false;
-                    }
-                    callback();
-                }
-            };
             return {
             	value1 : true,
             	isPhoneRule : true,
@@ -58,10 +46,12 @@
                 },
                 ruleInline: {
                     user: [
-                        { required: true, message: '请填写用户名', trigger: 'blur' }
+                        { required: true, pattern: '[\u4e00-\u9fa5]', message: '请填写真实姓名', trigger: 'blur' },
+                        { type:'string',  min: 2, message: '姓名不能少于俩个字符', trigger: 'blur' }
                     ],
                     phone: [
-                        { validator: validatePhone, trigger: 'blur' }
+                        { required: true, type:'number', message: '手机号不能为空', trigger: 'blur' },
+                        { pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号输入不正确', trigger: 'blur' }
                     ],
                     mail: [
                         { required: true, message: '邮箱不能为空', trigger: 'blur' },

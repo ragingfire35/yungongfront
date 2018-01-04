@@ -1,17 +1,4 @@
 <style lang="less" scoped>
-	.info{
-		h2{
-			margin-bottom:30px;
-			font-weight: normal;
-			font-size: 18px;
-		}
-
-	}
-	@media (max-width: 768px){
-		.info{
-			width: 100%;
-		}
-	}
 	.demo-upload-list {
 	    display: inline-block;
 	    width: 48%;
@@ -66,6 +53,20 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 	    right: 0;
 	    margin: auto;
 	}
+	.info{
+		h2{
+			margin-bottom:30px;
+			font-weight: normal;
+			font-size: 18px;
+		}
+
+	}
+	@media (max-width: 768px){
+		.info{
+			width: 100%;
+		}
+	}
+
 	.uploadBox{
 		clear:left;
 	}
@@ -97,7 +98,7 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 			        type="drag"
 			        accept="image/jpg, image/jpeg, image/png"
 			        :format="['jpg', 'jpeg', 'png']"
-			        action="//jsonplaceholder.typicode.com/posts/"
+			        action=""
 			        :on-format-error="handleFormatError"
 			        :on-exceeded-size="handleMaxSize"
 			        :before-upload="handleBeforeUpload"

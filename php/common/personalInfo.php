@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 	session_start();
-    if (!isset( $_SESSION['checkLogin'])) {
+/*    if (!isset( $_SESSION['checkLogin'])) {
     	$error = array('code' => 0, 'status' => 'error', 'msg' => '请先登录');
     	echo json_encode($error);
     	return;
-    };
+    };*/
 	require_once 'connectvars.php';
 	$username= $_REQUEST['username'];
 	$userid = $_SESSION['userid'];

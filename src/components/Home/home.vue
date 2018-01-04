@@ -388,7 +388,7 @@
 	</div>
 </template>
 <script>
-  import HomeHeader from "@/components/common/Header/Header-Home.vue";
+   import HomeHeader from "@/components/common/Header/Header-Home.vue";
    import HomeFooter from "@/components/common/Footer/Footer-Home.vue";
   export default {
     data(){
