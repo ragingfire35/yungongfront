@@ -20,9 +20,6 @@
 	        <Form-item label="用户登录名" prop="name">
 	            <Input v-model="formValidate.name" placeholder="请输入姓名"></Input>
 	        </Form-item>
-	        <Form-item label="微信号" prop="weixinNum">
-	            <Input v-model="formValidate.weixinNum" placeholder="仅用于运营人员联系您"></Input>
-	        </Form-item>
 	        <Form-item label="头像" prop="userhead">
 			   <crpopper ref="crpopper" ></crpopper>
 	        </Form-item>
@@ -39,17 +36,12 @@
 			return{
                 formValidate: {
                     name: this.$store.state.LoginedUser.username,
-                    weixinNum: this.$store.state.LoginedUser.weixinNum,
                     userhead: this.$store.state.LoginedUser.userhead
                 },
                 ruleValidate: {
                     name: [
                         { required: true, message: '用户登录名不能为空', trigger: 'blur' },
                         { type: 'string', max: 7, message: '用户名不能多于6字符', trigger: 'blur' }
-                    ],
-                    weixinNum: [
-                        { required: true, message: '请输入微信号', trigger: 'blur' },
-                        { type: 'string', min: 6, message: '微信号少于6字符', trigger: 'blur' }
                     ]
                 }
 			}
@@ -79,7 +71,6 @@
                     qs.stringify(
                     	{
                     		"username": _this.formValidate.name,
-                    		"weixinNum" : _this.formValidate.weixinNum,
                     		"userhead" : _this.$refs.crpopper.imgDataUrl
                     	}
                     )
@@ -88,7 +79,6 @@
                         if(response.data.status == 'success'){
                             this.$store.dispatch("username", response.data.userinfo.username);
                             this.$store.dispatch("userhead", response.data.userinfo.userhead);
-                            this.$store.dispatch("weixinNum", response.data.userinfo.weixinNum);
                             this.$Message.success(response.data.msg);
                         }
                     } else {

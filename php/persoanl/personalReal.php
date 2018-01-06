@@ -1,1 +1,0 @@
-http://yungong.cow8.cn/idCard.jpg

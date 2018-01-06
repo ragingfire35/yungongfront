@@ -1,58 +1,5 @@
+<!-- 公共less 在 PersonalReal.vue -->
 <style lang="less" scoped>
-	.demo-upload-list {
-	    display: inline-block;
-	    width: 48%;
-	    text-align: center;
-	    line-height: 60px;
-	    border-radius: 4px;
-	    overflow: hidden;
-	    background: #fff;
-	    position: relative;
-	    margin: 0 0 30px 0;
-/* 	    border: 1px solid transparent;
-box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
-	    margin-right: 4px;
-		&:nth-of-type(2n-1){
-			float: left;
-		}
-		&:nth-of-type(2n){
-			float: right;
-		}
-	}
-
-	.demo-upload-list img {
-	    width: 100%;
-	    height: 100%;
-	    display: block;
-	}
-
-	.demo-upload-list-cover {
-	    display: none;
-	    position: absolute;
-	    top: 0;
-	    bottom: 0;
-	    left: 0;
-	    right: 0;
-	    background: rgba(0, 0, 0, .6);
-	}
-
-	.demo-upload-list:hover .demo-upload-list-cover {
-	    display: block;
-	}
-
-	.demo-upload-list-cover i {
-	    color: #fff;
-	    font-size: 3em;
-	    width: 1em;
-	    height: 1em;
-	    cursor: pointer;
-	    position: absolute;
-	    top: 0;
-	    bottom: 0;
-	    left: 0;
-	    right: 0;
-	    margin: auto;
-	}
 	.info{
 		h2{
 			margin-bottom:30px;
@@ -88,29 +35,36 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 	            <Input v-model="formValidate.website" placeholder="请输入公司官网地址"></Input>
 	        </Form-item>
 	        <Form-item label="认证资料" >
-		        <div class="demo-upload-list" v-for="item in uploadList">
-		            <img :src="item.url">
-		            <div class="demo-upload-list-cover">
-		                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-		            </div>
-		        </div>
+	        	<div style="overflow:hidden; margin-bottom:30px; display: flex;justify-content:center;">
+			        <div class="demo-upload-list imgbox" v-if="formValidate.license.uploadImg">
+			            <img :src="formValidate.license.uploadImg" >
+			            <Spin size="large" fix  v-if="formValidate.license.loading"></Spin>
+			            <div class="demo-upload-list-cover">
+			                <Icon type="ios-trash-outline" @click.native="handleRemove(formValidate.license.uploadImg)"></Icon>
+			            </div>
+			        </div>
+			        <div
+			        	class=" demo-upload-list realInfoShow"
+			        	v-if="formValidate.license.hasValue == true"
+			        >
+						<p v-for="(list, index) in formValidate.license.realInfo" :key="index">
+							<em>{{list.item}}</em><span>{{list.itemstring}}</span>
+						</p>
+			        </div>
+		       	</div>
 				<Upload
 			        type="drag"
-			        accept="image/jpg, image/jpeg, image/png"
-			        :format="['jpg', 'jpeg', 'png']"
-			        action=""
-			        :on-format-error="handleFormatError"
-			        :on-exceeded-size="handleMaxSize"
-			        :before-upload="handleBeforeUpload"
-			        :max-size="2048"
-			        class="uploadBox"
-			        >
+					action=""
+					:format="['jpg', 'jpeg', 'png']"
+					accept="image/jpg, image/jpeg, image/png"
+					:before-upload="handleBeforeUpload"
+					class="uploadBox"
+			    >
 			        <div style="padding: 20px 0">
 			            <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
 			            <p>上传你的公司营业执照等能明确证明您企业身份的材料， 不超过5MB（.jpg/.jpeg 或 .png 格式）</p>
 			        </div>
 			    </Upload>
-			    <p class="rzValidate" v-if="uploadList.length === 0">*认证资料必传*</p>
 	        </Form-item>
 			<Form-item>
 	            <Button type="success" @click="handleSubmit('formValidate')">提交申请</Button>
@@ -126,7 +80,13 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
                 formValidate: {
                 	name : "",
                 	way : "",
-                	website : ""
+                	website : "",
+					license:{
+						loading: true,
+						hasValue : false,
+						uploadImg:'',
+						realInfo :[]
+					}
                 },
                 ruleValidate: {
                     name: [
@@ -154,29 +114,79 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
                     }
                 })
             },
-			handleFormatError (file) {
-                this.$Notice.warning({
-                    title: '文件格式不正确',
-                    desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
-                });
-            },
-		    handleBeforeUpload(file) {
+			handleBeforeUpload(file){
+				const _this = this;
 		        let reader = new FileReader();
 		        reader.readAsDataURL(file);
 
-		        const _this = this;
 		        reader.onloadend = function (e) {
-		            file.url = reader.result
-		            _this.uploadList.push(file)
+		           file.url = reader.result;
+		           _this.formValidate.license.uploadImg = file.url;
+		           _this.uploadFn();
 		        };
-		        return false;
-	    	},
+				return false;
+			},
 		    handleRemove(file) {
-		        this.uploadList.splice(this.uploadList.indexOf(file), 1);
+		        this.formValidate.license.uploadImg = '';
+		        this.formValidate.license.hasValue = false;
 		    },
-            handleMaxSize(){
+			uploadFn(){
+				const _this = this;
+		        const data ={//---> http://open.youtu.qq.com/#/develop/api-ocr-card
+		            "app_id": "10009633",
+		            "image": _this.formValidate.license.uploadImg.slice(23, -1),
+		            "session_id": "0011",
+		        }
+ 				this.$Notice.open({
+                    title: '营业执照校验中，稍候显示结果',
+                    duration: 2
+                });
+                _this.formValidate.license.loading = true;
+		        _this.$ajax({
+		            url: 'https://api.youtu.qq.com/youtu/ocrapi/bizlicenseocr',
+		            method: 'POST',
+		            data : data,
+		            headers: {
+		                  //'Host' : 'api.youtu.qq.com',
+		                  //'Content-Length' : "",
+		                  'Content-Type': 'text/json',
+		                  'Authorization' : 'lwL2wDRPGIUhLv34wRiQRt+lurVhPTEwMDA5NjMzJms9QUtJRGpYQmR1ek9hNlF1SlpmNUpxQk5PSzdqOVBhZFhqbDhKJmU9MTUxNTIxOTgwNSZ0PTE1MTUxMzM0MDUmcj0yMTA5NzcyMzg2JnU9MzI1NTIwNTg3Mg=='
+		            }
+		        }).then((response) => {
+					_this.formValidate.license.loading = false;
+	          	    if(response.data.errorcode == "0"){
+	          	    	console.log(response.data);
+	          	    	for(var i in response.data.items){
+	          	    		 _this.formValidate.license.realInfo.push({
+	          	    			item : response.data.items[i].item,
+	          	    			itemstring : response.data.items[i].itemstring
+	          	    		})
+	          	    	};
 
-            }
+
+
+
+
+
+
+
+
+		        		_this.formValidate.license.hasValue = true;
+		 				this.$Notice.success({
+		                    title: '营业执照校验成功',
+		                    duration: 2
+		                });
+		                return;
+	          	    } else {
+	          	    	_this.formValidate.license.realInfo = "";
+		 				this.$Notice.error({
+		                    title: '营业执照校验失败',
+		                    desc : '营业执照画面占比率低,请重新拍摄',
+		                    duration: 2
+		                });
+	          	    }
+		        })
+			}
 		}
 	})
 </script>

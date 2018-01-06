@@ -1,3 +1,4 @@
+
 <style lang="less">
 	.demo-upload-list {
 	    display: inline-block;
@@ -8,9 +9,6 @@
 	    overflow: hidden;
 	    background: #fff;
 	    position: relative;
-	    margin: 0 0 30px 0;
-/* 	    border: 1px solid transparent;
-box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 	    margin-right: 4px;
 		&:nth-of-type(2n-1){
 			float: left;
@@ -22,7 +20,7 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 
 	.demo-upload-list img {
 	    width: 100%;
-	    height: 100%;
+	    /* height: 100%; */
 	    display: block;
 	}
 
@@ -53,9 +51,42 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 	    right: 0;
 	    margin: auto;
 	}
-	.uploadBox{
 
+	.imgbox{
+		display: flex;
+		align-items:center;
+		justify-content: left;
+		border:1px solid #3399FF;
+		background: #fff;
+		padding: 10px;
 	}
+	.realInfoShow{
+		min-height: 1px;
+		border:1px solid #3399FF;
+		padding: 10px;
+		p{
+			text-align: left;
+			padding: 15px 0 15px 15px;
+			font-size: 16px;
+			line-height: 16px;
+			background: #3399FF;
+			font-family: PingFangSC-Regular;
+			margin-top: 10px;
+			color: #fff;
+			em{
+				display: inline-block;
+				width: 20%;
+				text-align: right;
+				font-style: normal;
+			}
+			span{
+				display: inline-block;
+				padding-left: 10%;
+			}
+		}
+	}
+</style>
+<style lang="less">
 	.iDCard,
 	.name{
 		.ivu-form-item-label{
@@ -70,19 +101,16 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 			}
 		}
 	}
-	.realInfoShow{
-		min-height: 1px;
-	}
 </style>
 
 <template>
 	<Card class="info bt0"  dis-hover>
 		<Form label-position="top" ref="formValidate" :model="formValidate" :rules="ruleValidate">
-	        <Form-item label="真实姓名" prop="name"  class="name">
-	            <Input v-model="formValidate.name" placeholder="请输入真实姓名"></Input>
+	        <Form-item label="真实姓名" prop="idCard.realInfo.realname"  class="name">
+	            <Input v-model="formValidate.idCard.realInfo.realname" placeholder="请输入真实姓名"></Input>
 	        </Form-item>
-	        <Form-item label="联系电话" prop="phone">
-	            <Input v-model="formValidate.phone" placeholder="请输入联系电话"></Input>
+	        <Form-item label="联系电话" prop="phoneNum">
+	            <Input v-model="formValidate.phoneNum" placeholder="请输入联系电话"></Input>
 	        </Form-item>
 	        <Form-item label="邮箱" prop="mail">
 	            <Input v-model="formValidate.mail" placeholder="仅用于运营人员联系您，及重要事项通知"></Input>
@@ -91,24 +119,26 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 	            <Input v-model="formValidate.zhifubao" placeholder="仅用于兼职后云工向您打款"></Input>
 	        </Form-item>
 	        <Form-item label="微信号" prop="weixinNum">
-	            <Input v-model="formValidate.weixinNum" placeholder="仅用于运营人员联系您，进行兼职推荐"></Input>
+	            <Input v-model="formValidate.weixinNum" placeholder="仅用于运营人员联系您，进行相关推荐"></Input>
 	        </Form-item>
-	        <Form-item label="请上传二代身份证正面" prop="iDCard" class="iDCard">
-	        	<div v-if="uploadImg" style="overflow:hidden;">
-			        <div class="demo-upload-list" >
-			            <img :src="uploadImg" >
-			            <Spin size="large" fix  v-if="aa"></Spin>
-			            <div class="demo-upload-list-cover" v-if="!aa">
-			                <Icon type="ios-trash-outline" @click.native="handleRemove(uploadImg)"></Icon>
+	        <Form-item label="请上传二代身份证正面" prop="" class="iDCard">
+	        	<div style="overflow:hidden; margin-bottom:30px; display: flex;justify-content:center;">
+			        <div class="demo-upload-list imgbox" v-if="formValidate.idCard.idCardImg">
+			            <img :src="formValidate.idCard.idCardImg">
+			            <Spin size="large" fix  v-if="formValidate.idCard.loading"></Spin>
+			            <div class="demo-upload-list-cover">
+			                <Icon type="ios-trash-outline" @click.native="handleRemove(formValidate.idCard.idCardImg)"></Icon>
 			            </div>
 			        </div>
-			        <div class=" demo-upload-list realInfoShow" v-if="!aa">
-						姓名 : {{realInfo.name}}
-						性别：{{realInfo.sex}}
-						民族：{{realInfo.nation}}
-						出生：{{realInfo.birth}}
-						住址：{{realInfo.address}}
-						身份证号：{{realInfo.id}}
+			        <div class=" demo-upload-list realInfoShow"
+			        	 v-if="formValidate.idCard.realInfoShow"
+			        >
+						<p><em>姓名 : </em><span v-html="formValidate.idCard.realInfo.realname"></span></p>
+						<p><em>性别 :</em><span v-html="formValidate.idCard.realInfo.sex"></span></p>
+						<p><em>民族 : </em><span v-html="formValidate.idCard.realInfo.nation"></span></p>
+						<p><em>出生 : </em><span v-html="formValidate.idCard.realInfo.birth"></span></p>
+						<p><em>住址 : </em><span v-html="formValidate.idCard.realInfo.address"></span></p>
+						<p><em>身份证号 : </em><span v-html="formValidate.idCard.realInfo.idCardNum"></span></p>
 			        </div>
 	        	</div>
 
@@ -137,30 +167,33 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 	export default({
 		data(){
 			return{
-				aa : false,
-				uploadImg:'',
-				realInfo :{
-					name : "",
-					sex: "",
-					nation : "",
-					birth : "",
-					address : "",
-					id: ""
-				},
+				qianming:"",
 				formValidate : {
-					name : "",
-					phone : "",
+					phoneNum : "",
 					mail : "",
 					zhifubao : "",
-					weixinNum : ""
+					weixinNum : "",
+					idCard:{
+						loading: false,
+						realInfoShow: false,
+						idCardImg:'',
+						realInfo :{
+							realname : "",
+							sex: "",
+							nation : "",
+							birth : "",
+							address : "",
+							idCardNum: ""
+						},
+					}
 				},
                 ruleValidate: {
                     user: [
                         { required: true, pattern: '[\u4e00-\u9fa5]', message: '请填写真实姓名', trigger: 'blur' },
                         { type:'string',  min: 2, message: '姓名不能少于俩个字符', trigger: 'blur' }
                     ],
-                    phone: [
-                        { required: true, type:'number', message: '手机号不能为空', trigger: 'blur' },
+                    phoneNum: [
+                        { required: true, message: '手机号不能为空', trigger: 'blur' },
                         { pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号输入不正确', trigger: 'blur' }
                     ],
                     mail: [
@@ -171,21 +204,32 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
  						{ required: true, message: '支付宝账号不能为空', trigger: 'blur' }
                     ],
                     weixinNum: [
-                        { required: true, message: '请输入微信号', trigger: 'blur' }
+                        { required: true, message: '请输入微信号', trigger: 'blur' },
+                        { type: 'string', min: 6, message: '微信号少于6字符', trigger: 'blur' }
                     ]
                 }
 			}
 		},
 		mounted(){
-
+		        this.$ajax({
+		            url: 'api/common/youtuQianMing.php',
+		            method: 'POST',
+		            data : ""
+		        }).then((response) => {
+		        	this.qianming= response.data;
+		        })
+		        this.getInfo();
 		},
 		methods:{
      		handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.$Message.success('提交成功!');
+                    if (valid && this.formValidate.idCard.realInfoShow) {
+                        this.saveInfo();
                     } else {
-                        this.$Message.error('表单验证失败!');
+                    	this.formValidate.idCard.realInfoShow == false ?
+	                    	this.$Message.error('身份证校验失败!') :
+	                        this.$Message.error('表单验证失败!');
+
                     }
                 })
             },
@@ -196,24 +240,29 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 
 		        reader.onloadend = function (e) {
 		           file.url = reader.result;
-		           _this.uploadImg = file.url;
+		           _this.formValidate.idCard.idCardImg = file.url;
 		           _this.uploadFn();
 		        };
 				return false;
 			},
 		    handleRemove(file) {
-		        this.uploadImg = '';
+		        this.formValidate.idCard.idCardImg = '';
+		        this.formValidate.idCard.realInfoShow = false;
 		    },
 			uploadFn(){
 				const _this = this;
 		        const data ={//---> http://open.youtu.qq.com/#/develop/api-ocr-card
 		            "app_id": "10114621",
-		            "image": _this.uploadImg.slice(23, -1),
-		            "card_type": 0,
+		            "image": _this.formValidate.idCard.idCardImg.slice(23, -1),
+		            "card_type": 0,//0 正面 //1反面
 		            //"session_id": "1",
 		            //"border_check_flag": false,
 		        }
-		        _this.aa = true;
+ 				this.$Notice.open({
+                    title: '身份证校验中，稍候显示结果',
+                    duration: 2
+                });
+                _this.formValidate.idCard.loading = true;
 		        _this.$ajax({
 		            url: 'https://api.youtu.qq.com/youtu/ocrapi/idcardocr',
 		            method: 'POST',
@@ -222,24 +271,94 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, .2); */
 		                  //'Host' : 'api.youtu.qq.com',
 		                  //'Content-Length' : "",
 		                  'Content-Type': 'text/json',
-		                  'Authorization' : 'S6oUy2Wi2+qYYelligGZ2jd7j35hPTEwMDA5NjMzJms9QUtJRGpYQmR1ek9hNlF1SlpmNUpxQk5PSzdqOVBhZFhqbDhKJmU9MTUxNTEzNjE3NCZ0PTE1MTUwNDk3NzQmcj0yMTM2NTgwODEwJnU9MzI1NTIwNTg3Mg=='
+		                  'Authorization' : _this.qianming
 		            }
 		        }).then((response) => {
-	          		_this.aa = false;
+					_this.formValidate.idCard.loading = false;
 	          	    if(response.data.errorcode == "0"){
-	          	    	_this.uploadImg = "data:image/png;base64,"+response.data.frontimage;
-	          	    	_this.realInfo = {
-							name : response.data.name,
+	          	    	_this.formValidate.idCard.idCardImg = "data:image/png;base64,"+response.data.frontimage;
+	          	    	_this.formValidate.idCard.realInfo = {
+							realname : response.data.name,
 							sex: response.data.sex,
 							nation : response.data.nation,
 							birth : response.data.birth,
 							address : response.data.address,
-							id: response.data.id
+							idCardNum: response.data.id
 	          	    	}
-	          	    	return;
+		 				this.$Notice.success({
+		                    title: '身份校验成功',
+		                    duration: 2
+		                });
+		                _this.formValidate.idCard.realInfoShow = true;
+		                return;
 	          	    } else {
+	          	    	_this.formValidate.idCard.realInfo = "";
+		 				this.$Notice.error({
+		                    title: '身份校验失败',
+		                    desc : '身份证画面占比率低,请重新拍摄',
+		                    duration: 2
+		                });
 	          	    }
 		        })
+			},
+			getInfo(){
+				var _this = this;
+				_this.qs = require('querystring');
+		        _this.$ajax({
+		            url: 'api/personal/personalReal.php',
+		            method: 'POST',
+		            data : _this.qs.stringify({status: 'get'})
+		        }).then((response) => {
+		        	if(response.data.status == 'success'){
+		        		var info = response.data.realInfo;
+						_this.formValidate = {
+							phoneNum : info.phoneNum,
+							mail : info.mail,
+							zhifubao : info.zhifubao,
+							weixinNum : info.weixinNum,
+							idCard:{
+								loading: false,
+								realInfoShow: true,
+								idCardImg: info.idCard,
+								realInfo :{
+									realname : info.realname,
+									sex: info.sex,
+									nation : info.nation,
+									birth : info.birth,
+									address : info.address,
+									idCardNum: info.idCardNum
+								},
+							}
+						}
+		        	};
+		        });
+			},
+			saveInfo(){
+				var _this = this;
+				var data = {
+					status : 'save',
+					phoneNum : _this.formValidate.phoneNum,
+					mail : _this.formValidate.mail,
+					zhifubao : _this.formValidate.zhifubao,
+					weixinNum : _this.formValidate.weixinNum,
+					idCard : _this.formValidate.idCard.idCardImg,
+					realname : _this.formValidate.idCard.realInfo.realname,
+					sex : _this.formValidate.idCard.realInfo.sex,
+					nation : _this.formValidate.idCard.realInfo.nation,
+					birth : _this.formValidate.idCard.realInfo.birth,
+					address :  _this.formValidate.idCard.realInfo.address,
+					idCardNum : _this.formValidate.idCard.realInfo.idCardNum
+				};
+				_this.qs = require('querystring');
+		        _this.$ajax({
+		            url: 'api/personal/personalReal.php',
+		            method: 'POST',
+		            data : _this.qs.stringify(data)
+		        }).then((response) => {
+		        	if(response.data.status == 'success'){
+						_this.$Message.success(response.data.msg);
+		        	};
+		        });
 			}
 		}
 	})

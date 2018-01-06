@@ -14,10 +14,13 @@ module.exports = {
     assetsPublicPath: './',
     productionSourceMap: false,
     proxyTable: {
-      '/api/**': {
-        target: 'http://www.xxx.com', // 你接口的域名
-        secure: false,      // 如果是https接口，需要配置这个参数
+      '/api': {
+        target: 'http://yungong.cn/php/', // 你接口的域名
+        //secure: false,      // 如果是https接口，需要配置这个参数
         changeOrigin: true,     // 如果接口跨域，需要进行这个参数配置
+        pathRewrite: {
+            '^/api': '/' //路径重写
+        }
       }
     },
     // Gzip off by default as many popular static hosts such as
@@ -40,7 +43,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:80/github/yungongfront/php', // 你接口的域名
+        target: 'http://php.yungong.cn', // 你接口的域名
         //secure: false,      // 如果是https接口，需要配置这个参数
         changeOrigin: true,     // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {

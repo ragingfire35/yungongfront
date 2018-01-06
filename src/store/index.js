@@ -17,8 +17,7 @@ const store = new Vuex.Store({
                       },//用户属于企业还是个人 value--> "{}"
         LoginedUser: {
           username: sessionStorage.username || '',
-          userhead :  sessionStorage.userhead || '',
-          weixinNum : sessionStorage.weixinNum || ''
+          userhead :  sessionStorage.userhead || ''
         }
     },
 
@@ -40,10 +39,6 @@ const store = new Vuex.Store({
             let userhead = sessionStorage.getItem('userhead');
             state.LoginedUser.userhead = userhead;
         },
-        WEIXINNUM(state){
-            let weixinNum = sessionStorage.getItem('weixinNum');
-            state.LoginedUser.weixinNum = weixinNum;
-        },
         USERCLASSIFY(state){
             let userClassify = JSON.parse(sessionStorage.getItem('userClassify'));
             state.userClassify = userClassify;
@@ -53,7 +48,6 @@ const store = new Vuex.Store({
         login ({commit}, userinfo) {
           this.dispatch('username', userinfo.username);
           this.dispatch('userhead', userinfo.userhead);
-          this.dispatch('weixinNum', userinfo.weixinNum);
           commit('LOGIN');
         },
         logout ({commit}) {
@@ -66,10 +60,6 @@ const store = new Vuex.Store({
         userhead ({commit}, userhead) {
           sessionStorage.setItem("userhead", userhead == false ? "./src/components/personal/Job/image/user.png" : userhead);
           commit('USERHEAD');
-        },
-        weixinNum ({commit}, weixinNum) {
-          sessionStorage.setItem("weixinNum",weixinNum);
-          commit('WEIXINNUM')
         },
         userClassify ({commit},  userClassify) {
           let website = {
