@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-    .modalBox{
+    .loginInBox{
         text-align: center;
         .ivu-form-item{
             width: 80%;
@@ -41,7 +41,7 @@
             :mask-closable="false"
 	        v-model="$store.state.show_loginInBox"
 	        title="登录"
-            class="modalBox"
+            class="loginInBox"
         >
             <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
                 <Form-item prop="user">

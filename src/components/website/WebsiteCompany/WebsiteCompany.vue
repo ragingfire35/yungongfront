@@ -25,16 +25,10 @@
 <template>
 	<Card class="info bt0"  dis-hover>
 		<Form label-position="top" ref="formValidate" :model="formValidate" :rules="ruleValidate">
-	        <Form-item label="公司名称" prop="name">
-	            <Input v-model="formValidate.name" placeholder="请输入公司名称"></Input>
-	        </Form-item>
-	        <Form-item label="公司地址" prop="way">
-	            <Input v-model="formValidate.way" placeholder="请输入公司地址"></Input>
-	        </Form-item>
 	        <Form-item label="公司官网" prop="website">
-	            <Input v-model="formValidate.website" placeholder="请输入公司官网地址"></Input>
+	            <Input v-model="formValidate.website" placeholder="请输入公司官网地址 , 以http或https开头"></Input>
 	        </Form-item>
-	        <Form-item label="认证资料" >
+	        <Form-item label="认证资料" class="company">
 	        	<div style="overflow:hidden; margin-bottom:30px; display: flex;justify-content:center;">
 			        <div class="demo-upload-list imgbox" v-if="formValidate.license.uploadImg">
 			            <img :src="formValidate.license.uploadImg" >
@@ -47,7 +41,7 @@
 			        	class=" demo-upload-list realInfoShow"
 			        	v-if="formValidate.license.hasValue == true"
 			        >
-						<p v-for="(list, index) in formValidate.license.realInfo" :key="index">
+						<p v-for="(list, index) in formValidate.license.companyInfo" :key="index">
 							<em>{{list.item}}</em><span>{{list.itemstring}}</span>
 						</p>
 			        </div>
@@ -58,11 +52,12 @@
 					:format="['jpg', 'jpeg', 'png']"
 					accept="image/jpg, image/jpeg, image/png"
 					:before-upload="handleBeforeUpload"
+					:max-size = '2048'
 					class="uploadBox"
 			    >
 			        <div style="padding: 20px 0">
 			            <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-			            <p>上传你的公司营业执照等能明确证明您企业身份的材料， 不超过5MB（.jpg/.jpeg 或 .png 格式）</p>
+			            <p>上传你的公司营业执照等能明确证明您企业身份的材料， 不超过2MB（.jpg/.jpeg 或 .png 格式）</p>
 			        </div>
 			    </Upload>
 	        </Form-item>
@@ -76,41 +71,39 @@
 	export default({
 		data(){
 			return{
-				uploadList: [],
+				qianming:"",
                 formValidate: {
-                	name : "",
-                	way : "",
-                	website : "",
+                	website : "http://www.baidu.com",
 					license:{
-						loading: true,
+						loading: false,
 						hasValue : false,
 						uploadImg:'',
-						realInfo :[]
+						companyInfo :[]
 					}
                 },
                 ruleValidate: {
-                    name: [
-                        { required: true, message: '公司名称输入不能为空', trigger: 'blur' }
-                    ],
-                    way: [
-                    	{ required: true, message: '公司地址输入不能为空', trigger: 'blur' }
-                    ],
                     website : [
-                    	{ required: true, message: '公司官网输入不能为空', trigger: 'blur' }
+                    	{ required: true, message: '公司官网输入不能为空', trigger: 'blur' },
+                    	{ pattern: '^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+', message: "网址输入不正确", trigger: 'blur'}
                     ]
                 }
 			}
 		},
 		mounted(){
-
+				this.youtuQM();
+				this.getInfo();
 		},
 		methods:{
      		handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
-                    if (valid && uploadList.length!==0) {
-                        this.$Message.success('提交成功!');
+                    if (valid && this.formValidate.license.hasValue) {
+                        this.saveInfo();
                     } else {
-                        this.$Message.error('表单验证失败!');
+                        if(!this.formValidate.license.hasValue){
+                        	this.$Message.error('营业执照校验失败！');
+                        } else{
+                        	 this.$Message.error('表单验证失败!');
+                        }
                     }
                 })
             },
@@ -118,19 +111,26 @@
 				const _this = this;
 		        let reader = new FileReader();
 		        reader.readAsDataURL(file);
-
 		        reader.onloadend = function (e) {
 		           file.url = reader.result;
 		           _this.formValidate.license.uploadImg = file.url;
 		           _this.uploadFn();
 		        };
-				return false;
+				//return false;
 			},
 		    handleRemove(file) {
 		        this.formValidate.license.uploadImg = '';
 		        this.formValidate.license.hasValue = false;
 		    },
+			handleMaxSize(){
+				this.$Message.error('文件最大2m, 请压缩或更换图片!');
+				this.handleRemove();
+				return false;
+			},
 			uploadFn(){
+				if(this.formValidate.license.uploadImg.length > 2048 * 1024){
+					this.handleMaxSize();
+				}
 				const _this = this;
 		        const data ={//---> http://open.youtu.qq.com/#/develop/api-ocr-card
 		            "app_id": "10009633",
@@ -142,43 +142,37 @@
                     duration: 2
                 });
                 _this.formValidate.license.loading = true;
+                _this.formValidate.license.companyInfo = [];
 		        _this.$ajax({
 		            url: 'https://api.youtu.qq.com/youtu/ocrapi/bizlicenseocr',
 		            method: 'POST',
 		            data : data,
 		            headers: {
-		                  //'Host' : 'api.youtu.qq.com',
 		                  //'Content-Length' : "",
+		                  //'Host' : 'api.youtu.qq.com',
 		                  'Content-Type': 'text/json',
-		                  'Authorization' : 'lwL2wDRPGIUhLv34wRiQRt+lurVhPTEwMDA5NjMzJms9QUtJRGpYQmR1ek9hNlF1SlpmNUpxQk5PSzdqOVBhZFhqbDhKJmU9MTUxNTIxOTgwNSZ0PTE1MTUxMzM0MDUmcj0yMTA5NzcyMzg2JnU9MzI1NTIwNTg3Mg=='
+		                  'Authorization' : _this.qianming
 		            }
 		        }).then((response) => {
 					_this.formValidate.license.loading = false;
 	          	    if(response.data.errorcode == "0"){
-	          	    	console.log(response.data);
 	          	    	for(var i in response.data.items){
-	          	    		 _this.formValidate.license.realInfo.push({
+	          	    		 _this.formValidate.license.companyInfo.push({
 	          	    			item : response.data.items[i].item,
 	          	    			itemstring : response.data.items[i].itemstring
 	          	    		})
 	          	    	};
+	          	        if(_this.formValidate.license.companyInfo.length == 5){
+			        		_this.formValidate.license.hasValue = true;
+			 				this.$Notice.success({
+			                    title: '营业执照校验成功',
+			                    duration: 2
+			                });
+	          	        }
 
-
-
-
-
-
-
-
-
-		        		_this.formValidate.license.hasValue = true;
-		 				this.$Notice.success({
-		                    title: '营业执照校验成功',
-		                    duration: 2
-		                });
 		                return;
 	          	    } else {
-	          	    	_this.formValidate.license.realInfo = "";
+	          	    	_this.formValidate.license.companyInfo = [];
 		 				this.$Notice.error({
 		                    title: '营业执照校验失败',
 		                    desc : '营业执照画面占比率低,请重新拍摄',
@@ -186,6 +180,53 @@
 		                });
 	          	    }
 		        })
+			},
+			getInfo(){
+				var _this = this;
+				_this.qs = require('querystring');
+		        _this.$ajax({
+		            url: 'api/website/websiteCompany.php',
+		            method: 'POST',
+		            data : _this.qs.stringify({status: 'get'})
+		        }).then((response) => {
+		        	if(response.data.status == 'success'){
+		        		var companyInfo = response.data.info.companyInfo.split(",");
+		        		for(var i in companyInfo){
+		        			if(companyInfo[i] != ""){
+			        			_this.formValidate.license.companyInfo.push({
+			        				item : companyInfo[i].split(":")[0],
+			        				itemstring : companyInfo[i].split(":")[1]
+			        			})
+		        			}
+		        		}
+		        		_this.formValidate.license.hasValue = true;
+		        		_this.formValidate.license.uploadImg = response.data.info.license;
+		        	};
+		        });
+			},
+			saveInfo(){
+				var _this = this;
+				_this.qs = require('querystring');
+				var companyInfo = _this.formValidate.license.companyInfo;
+				var endInfo = "";
+				for(var i in companyInfo){
+					endInfo += companyInfo[i].item +":"+ companyInfo[i].itemstring+","
+				}
+				var data = {
+					status : 'save',
+					companyInfo : endInfo,
+					website : _this.formValidate.website,
+					license : _this.formValidate.license.uploadImg
+				};
+		        _this.$ajax({
+		            url: 'api/website/websiteCompany.php',
+		            method: 'POST',
+		            data : _this.qs.stringify(data)
+		        }).then((response) => {
+		        	if(response.data.status == 'success'){
+                        _this.$Message.success(response.data.msg);
+		        	};
+		        });
 			}
 		}
 	})

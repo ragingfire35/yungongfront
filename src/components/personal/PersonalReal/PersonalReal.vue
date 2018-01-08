@@ -85,10 +85,9 @@
 			}
 		}
 	}
-</style>
-<style lang="less">
 	.iDCard,
-	.name{
+	.name,
+	.company{
 		.ivu-form-item-label{
 			&:before{
 			    content: '*';
@@ -107,7 +106,7 @@
 	<Card class="info bt0"  dis-hover>
 		<Form label-position="top" ref="formValidate" :model="formValidate" :rules="ruleValidate">
 	        <Form-item label="真实姓名" prop="idCard.realInfo.realname"  class="name">
-	            <Input v-model="formValidate.idCard.realInfo.realname" placeholder="请输入真实姓名"></Input>
+	            <Input v-model="formValidate.idCard.realInfo.realname" disabled placeholder="真实姓名不必填，稍候验证获取"></Input>
 	        </Form-item>
 	        <Form-item label="联系电话" prop="phoneNum">
 	            <Input v-model="formValidate.phoneNum" placeholder="请输入联系电话"></Input>
@@ -188,10 +187,6 @@
 					}
 				},
                 ruleValidate: {
-                    user: [
-                        { required: true, pattern: '[\u4e00-\u9fa5]', message: '请填写真实姓名', trigger: 'blur' },
-                        { type:'string',  min: 2, message: '姓名不能少于俩个字符', trigger: 'blur' }
-                    ],
                     phoneNum: [
                         { required: true, message: '手机号不能为空', trigger: 'blur' },
                         { pattern: /^1[3|4|5|7|8][0-9]{9}$/, message: '手机号输入不正确', trigger: 'blur' }
@@ -211,13 +206,7 @@
 			}
 		},
 		mounted(){
-		        this.$ajax({
-		            url: 'api/common/youtuQianMing.php',
-		            method: 'POST',
-		            data : ""
-		        }).then((response) => {
-		        	this.qianming= response.data;
-		        })
+				this.youtuQM();
 		        this.getInfo();
 		},
 		methods:{
@@ -318,7 +307,7 @@
 							weixinNum : info.weixinNum,
 							idCard:{
 								loading: false,
-								realInfoShow: true,
+								realInfoShow: info.idCard == "" ? false : true,
 								idCardImg: info.idCard,
 								realInfo :{
 									realname : info.realname,
@@ -330,6 +319,7 @@
 								},
 							}
 						}
+
 		        	};
 		        });
 			},

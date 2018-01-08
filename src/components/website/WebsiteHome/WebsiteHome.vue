@@ -31,13 +31,13 @@
 		<h1 class="tt">个人主页</h1>
 		<Tabs type="card" class="personalHome" @on-click="info" :value="$route.query.name">
 			<Tab-pane label="账户资料" name="websiteInfo">
-				<website-info/>
+				<website-info v-if="base.websiteInfo"></website-info>
 			</Tab-pane>
 			<Tab-pane label="真实信息" name="websiteReal">
-				<website-real/>
+				<website-real v-if="base.websiteReal"></website-real>
 			</Tab-pane>
 			<Tab-pane label="公司信息" name="websiteCompany">
-				<website-company/>
+				<website-company v-if="base.websiteCompany"></website-company>
 			</Tab-pane>
 		</Tabs>
 
@@ -52,6 +52,11 @@
 	export default({
 		data(){
 			return{
+				base :{
+					websiteInfo: this.$route.query.name == 'websiteInfo' || false,
+					websiteReal: this.$route.query.name == 'websiteReal' || false,
+					websiteCompany: this.$route.query.name == 'websiteCompany' || false
+				}
 			}
 		},
 		components:{
@@ -64,6 +69,7 @@
 		},
 		methods:{
 			info(name){
+				this.base[name] = true;
 				this.$router.push({path:'/WebsiteHome', query: {name:name}})
 			}
 		}

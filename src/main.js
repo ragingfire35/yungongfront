@@ -4,6 +4,8 @@ import store from "./store";
 import axios from 'axios'
 import App from './app.vue';
 import '../static/my-theme/index.less';
+import commonJs from './components/common/commonJs/common.js';
+Vue.use(commonJs);
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;

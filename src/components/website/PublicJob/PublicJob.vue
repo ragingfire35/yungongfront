@@ -123,7 +123,7 @@
 
 </template>
 <script>
-    import PerfectInfo from "@/components/common/Dialog/PerfectWebsiteInfo.vue";
+    import PerfectInfo from "@/components/common/Dialog/PerfectInfo.vue";
     export default {
         data () {
             return {

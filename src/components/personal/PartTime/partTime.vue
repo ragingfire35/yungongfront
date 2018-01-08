@@ -132,7 +132,7 @@
 	</div>
 </template>
 <script>
-	import PerfectInfo from "@/components/common/Dialog/PerfectUserInfo.vue";
+	import PerfectInfo from "@/components/common/Dialog/PerfectInfo.vue";
 	export default({
 		data(){
 			return{
