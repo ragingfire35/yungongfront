@@ -1,5 +1,6 @@
-<!-- 公共less 在 PersonalReal.vue -->
+
 <style lang="less" scoped>
+	@import '../../common/commonLess/personalReal.less';
 	.info{
 		h2{
 			margin-bottom:30px;
@@ -39,7 +40,7 @@
 			        </div>
 			        <div
 			        	class=" demo-upload-list realInfoShow"
-			        	v-if="formValidate.license.hasValue == true"
+			        	v-if="formValidate.license.hasValue"
 			        >
 						<p v-for="(list, index) in formValidate.license.companyInfo" :key="index">
 							<em>{{list.item}}</em><span>{{list.itemstring}}</span>
@@ -73,7 +74,7 @@
 			return{
 				qianming:"",
                 formValidate: {
-                	website : "http://www.baidu.com",
+                	website : "",
 					license:{
 						loading: false,
 						hasValue : false,
@@ -191,16 +192,19 @@
 		        }).then((response) => {
 		        	if(response.data.status == 'success'){
 		        		var companyInfo = response.data.info.companyInfo.split(",");
-		        		for(var i in companyInfo){
-		        			if(companyInfo[i] != ""){
-			        			_this.formValidate.license.companyInfo.push({
-			        				item : companyInfo[i].split(":")[0],
-			        				itemstring : companyInfo[i].split(":")[1]
-			        			})
-		        			}
+		        		if(companyInfo != ""){
+			        		for(var i in companyInfo){
+			        			if(companyInfo[i] != ""){
+				        			_this.formValidate.license.companyInfo.push({
+				        				item : companyInfo[i].split(":")[0],
+				        				itemstring : companyInfo[i].split(":")[1]
+				        			})
+			        			}
+			        		}
+			        		_this.formValidate.license.hasValue = true;
+			        		_this.formValidate.license.uploadImg = response.data.info.license;
+			        		_this.formValidate.website = response.data.info.website;
 		        		}
-		        		_this.formValidate.license.hasValue = true;
-		        		_this.formValidate.license.uploadImg = response.data.info.license;
 		        	};
 		        });
 			},

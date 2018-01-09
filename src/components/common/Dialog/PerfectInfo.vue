@@ -1,35 +1,30 @@
-<style lang="less" scoped>
+<style lang="less" >
     .perfectInfoBox{
-        text-align: center;
-        .ivu-form-item{
-            width: 80%!important;
+        .ivu-modal-header-inner{
+            text-align: center;
         }
-        .ivu-input-group-prepend{
-            width: 20%;
-        }
-        .ivu-input{
-            width: 100%;
-        }
-        .ivu-icon{
-            font-size: 16px;
-        }
-        .phone{
-
-        }
-
-        .ivu-modal-footer{
-            button{
-                width: 45%;
-            }
-        }
-        .countDown{
+        .inner-text{
+            height: 50px;
+            line-height: 50px;
+            color:#666;
+            text-align:center;
             font-size: 14px;
-            color: red;
+            .countDown{
+                font-size: 16px;
+                color: red;
+            }
         }
         .ivu-modal-footer{
             text-align: center;
+            button{
+                width: 45%;
+                &:nth-of-type(1){
+                    display: none;
+                }
+            }
         }
     }
+
 </style>
 <template>
 	<div>
@@ -40,35 +35,41 @@
 	        title="这是您第一次发布信息，请先完善您的个人基本信息"
             class="perfectInfoBox"
             ok-text="立即跳转"
+            @on-ok = "onOk"
         >
-            <router-link to="/" style="color:#999;"><span class="countDown">{{ time }}</span>{{ ltHref }}</router-link>
+            <p class="inner-text"><span class="countDown">{{ time }}</span>{{ ltHref }}</p>
 	    </Modal>
 	</div>
 
 </template>
 <script>
-    export default {
+    export default ({
         data () {
             return {
+                t: null,//fn
             	value1 : true,
                 time : 3,
                 ltHref : "\ns自动跳转到个人信息页",
-                path : this.$route.path == "/PartTime" ? "/PersonalHome?name=personalInfo" : "/WebsiteHome?name=personalInfo"
+                path : this.$store.state.userClassify.userClass == "personal" ? "/PersonalHome?name=personalInfo" : "/WebsiteHome?name=websiteCompany"
             }
         },
         mounted(){
             var _this = this;
-/*            var t = setInterval(function(){
+            _this.t = setInterval(function(){
                 if( _this.time == 0 ){
                     _this.time = 3;
                     _this.$router.push({path: _this.path});
+                    clearInterval(_this.t);
                 } else {
                     _this.time--;
                 }
-            } ,1000)*/
+            } ,1000)
         },
         methods: {
-
+            onOk(){
+                this.$router.push({path: this.path});
+                clearInterval(this.t);
+            }
         }
-    }
+    })
 </script>

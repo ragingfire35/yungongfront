@@ -1,11 +1,13 @@
 exports.install = function (Vue, options) {
     Vue.prototype.youtuQM = function (){
-        this.$ajax({
+        var _this = this;
+        _this.qs = require('querystring');
+        _this.$ajax({
             url: 'api/common/youtuQianMing.php',
             method: 'POST',
             data : ""
         }).then((response) => {
-        	this.qianming= response.data;
+            _this.qianming= response.data;
         });
     };
 };

@@ -118,7 +118,7 @@
                 </Form-item>
             </Form>
         </Card>
-        <perfect-info/>
+        <perfect-info v-if="!perfectInfo"></perfect-info>
     </div>
 
 </template>
@@ -127,6 +127,7 @@
     export default {
         data () {
             return {
+                perfectInfo : true,
                 ruleValidate: {
                     uClassify: [],
                     wClassify: [],
@@ -160,6 +161,21 @@
         },
         components:{
             PerfectInfo : PerfectInfo
+        },
+        watch:{
+        },
+        mounted(){
+            var _this = this;
+            _this.qs = require('querystring');
+            _this.$ajax({
+                url: 'api/website/websiteCompany.php',
+                method: 'POST',
+                data : _this.qs.stringify({status: 'check'})
+            }).then((response) => {
+                if(response.data.status == "success"){
+                    _this.perfectInfo = response.data.info.license == "" ?  false :  true;
+                }
+            });
         },
         methods: {
             handleAdd () {

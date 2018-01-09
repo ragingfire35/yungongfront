@@ -93,7 +93,7 @@
           switch(this.$store.state.userClassify.userClass || name){
               case "personal" :
                   if (this.$route.path == "/PersonalHome")
-                    this.$router.push({'path':'/WebsiteHome?name=personalInfo'});
+                    this.$router.push({'path':'/WebsiteHome?name=websiteInfo'});
                   this.userClassify = 'website';
                   break;
               case "website" :
