@@ -8,8 +8,14 @@ import '../static/my-theme/index.less';
 import commonJs from './components/common/commonJs/common.js';
 Vue.use(commonJs);
 
+//城市
 import cityJson from './components/common/commonJs/city.js';
 Vue.prototype.cityJson = cityJson;
+
+//职业类型
+import roleJson from './components/common/commonJs/role.js';
+Vue.prototype.roleJson = roleJson;
+
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
