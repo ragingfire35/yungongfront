@@ -86,7 +86,7 @@
     				                <Option
                                         v-for="(item,index) in cityJson"
                                         :key="index"
-                                        :value="item.value"
+                                        :value="item.label"
                                         @click.native = "
                                             areaJson = item.children
                                         "
@@ -106,7 +106,7 @@
                                     <Option
                                         v-for="(item,index) in areaJson"
                                         :key="index"
-                                        :value="item.value"
+                                        :value="item.label"
                                     >
                                         {{ item.label }}
                                     </Option>
@@ -285,12 +285,12 @@
                 var _this = this;
                 var data = this.formValidate;
                 data['status'] = 'save';
-                _this.qs = require('querystring');
                 _this.$ajax({
                     url: 'api/personal/jobSeekers.php',
                     method: 'POST',
                     data : data
                 }).then((response) => {
+                    console.log(response.data);
                     if(response.data.status == 'success'){
                         _this.$Message.success(response.data.msg);
                     };

@@ -5,13 +5,18 @@
 }
 .conditions{
 	.artic{
-		height: 32px;
-		line-height: 32px;
-		margin-bottom: 10px;
-		&.region{
-			[slot=title]{
-				margin-right: 8px;
-			}
+		margin-bottom: 30px;
+		overflow: hidden;
+		[slot=title]{
+			height: 32px;
+			line-height: 32px;
+			margin-right: 8px;
+			width: 4em;
+		}
+		.noValue{
+			height: 32px;
+			line-height: 32px;
+			color: #ccc;
 		}
 	}
 	[slot=title]{
@@ -21,10 +26,17 @@
 		font-size: 16px;
 		text-align: right;
 	}
+	.sortRule{
+		.listBtn{
+			width: auto;
+		}
+	}
 	.listBtn {
+		width: 70%;
 		overflow: hidden;
 		margin-left: 40px;
 		float: left;
+		text-align: left;
 		button{
 			display: inline-block;
 			vertical-align: 2px;
@@ -34,6 +46,9 @@
 			}
 		}
 	}
+	.moreBtn button{
+		color: #19be6b;
+	}
 }
 .card{
 	margin-bottom: 30px;
@@ -42,6 +57,7 @@
 .lt-det{
 	float: left;
 	text-align: left;
+    padding:0 8px;
 	a{
 		color: #777;
 	}
@@ -114,7 +130,7 @@ hr.split-line{
 }
 
 .rt-det{
-
+    padding:0 8px;
 }
 .about-num{
 	padding-left: 10%;

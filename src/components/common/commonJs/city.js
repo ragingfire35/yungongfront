@@ -216,7 +216,7 @@ export default
     }
   ]
 }, {
-  value: 'shanxi',
+  value: 'shanxi-1',
   label: '山西',
   children: [
     {
@@ -1775,7 +1775,7 @@ export default
     }
   ]
 }, {
-  value: 'shanxi',
+  value: 'shanxi-2',
   label: '陕西',
   children: [
     {
@@ -2254,10 +2254,4 @@ export default
       label: '其他'
     }
   ]
-}, {
-  value: 'haiwai',
-  label: '海外'
-}, {
-  value: 'other',
-  label: '其他'
 }]
