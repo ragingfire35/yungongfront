@@ -10,6 +10,25 @@
     {
         margin-bottom: 40px;
     }
+
+</style>
+<style lang="less">
+    .job_exe,
+    .job_timelimit,
+    .job_addresscan,
+    .job_priceday{
+        .ivu-form-item-label{
+            &:before{
+                content: '*';
+                display: inline-block;
+                margin-right: 4px;
+                line-height: 1;
+                font-family: SimSun;
+                font-size: 12px;
+                color: #ed3f14;
+            }
+        }
+    }
 </style>
 <template>
 	<div>
@@ -36,7 +55,9 @@
 		 		<Form-item
 		            v-for="(item, index) in formValidate.job_exe"
 		            :key="index"
-		            :label="'公司/职位 *' + (index + 1)">
+		            :label="'公司/职位 *' + (index + 1)"
+                    class="job_exe"
+                >
 		            <Row>
 		                <Col span="9">
                             <Form-item
@@ -69,11 +90,12 @@
 		        </Form-item>
 
                 <Button type="dashed" long @click="handleAdd" icon="plus-round" class="addBTN">新增</Button>
-		  		<Form-item label="工作年限" prop="job_timelimit">
+		  		<Form-item label="工作年限" prop="job_timelimit" class="job_timelimit">
                     <Input-number :max="10" :min="1" v-model="formValidate.job_timelimit" style="width: 100%;" ></Input-number>
 		        </Form-item>
 		 		<Form-item
 		            label="可兼职区域"
+                    class="job_addresscan"
 		        >
 		            <Row>
 		                <Col span="8">
@@ -124,13 +146,13 @@
 		                </Col>
 		            </Row>
 		        </Form-item>
-		  		<Form-item label="日薪**工作8小时计为一天,请填写日薪" prop="job_priceday" >
+		  		<Form-item label="日薪**工作8小时计为一天,请填写日薪" prop="job_priceday" class="job_priceday">
                     <Input-number :max="1000" :min="100" :step="100" v-model="formValidate.job_priceday" style="width: 100%;" ></Input-number>
 		        </Form-item>
 		  		<Form-item label="顾问角色" prop="user_type">
 		            <Select v-model="formValidate.user_type" placeholder="顾问角色">
 		            	<Option value="">顾问角色</Option>
-                        <Option v-for="(item,index) in roleJson" :key="index" :value="item.value" >
+                        <Option v-for="(item,index) in roleJson" :key="index" :value="item.label" >
                              {{item.label}}
                         </Option>
 

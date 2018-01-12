@@ -16,6 +16,9 @@ Vue.prototype.cityJson = cityJson;
 import roleJson from './components/common/commonJs/role.js';
 Vue.prototype.roleJson = roleJson;
 
+//项目类型
+import projectJson from './components/common/commonJs/project.js';
+Vue.prototype.projectJson = projectJson;
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
