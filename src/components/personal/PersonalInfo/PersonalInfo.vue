@@ -1,6 +1,7 @@
 <style lang="less" scoped>
 
 	.info{
+        min-height: 700px;
 		h2{
 			margin-bottom:30px;
 			font-weight: normal;

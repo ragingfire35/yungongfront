@@ -189,7 +189,7 @@
 						<div class="user-info">
 							<img :src="item.userhead" alt="">
 							<span v-text="item.username"></span>
-							<span><Icon type="settings"></Icon>&nbsp;{{ JSON.parse(item.job_exe)[0].value2 }}</span>
+							<span><Icon type="settings"></Icon>&nbsp;{{ JSON.parse(item.job_exe)[0].value2}}</span>
 							<span>高级顾问</span>
 							<span>{{item.job_timelimit}}年</span>
 						</div>

@@ -107,9 +107,9 @@
                 </div>
                 <Form-item label="请选择您希望的工作方式" prop="workWay">
                     <Select placeholder="请选择" v-model="formValidate.workWay">
-                        <Option value="like_office_worker">全程坐班</Option>
-                        <Option value="like_scheduled">定期坐班</Option>
-                        <Option value="like_soho">远程</Option>
+                        <Option value="全程坐班">全程坐班</Option>
+                        <Option value="定期坐班">定期坐班</Option>
+                        <Option value="远程">远程</Option>
                     </Select>
                 </Form-item>
                 <Form-item label="请输入您期望的个人所在地或工作地点" class="job_addresscan">
@@ -180,11 +180,11 @@
                 projectJson : this.projectJson,
                 user_skill_one : "",
                 formValidate : {
-                    user_type: "",
-                    projectClass: "",
-                    projectName : "",
-                    projectDesc: "",
-                    user_skills : [],
+                    user_type: "iOS工程师",
+                    projectClass: "平面设计",
+                    projectName : "云公网",
+                    projectDesc: "招聘",
+                    user_skills : ["js", "css"],
                     payWay : "项目制",
                     projectScheme: {
                         total : 100,
@@ -192,16 +192,17 @@
                     },//项目制
                     dailyWageSystem: {
                         oneDay : 100,
-                        date : 1
+                        date : 1,
+                        total: ""
                     },//日薪制
-                    workWay : "",
+                    workWay : "定期坐班",
                     job_addresscan : {
                         city: "",
                         area: "",
                         detail : "万柏林区千峰南路"
                     },
-                    workTimeStart: "",
-                    companyName: "",
+                    workTimeStart: "2017-08-12",
+                    companyName: "烈火天使科技公司",
                 },
                 ruleValidate: {
                     user_type:[
@@ -214,7 +215,7 @@
                         { required: true, message: '请输入项目名称', trigger: 'blur' }
                     ],
                     projectDesc:[
-                        { required: true, min:100, message: '请填写项目描述,不少于100字', trigger: 'blur' }
+                        { required: true, min:1, message: '请填写项目描述,不少于100字', trigger: 'blur' }
                     ],
                     user_skills:[
                         { required: true, type: 'array',message: '至少添加一个技能', trigger: 'blur' },
@@ -279,11 +280,22 @@
                 })
             },
             saveInfo(){
+                console.log(this.formValidate);
                 var _this = this;
-                var data = this.formValidate;
+                var data = JSON.parse(JSON.stringify(this.formValidate));
                 data['status'] = 'save';
+
+                switch (data.payWay){
+                    case "项目制":
+                        delete data.dailyWageSystem;
+                        break;
+                    case "日薪制":
+                        delete data.projectScheme;
+                        break;
+                };
+
                 _this.$ajax({
-                    url: 'api/personal/jobSeekers.php',
+                    url: 'api/website/publicJob.php',
                     method: 'POST',
                     data : data
                 }).then((response) => {
