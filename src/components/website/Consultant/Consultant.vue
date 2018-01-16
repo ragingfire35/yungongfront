@@ -16,10 +16,12 @@
   					<p class="listBtn">
   						<Button
   							v-for="(item, index) in Place.cityJson"
-  							:type="formValidate.city == item.value ? 'primary' : 'text'"
+  							:type="formValidate.city == item.label ? 'primary' : 'text'"
   							:key="index"
-  							:value="item.value"
-  							@click="formValidate.city = item.value, Place.areaJson = item.children"
+  							:value="item.label"
+  							@click="formValidate.city = item.label,
+  									Place.areaJson =  [{value:'', label:'不限',children:[]}].concat( item.children ),
+  									selectPersonal()"
   							v-if= "index < Place.cityShowNum"
   						>{{item.label}}</Button>
   					</p>
@@ -34,17 +36,17 @@
   					<p class="listBtn">
   						<Button
 			  				v-for="(item, index) in Place.areaJson"
-			  				:type="formValidate.area == item.value ? 'primary' : 'text'"
+			  				:type="formValidate.area == item.label ? 'primary' : 'text'"
 			  				:key="index"
-			  				:value="item.value"
-			  				@click="formValidate.area = item.value"
+			  				:value="item.label"
+			  				@click="formValidate.area = item.label, selectPersonal()"
 			  				v-if= "index < Place.areaShowNum"
   						>{{item.label}}</Button>
   					</p>
   					<p class="moreBtn" v-if="Place.areaJson && Place.areaJson.length > 8">
   						<Button type="text" icon="chevron-down" @click.native="Place.areaShowNum = Place.areaShowNum == 8 ? 1000:8">更多</Button>
   					</p>
-  					<p v-if="formValidate.city == ''" class="noValue" >
+  					<p v-if="formValidate.city == '不限'" class="noValue" >
   						请先选择一个工作地点
   					</p>
   				</div>
@@ -55,9 +57,9 @@
 						<Button
 							v-for="(item, index) in JobClass.roleJson"
 							:key="index"
-							:value = "item.value"
-							:type="formValidate.role == item.value ? 'primary' : 'text'"
-							@click="formValidate.role = item.value"
+							:value = "item.label"
+							:type="formValidate.role == item.label ? 'primary' : 'text'"
+							@click="formValidate.role = item.label, selectPersonal()"
 							v-if="index < JobClass.roleShowNum"
 						>
 							{{ item.label }}
@@ -88,7 +90,7 @@
 						            	v-for="(ITEM, INDEX) in item.optionName"
 						            	:key="INDEX"
 										:name="ITEM"
-										@click.native="item.checkedIndex = INDEX"
+										@click.native="item.checkedIndex = INDEX, selectPersonal()"
 						            >
 						            	{{ITEM}}
 						        	</Dropdown-item>
@@ -105,8 +107,8 @@
 						<Button
 							v-for="(item, index) in level"
 							:key="index"
-							:type="index == websiteIndex ? 'primary' : 'text'"
-							@click="websiteIndex = index"
+							:type="formValidate.level == item? 'primary' : 'text'"
+							@click="formValidate.level = item,  selectPersonal()"
 						>
 							{{item}}
 						</Button>
@@ -114,68 +116,11 @@
 				</div>
 
             </Card>
-            <Card class="card jobDetail">
-				<Row type="flex" justify="center" class="detail-inner">
-					<Col
-						class="lt-det"
-						:xs="24"
-						:sm="24"
-						:md="16"
-						:lg="16"
-					>
-					<router-link to="/ConsultantDetail">
-						<div class="user-info">
-							<img src="../../personal/Job/image/user.png" alt="">
-							<span>大好时光</span>
-							<span><Icon type="settings"></Icon>&nbsp;web前端工程师</span>
-							<span>高级顾问</span>
-							<span>6年</span>
-						</div>
-						<div class="job-main">
-							<div class="title">
-								<h5>擅长技能</h5>
-							</div>
-							<p class="text">
-								毕业于河北石家庄某大学,目前正在中国石油大学读在职研究生,在校期间专业成绩优秀,目前就职于拉卡拉技术经理一职,从事java开发5年之久,参与公司的产品设计,系统架构,核心开发,主要应用技术有h5,c3,java,mysql,oracle,socket,mina,netty,io,线程,高并发,分布式.redis,js等.
-							</p>
-						</div>
-					</router-link>
-
-					</Col>
-
-					<Col
-						class="rt-det"
-						:xs="24"
-						:sm="24"
-						:md="8"
-						:lg="8"
-					>
-						<hr class="split-line"/>
-						<div class="about-num">
-							<p><span>￥700</span>&nbsp;/&nbsp;8小时</p>
-							<ol>
-								<li>
-									<span>被预约次数</span>
-									<span>2</span>
-								</li>
-								<li>
-									<span>可兼职时间</span>
-									<span> 周六、周日、工作日</span>
-								</li>
-								<li>
-									<span>可兼职地点</span>
-									<span>海淀</span>
-								</li>
-							</ol>
-							<Button type="success" @click="$router.push({'path': '/GetTalent'})">立即预约</Button>
-						</div>
-					</Col>
-				</Row>
-            </Card>
 
             <Card class="card jobDetail"
 	              v-for="(item, index) in job_seekers"
 	              :key = index
+	              v-if="job_seekers.length != 0"
             >
 				<Row type="flex" justify="center" class="detail-inner">
 					<Col
@@ -185,7 +130,7 @@
 						:md="16"
 						:lg="16"
 					>
-					<router-link to="/ConsultantDetail">
+					<router-link :to="{ path: '/ConsultantDetail', query: { userid: item.userid }}">
 						<div class="user-info">
 							<img :src="item.userhead" alt="">
 							<span v-text="item.username"></span>
@@ -254,17 +199,17 @@
   	data(){
   		return {
   			job_seekers : [],
+  			spinShow : false,
   			formValidate:{
-  				city : "",
-  				area : "",
-  				role : ""
+  				"city" : "不限",
+  				"area" : "不限",
+  				"role" : "不限",
+  				"sortRule" : "",
+  				"level" : "不限"
   			},
-  			PlaceIndex : 0,
-			jobIndex : 0,
-			ruleIndex : 0,
 			websiteIndex : 0,
   			Place : {
-  				cityJson : [{value:"", label:"全国",children:[]}].concat( this.cityJson ),
+  				cityJson : [{value:"", label:"不限", children:[]}].concat( this.cityJson ),//this.cityJson main.js全局
   				areaJson : {},
   				roleJson : this.roleJson,
   				cityShowNum : 8,
@@ -272,7 +217,7 @@
   			},
 
   			JobClass : {
-  				roleJson : this.roleJson,
+  				roleJson : [{value:"", label:"不限", children:[]}].concat( this.roleJson ),
   				roleShowNum : 5
   			},
 
@@ -303,22 +248,40 @@
   		}
   	},
     mounted(){
-    	var _this = this;
-        _this.$ajax({
-            url: 'api/personal/jobSeekers.php',
-            method: 'POST',
-            data : {status : 'get'}
-        }).then((response) => {
-            if(response.data.status == 'success'){
-               _this.job_seekers = response.data.info;
-            };
-        });
+    	this.getPersonal();
     },
     components:{
     	switchProcess : switchProcess
     },
     methods: {
-
+    	getPersonal(){
+	    	var _this = this;
+	        _this.$ajax({
+	            url: 'api/personal/jobSeekers.php',
+	            method: 'POST',
+	            data : {status : 'get'}
+	        }).then((response) => {
+	            if(response.data.status == 'success'){
+	               _this.job_seekers = response.data.info;
+	            };
+	        });
+    	},
+    	selectPersonal(){
+	    	var _this = this;
+	    	var data = JSON.parse(JSON.stringify(_this.formValidate));
+	    	data['status'] = 'check';
+	    	_this.spinShow = true;
+	        _this.$ajax({
+	            url: 'api/personal/jobSeekers.php',
+	            method: 'POST',
+	            data : data
+	        }).then((response) => {
+	        	_this.spinShow = false;
+	            if(response.data.status == 'success'){
+	               _this.job_seekers = response.data.info;
+	            };
+	        });
+    	}
     }
   }
 </script>

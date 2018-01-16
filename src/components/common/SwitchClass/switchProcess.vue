@@ -67,12 +67,13 @@
 			},
 			partTime(){
 				if (this.checkStatus()){
-					this.$router.push({path: "/PartTime"})
+					this.$router.push({path: "/PartTime"});
 				}
 			},
 			publicJob(){
-				this.checkStatus();
-				this.$router.push({path: "/PublicJob"})
+				if (this.checkStatus()){
+					this.$router.push({path: "/PublicJob"});
+				}
 			}
 		}
 	})

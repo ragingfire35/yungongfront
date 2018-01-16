@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import router from './router';
 import store from "./store";
+import filter from "./filter";
 import axios from 'axios'
 import App from './app.vue';
+
 import '../static/my-theme/index.less';
 
 import commonJs from './components/common/commonJs/common.js';

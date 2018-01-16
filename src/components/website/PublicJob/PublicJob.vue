@@ -193,7 +193,7 @@
                     dailyWageSystem: {
                         oneDay : 100,
                         date : 1,
-                        total: ""
+                        total: 0
                     },//日薪制
                     workWay : "定期坐班",
                     job_addresscan : {
@@ -291,6 +291,7 @@
                         break;
                     case "日薪制":
                         delete data.projectScheme;
+                        data.dailyWageSystem.total = data.dailyWageSystem.oneDay * data.dailyWageSystem.date;
                         break;
                 };
 

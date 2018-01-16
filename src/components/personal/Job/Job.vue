@@ -16,10 +16,12 @@
   					<p class="listBtn">
   						<Button
   							v-for="(item, index) in Place.cityJson"
-  							:type="formValidate.city == item.value ? 'success' : 'text'"
+  							:type="formValidate.city == item.label ? 'success' : 'text'"
   							:key="index"
-  							:value="item.value"
-  							@click="formValidate.city = item.value, Place.areaJson = item.children"
+  							:value="item.label"
+  							@click="formValidate.city = item.label,
+  									Place.areaJson =  [{value:'', label:'不限',children:[]}].concat( item.children ),
+  									selectJob()"
   							v-if= "index < Place.cityShowNum"
   						>{{item.label}}</Button>
   					</p>
@@ -35,17 +37,17 @@
   					<p class="listBtn">
   						<Button
 			  				v-for="(item, index) in Place.areaJson"
-			  				:type="formValidate.area == item.value ? 'success' : 'text'"
+			  				:type="formValidate.area == item.label ? 'success' : 'text'"
 			  				:key="index"
-			  				:value="item.value"
-			  				@click="formValidate.area = item.value"
+			  				:value="item.label"
+			  				@click="formValidate.area = item.label, selectJob()"
 			  				v-if= "index < Place.areaShowNum"
   						>{{item.label}}</Button>
   					</p>
   					<p class="moreBtn" v-if="Place.areaJson && Place.areaJson.length > 8">
   						<Button type="text" icon="chevron-down" @click.native="Place.areaShowNum = Place.areaShowNum == 8 ? 1000:8">更多</Button>
   					</p>
-  					<p v-if="formValidate.city == ''" class="noValue" >
+  					<p v-if="formValidate.city == '不限'" class="noValue" >
   						请先选择一个工作地点
   					</p>
   				</div>
@@ -56,9 +58,9 @@
 						<Button
 							v-for="(item, index) in JobClass.roleJson"
 							:key="index"
-							:value = "item.value"
-							:type="formValidate.role == item.value ? 'primary' : 'text'"
-							@click="formValidate.role = item.value"
+							:value = "item.label"
+							:type="formValidate.role == item.label ? 'success' : 'text'"
+							@click="formValidate.role = item.label,  selectJob()"
 							v-if="index < JobClass.roleShowNum"
 						>
 							{{ item.label }}
@@ -75,75 +77,14 @@
 						<Button
 							v-for="(item, index) in sortRule"
 							:key="index"
-							:type="index == ruleIndex ? 'success' : 'text'"
-							@click="ruleIndex = index"
+							:type="formValidate.sortRule == item ? 'success' : 'text'"
+							@click="formValidate.sortRule = item, selectJob()"
 						>
 							{{item}}
 						</Button>
 					</p>
 				</div>
             </Card>
-            <Card class="card jobDetail">
-				<Row type="flex" justify="center" class="detail-inner">
-					<Col
-						class="lt-det"
-						:xs="24"
-						:sm="24"
-						:md="16"
-						:lg="16"
-					>
-						<div class="job-main">
-							<router-link to="/JobDetail">
-								<div class="title">
-									<h5>交易平台功能完善</h5>
-									<Tag class="badge">日薪制</Tag>
-								</div>
-								<p class="text">
-									1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。 例：目前网站只支持玩客币交易，如果要添加其它币种交易，后台直接添加，前台会显示这个币的交易链接，点击可进入交易页面。 2、转币入帐加一个表单。 例：客户向我们钱包转帐后，在网站可以提交表单，表单内容为客户钱包帐号、转帐金额、转帐时间（精确到
-								</p>
-							</router-link>
-						</div>
-						<div class="user-info">
-							<router-link to="">
-								<img src="./image/user.png" alt="">
-								<span>大好时光</span>
-								<i>21分钟前发布</i>
-							</router-link>
-						</div>
-
-					</Col>
-
-					<Col
-						class="rt-det"
-						:xs="24"
-						:sm="24"
-						:md="8"
-						:lg="8"
-					>
-						<hr class="split-line"/>
-						<div class="about-num">
-							<p>预估&nbsp;<span>20000</span>&nbsp;元</p>
-							<ol>
-								<li>
-									<span>工期：</span>
-									<span>20天</span>
-								</li>
-								<li>
-									<span>预算：</span>
-									<span>20000元</span>
-								</li>
-								<li>
-									<span>开工时间：</span>
-									<span>2017-12-05</span>
-								</li>
-							</ol>
-							<Button type="primary">投递职位</Button>
-						</div>
-					</Col>
-				</Row>
-            </Card>
-
-
 
             <Card class="card jobDetail"
 	              v-for="(item, index) in job_public"
@@ -160,7 +101,7 @@
 						<div class="job-main">
 							<router-link to="/JobDetail">
 								<div class="title">
-									<h5 v-text="item.projectDesc"></h5>
+									<h5 v-text="item.projectName"></h5>
 									<Tag class="badge" v-text="item.payWay"></Tag>
 								</div>
 								<p class="text" v-html="item.projectDesc"></p>
@@ -170,7 +111,7 @@
 							<router-link to="">
 								<img :src="item.userhead" alt="">
 								<span v-text="item.username"></span>
-								<i>21分钟前发布</i>
+								<i>{{item.timeAgo | timeAgo}}发布</i>
 							</router-link>
 						</div>
 
@@ -185,15 +126,19 @@
 					>
 						<hr class="split-line"/>
 						<div class="about-num">
-							<p>预估&nbsp;<span>20000</span>&nbsp;元</p>
+							<p>
+								预估&nbsp;
+								<span v-if="item.projectScheme!=''">{{ JSON.parse( item.projectScheme ).total }}&nbsp;元</span>
+								<span v-else>{{ JSON.parse( item.dailyWageSystem || "" ).oneDay }}&nbsp;元&nbsp;/&nbsp;天</span>
+							</p>
 							<ol>
 								<li>
 									<span>工期：</span>
-									<span>{{ item.projectScheme}}天</span>
+									<span>{{ JSON.parse( item.projectScheme || item.dailyWageSystem ).date }}天</span>
 								</li>
 								<li>
 									<span>预算：</span>
-									<span>20000元</span>
+									<span>{{ JSON.parse( item.projectScheme || item.dailyWageSystem ).total }}元</span>
 								</li>
 								<li>
 									<span>开工时间：</span>
@@ -205,9 +150,6 @@
 					</Col>
 				</Row>
             </Card>
-
-
-
 		</Col>
 
 		<switch-process/>
@@ -219,42 +161,62 @@
   	data(){
   		return {
   			job_public: [],
-			ruleIndex : 0,
   			Place : {
-  				cityJson : [{value:"", label:"全国",children:[]}].concat( this.cityJson ),
+  				cityJson : [{value:"", label:"不限",children:[]}].concat( this.cityJson ),
   				areaJson : {},
-  				roleJson : this.roleJson,
   				cityShowNum : 8,
   				areaShowNum : 8
   			},
   			JobClass : {
-  				roleJson : this.roleJson,
+  				roleJson : [{value:"", label:"不限",children:[]}].concat( this.roleJson ),
   				roleShowNum : 5
   			},
 
   			formValidate:{
-  				city : "",
-  				area : "",
-  				role : ""
+  				"city" : "不限",
+  				"area" : "不限",
+  				"role" : "不限",
+  				"sortRule" : "默认"
   			},
 
   			sortRule: ["默认",  "最新职位",  "无人投递",  "接受远程"]
   		}
   	},
-    mounted(){
-    	var _this = this;
-        _this.$ajax({
-            url: 'api/website/publicJob.php',
-            method: 'POST',
-            data : {status : 'get'}
-        }).then((response) => {
-            if(response.data.status == 'success'){
-               _this.job_public = response.data.info;
-            };
-        });
-    },
     components:{
     	switchProcess : switchProcess
+    },
+    mounted(){
+    	this.getJob();
+    },
+    methods:{
+    	getJob(){
+	    	var _this = this;
+	        _this.$ajax({
+	            url: 'api/website/publicJob.php',
+	            method: 'POST',
+	            data : {status : 'get'}
+	        }).then((response) => {
+	            if(response.data.status == 'success'){
+	               _this.job_public = response.data.info;
+	            };
+	        });
+    	},
+    	selectJob(){
+	    	var _this = this;
+	    	_this.spinShow = true;
+	    	var data = JSON.parse(JSON.stringify(_this.formValidate));
+	    	data['status'] = 'check';
+	        _this.$ajax({
+	            url: 'api/website/publicJob.php',
+	            method: 'POST',
+	            data : data
+	        }).then((response) => {
+	        	_this.spinShow = false;
+	            if(response.data.status == 'success'){
+	               _this.job_public = response.data.info;
+	            };
+	        });
+    	}
     }
   }
 </script>

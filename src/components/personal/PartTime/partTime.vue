@@ -39,7 +39,7 @@
                 :rules="ruleValidate"
             >
                 <Form-item label="目前状态" prop="now_status">
-                    <Radio-group v-model="formValidate.now_status">
+                    <Radio-group v-model ="formValidate.now_status">
                         <Radio label="在职"></Radio>
                         <Radio label="自由职业者"></Radio>
                     </Radio-group>
@@ -84,7 +84,7 @@
                             </Form-item>
 		                </Col>
 		                <Col span="6">
-		                    <Button type="success" @click="handleRemove(index)" long>删除</Button>
+		                    <Button type="success" @click="handleRemove(index)" long v-if="index>0">删除</Button>
 		                </Col>
 		            </Row>
 		        </Form-item>
@@ -150,7 +150,7 @@
                     <Input-number :max="1000" :min="100" :step="100" v-model="formValidate.job_priceday" style="width: 100%;" ></Input-number>
 		        </Form-item>
 		  		<Form-item label="顾问角色" prop="user_type">
-		            <Select v-model="formValidate.user_type" placeholder="顾问角色">
+		            <Select placeholder="顾问角色" v-model="formValidate.user_type" >
 		            	<Option value="">顾问角色</Option>
                         <Option v-for="(item,index) in roleJson" :key="index" :value="item.label" >
                              {{item.label}}
@@ -223,7 +223,7 @@
                         detail : "万柏林区千峰南路"
                     },
                     job_priceday :100,
-                    user_type : "10003",
+                    user_type : "前端工程师",
                     user_skills : ["js","css"],
                     user_skillsexe : "请详细填写您的技术经验和能力情况，展示您的实力，有利于更多公司预约您。请不要小于140字。",
                     user_projectexe : "请详细填写您在工作和业余时间参与过的项目，以及您在项目中所做的具体工作，有利于更多公司预约您。请不要小于70字。",
@@ -233,8 +233,7 @@
                         { required: true, message: '请选择您现在的工作状态', trigger: 'change' }
                     ],
                     job_timecan: [
-                        { required: true, type: 'array', min: 1, message: '至少选择一个爱好', trigger: 'change' },
-                        { type: 'array', max: 2, message: '最多选择两个爱好', trigger: 'change' }
+                        { required: true, type: 'array', min: 1, message: '至少选择一个时间端', trigger: 'change' },
                     ],
                     user_type:[
                         { required: true, message: '请选择顾问角色', trigger: 'change' }

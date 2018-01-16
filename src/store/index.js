@@ -18,7 +18,7 @@ const store = new Vuex.Store({
         LoginedUser: {
           username: sessionStorage.username || '',
           userhead :  sessionStorage.userhead || ''
-        }
+        },
     },
 
     mutations: {

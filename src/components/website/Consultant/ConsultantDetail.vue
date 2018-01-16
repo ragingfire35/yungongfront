@@ -2,7 +2,7 @@
 	@import "ConsultantDetail.less";
 </style>
 <template>
-	<Row type="flex" class="ConDetail" justify="center" :gutter="16">
+	<Row type="flex" class="ConDetail" justify="center" :gutter="16" v-if="detail != ''">
 		<Col
 			class="left-section"
 			:xs="24"
@@ -12,23 +12,23 @@
 		>
 			<Card class="ltCard">
 				<p class="importantInfo">
-					我：<span>深圳</span>&nbsp;&nbsp;/&nbsp;<span>Android工程师</span>
+					我：<span>{{ JSON.parse(detail.job_addresscan).city }}</span>&nbsp;&nbsp;/&nbsp;<span>{{ JSON.parse(detail.job_exe)[0].value2}}</span>
 				</p>
 				<div class="about-me">
 					<img src="../../personal/Job/image/user.png" height="50" width="50" alt="" class="lt-img">
 					<div class="rt-content">
 						<ul>
 							<li>
-								<span>大好时光</span>
+								<span>{{ detail.username }}</span>
 							</li>
 							<li>
-								<span>1000</span>&nbsp;/&nbsp;8小时
+								<span>{{ detail.job_priceday }}</span>&nbsp;/&nbsp;8小时
 							</li>
 							<li>
-								5年工作经验
+								{{detail.job_timelimit}}年工作经验
 							</li>
 							<li>
-								Android工程师
+								{{ JSON.parse(detail.job_exe)[0].value2}}
 							</li>
 							<li>
 								高级顾问
@@ -47,9 +47,15 @@
 				</div>
 				<div class="skills">
 					<h4 class="my-tt">擅长技能</h4>
-					<Tag type="dot" class="skills-tag">Javascript</Tag>
-					<Tag type="dot" class="skills-tag">Php</Tag>
-					<div class="skills-main">
+					<Tag
+						class="skills-tag"
+						type="dot"
+						v-for="(tag, tagIndex) in JSON.parse(detail.user_skills)"
+						:key="tagIndex"
+					>
+						{{tag}}
+					</Tag>
+					<!-- <div class="skills-main">
 						主修前端，辅修 Web 开发相关的各种技能，认同 RoR 的开发理念；<br/>
 						热爱开源，为多个开源项目提过 PR，如 Vue[1]、jQuery[2]、Async[3]；<br/>
 						能胜任任何技术栈的开发，已有经验的包括常规前端技术外还有 Ruby(RoR)、PHP、Nodejs、Java 等；<br/>
@@ -58,11 +64,12 @@
 						[1]: https://github.com/vuejs/vue/pulls?q=is%3Apr+author%3Arhyzx+is%3Aclosed <br/>
 						[2]: https://github.com/jquery/jquery/pull/1888 <br/>
 						[3]: https://github.com/caolan/async/pull/216<br/>
-					</div>
+					</div> -->
+					<div class="skills-main" v-html="detail.user_skillsexe"></div>
 				</div>
 				<div class="exe">
 					<h4 class="my-tt">项目经验</h4>
-					<div class="exe-main">
+					<!-- <div class="exe-main">
 						Treation https://treation.com<br/>
 						主导该项目的前端工作，基于 Vue、BS4、Actioncable，主要精力花在表格的编辑功能开发与性能优化上；<br/>
 						参与部分后端任务，基于 Rails。<br/><br/>
@@ -86,12 +93,8 @@
 						[1]: https://speakerdeck.com/rhyzx/xie-angular-de-zui-jia-shi-jian<br/>
 						[2]: https://github.com/nodeca/mincer<br/>
 						[3]: https://github.com/rhyzx/sample-pyramid-app-with-docker-and-fig
-					</div>
-				</div>
-				<div class="works">
-					<h4 class="my-tt">作品介绍</h4>
-					<div class="works-main">
-						<a href="https://github.com/rhyzx">https://github.com/rhyzx</a>
+					</div> -->
+					<div class="exe-main" v-html="detail.user_projectexe">
 					</div>
 				</div>
 				<div class="comments">
@@ -151,6 +154,7 @@
 	export default({
 		data(){
 			return{
+				detail: '',
 				focusOn : false,
 				valueDisabled : 4.2,
 				value7 : "",
@@ -165,7 +169,16 @@
 			}
 		},
 		mounted(){
-
+	    	var _this = this;
+	        _this.$ajax({
+	            url: 'api/personal/jobSeekers.php',
+	            method: 'POST',
+	            data : {status : 'one', userid: _this.$route.query.userid}
+	        }).then((response) => {
+	            if(response.data.status == 'success'){
+	               _this.detail = response.data.info;
+	            };
+	        });
 		},
 		methods:{
 
