@@ -70,7 +70,7 @@
 			>
 				<div class="main-info">
 					<router-link to="">
-						<img src="./image/user.png" height="50" width="50" alt="" class="info-headerImg">
+						<img src="http://yungong.cow8.cn/static/image/user.png" height="50" width="50" alt="" class="info-headerImg">
 						<p class="info-rt">
 							<span class="info-name">大好时光</span><br/>
 							<span class="public-time">大约&nbsp;4小时&nbsp;前</span>

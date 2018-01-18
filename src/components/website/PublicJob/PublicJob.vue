@@ -244,7 +244,7 @@
             var _this = this;
             _this.qs = require('querystring');
             _this.$ajax({
-                url: 'api/website/websiteCompany.php',
+                url: _this.API_ROOT + '/website/websiteCompany.php',
                 method: 'POST',
                 data : _this.qs.stringify({status: 'check'})
             }).then((response) => {
@@ -296,7 +296,7 @@
                 };
 
                 _this.$ajax({
-                    url: 'api/website/publicJob.php',
+                    url: _this.API_ROOT + '/website/publicJob.php',
                     method: 'POST',
                     data : data
                 }).then((response) => {

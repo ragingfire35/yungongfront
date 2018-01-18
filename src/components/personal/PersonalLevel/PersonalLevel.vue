@@ -5,7 +5,6 @@
 	.sliderBar{
 		width: 80%;
 		margin: 100px auto 36px auto;
-
 	}
 	.tooltip{
 		width: 80%;
@@ -47,11 +46,36 @@
 	}
 	.levelContent{
 		text-align: left;
+		padding-left: 120px;
+		margin: 0 0 120px 0;
+		p{
+			color: #666;
+			margin-top: 30px;
+			&.ts{
+				color: #ff6161;
+			}
+		}
+	}
+	.level-tt{
 		width: 80%;
-		margin: 120px auto 0 auto;
 	    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#008000), to(#333333));
 	    -webkit-background-clip: text;
 	    -webkit-text-fill-color: transparent;
+	}
+	.nowLevel{
+		text-align: left;
+		padding-left: 120px;
+		margin: 120px 0 30px 0;
+		p{
+			font-size: 20px;
+			margin-top: 20px;
+			span{
+				display: inline-block;
+				padding: 0 15px;
+				font-weight: bold;
+				color: #ff6161;
+			}
+		}
 	}
 </style>
 <style lang="less">
@@ -91,10 +115,25 @@
 		  </ul>
 	  </div>
 
-	  <div class="levelContent">
-	  	<h2>等级攻略</h2>
-	  	<p>**该等级职称只适用于云工网</p>
+	  <div class="nowLevel">
+	  	<h2 class="level-tt">当前进度</h2>
+	  	<p>已完成<span>10</span>个项目,好评平均分达到<span>4</span>分, 有<span>3</span>个项目好评分达到 4.5分</p>
 	  </div>
+
+	  <div class="levelContent">
+	  	<h2 class="level-tt">等级攻略</h2>
+	  	<p class="ts">*该等级职称只适用于云工网</p>
+		<p>初级工程师  完成三个项目</p>
+
+		<p>2. 中级工程师  完成5个项目 && 好评平均分 达到 4 分</p>
+
+		<p>3. 高级工程师  完成10个项目 && 好评平均分 达到 4 分 && 有个3个项目好评分 达到 4.5分</p>
+
+		<p>4. 专家 	   完成20个项目 && 好评平均分 达到 4 分 && 有个10个项目好评分 达到 4.5分</p>
+
+		<p>5. 高级顾问    完成50个项目 && 好评平均分 达到 4 分 && 有个30个项目好评分 达到 4.5分</p>
+	  </div>
+
 	</Card>
 </template>
 <script>

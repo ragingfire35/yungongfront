@@ -152,7 +152,7 @@
                 const bcrypt = _this.bcrypt();
                 _this.qs = require('querystring')
                  _this.$ajax.post(
-                    'api/loginIn.php',
+                    _this.API_ROOT + '/loginIn.php',
                     _this.qs.stringify({"username": _this.formInline.user})
                 ).then((response) => {
                     if(response.data.status == "nameerror"){
@@ -171,8 +171,9 @@
                 })
             },
             checkLoginin (){
+
                 this.$ajax.post(
-                    'api/CheckLogin.php',
+                    this.API_ROOT + '/CheckLogin.php',
                     this.qs.stringify({"username": this.formInline.user, "checkLogin" : "1" })
                 ).then((response) => {
                     if(response.data.status == "success"){

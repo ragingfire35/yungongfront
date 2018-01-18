@@ -127,7 +127,7 @@
                 const _this = this;
                 var qs = require('querystring');
                  _this.$ajax.post(
-                    'api/loginUp.php',
+                    _this.API_ROOT + '/loginUp.php',
                     qs.stringify({"username": _this.formInline.user, "pass" : _this.bcrypt() })
                 ).then((response) => {
                     if(response.data.status == "repeat"){

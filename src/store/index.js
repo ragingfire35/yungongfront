@@ -16,12 +16,29 @@ const store = new Vuex.Store({
                           "text1" : ""
                       },//用户属于企业还是个人 value--> "{}"
         LoginedUser: {
-          username: sessionStorage.username || '',
-          userhead :  sessionStorage.userhead || ''
+          username: sessionStorage.username || 'http://yungong.cow8.cn/static/image/user.png',
+          userhead :  sessionStorage.userhead
         },
     },
 
     mutations: {
+        CHECKLOGIN(state){
+          if(state.is_login == "false"){
+            this._vm.$Message.error('请先登录');
+            return false;
+          } else if(!state.userClassify.userClass){
+            this._vm.$Notice.open({
+                 title: "请先选择一个版本进入",
+                 desc: "预约人才 或 发布需求 请进入企业版<br/>投递职位 或 申请兼职 请进入个人版",
+                 duration : 5,
+                 key: 'bb'
+            });
+            return false;
+          } else {
+            return true;
+          }
+        },
+
     	  LOGIN (state){
             state.is_login = sessionStorage.is_login = "true";
         },
@@ -45,6 +62,9 @@ const store = new Vuex.Store({
         },
     },
     actions:{
+        checklogin({commit}){
+          commit('CHECKLOGIN');
+        },
         login ({commit}, userinfo) {
           this.dispatch('username', userinfo.username);
           this.dispatch('userhead', userinfo.userhead);
@@ -58,7 +78,7 @@ const store = new Vuex.Store({
           commit('USERNAME');
         },
         userhead ({commit}, userhead) {
-          sessionStorage.setItem("userhead", userhead == false ? "./src/components/personal/Job/image/user.png" : userhead);
+          sessionStorage.setItem("userhead", userhead == false ? "http://yungong.cow8.cn/static/image/user.png" : userhead);
           commit('USERHEAD');
         },
         userClassify ({commit},  userClassify) {

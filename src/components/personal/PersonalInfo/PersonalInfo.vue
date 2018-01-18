@@ -68,7 +68,7 @@
             	var _this = this;
                 var qs = require('querystring');
                  _this.$ajax.post(
-                    'api/common/personalInfo.php',
+                    _this.API_ROOT + '/common/personalInfo.php',
                     qs.stringify(
                     	{
                     		"username": _this.formValidate.name,

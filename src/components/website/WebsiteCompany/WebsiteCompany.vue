@@ -186,7 +186,7 @@
 				var _this = this;
 				_this.qs = require('querystring');
 		        _this.$ajax({
-		            url: 'api/website/websiteCompany.php',
+		            url: _this.API_ROOT + '/website/websiteCompany.php',
 		            method: 'POST',
 		            data : _this.qs.stringify({status: 'get'})
 		        }).then((response) => {
@@ -223,7 +223,7 @@
 					license : _this.formValidate.license.uploadImg
 				};
 		        _this.$ajax({
-		            url: 'api/website/websiteCompany.php',
+		            url: _this.API_ROOT + '/website/websiteCompany.php',
 		            method: 'POST',
 		            data : _this.qs.stringify(data)
 		        }).then((response) => {

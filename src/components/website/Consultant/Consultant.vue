@@ -183,7 +183,7 @@
 									<span>{{ JSON.parse(item.job_addresscan).city + '&nbsp;' + JSON.parse(item.job_addresscan).area }}</span>
 								</li>
 							</ol>
-							<Button type="success" @click="$router.push({'path': '/GetTalent'})">立即预约</Button>
+							<Button type="success" @click.native="yuyue(item.userid)">立即预约</Button>
 						</div>
 					</Col>
 				</Row>
@@ -254,10 +254,15 @@
     	switchProcess : switchProcess
     },
     methods: {
+    	yuyue(userid){
+    		//if (this.$store.dispatch("checklogin") == true){
+    			this.$router.push({'path': '/GetTalent', query: { userid: userid }});
+    		//};
+    	},
     	getPersonal(){
 	    	var _this = this;
 	        _this.$ajax({
-	            url: 'api/personal/jobSeekers.php',
+	            url: _this.API_ROOT + '/personal/jobSeekers.php',
 	            method: 'POST',
 	            data : {status : 'get'}
 	        }).then((response) => {
@@ -272,7 +277,7 @@
 	    	data['status'] = 'check';
 	    	_this.spinShow = true;
 	        _this.$ajax({
-	            url: 'api/personal/jobSeekers.php',
+	            url: _this.API_ROOT + '/personal/jobSeekers.php',
 	            method: 'POST',
 	            data : data
 	        }).then((response) => {

@@ -140,7 +140,7 @@
 				let _this = this;
 				_this.qs = require('querystring');
 	            _this.$ajax.post(
-	                'api/CheckLogin.php',
+	                _this.API_ROOT + '/CheckLogin.php',
 	                _this.qs.stringify({"username": _this.$store.state.LoginedUser.username, "checkLogin" : "0" })
 	            ).then((response) => {
 	                if(response.data.status == "success"){

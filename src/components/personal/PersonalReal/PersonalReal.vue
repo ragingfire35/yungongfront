@@ -195,7 +195,7 @@
 				var _this = this;
 				_this.qs = require('querystring');
 		        _this.$ajax({
-		            url: 'api/personal/personalReal.php',
+		            url: _this.API_ROOT + '/personal/personalReal.php',
 		            method: 'POST',
 		            data : _this.qs.stringify({status: 'get'})
 		        }).then((response) => {
@@ -242,7 +242,7 @@
 				};
 				_this.qs = require('querystring');
 		        _this.$ajax({
-		            url: 'api/personal/personalReal.php',
+		            url: _this.API_ROOT + '/personal/personalReal.php',
 		            method: 'POST',
 		            data : _this.qs.stringify(data)
 		        }).then((response) => {

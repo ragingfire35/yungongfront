@@ -192,7 +192,7 @@
     	getJob(){
 	    	var _this = this;
 	        _this.$ajax({
-	            url: 'api/website/publicJob.php',
+	            url: _this.API_ROOT + '/website/publicJob.php',
 	            method: 'POST',
 	            data : {status : 'get'}
 	        }).then((response) => {
@@ -207,7 +207,7 @@
 	    	var data = JSON.parse(JSON.stringify(_this.formValidate));
 	    	data['status'] = 'check';
 	        _this.$ajax({
-	            url: 'api/website/publicJob.php',
+	            url: _this.API_ROOT + '/website/publicJob.php',
 	            method: 'POST',
 	            data : data
 	        }).then((response) => {

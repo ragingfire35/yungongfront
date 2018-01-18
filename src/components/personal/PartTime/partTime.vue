@@ -186,7 +186,17 @@
 
                 </Form-item>
                 <Form-item label="技术详述" prop="user_skillsexe">
-                    <Input v-model="formValidate.user_skillsexe" type="textarea" :autosize="{minRows: 5,maxRows: 20}" placeholder="请详细填写您的技术经验和能力情况，展示您的实力，有利于更多公司预约您。请不要小于140字。"></Input>
+                    <Input
+                        v-model="formValidate.user_skillsexe"
+                        type="textarea"
+                        :autosize="{minRows: 5,maxRows: 20}"
+                        placeholder="
+                        请详细填写您的技术经验和能力情况，展示您的实力，有利于更多公司预约您。请不要小于140字。例：
+                        1.xxxxxxxxxxx
+                        2.xxxxxxxxxxxxxx
+                        3.xxxxx"
+                    >
+                    </Input>
                 </Form-item>
                 <Form-item label="项目经验" prop="user_projectexe">
                     <Input v-model="formValidate.user_projectexe" type="textarea" :autosize="{minRows: 5,maxRows: 20}" placeholder="请详细填写您在工作和业余时间参与过的项目，以及您在项目中所做的具体工作，有利于更多公司预约您。请不要小于70字。"></Input>
@@ -257,7 +267,7 @@
 	        var _this = this;
 	        _this.qs = require('querystring');
             _this.$ajax({
-                url: 'api/personal/personalReal.php',
+                url: _this.API_ROOT + '/personal/personalReal.php',
                 method: 'POST',
                 data : _this.qs.stringify({status: 'check'})
             }).then((response) => {
@@ -307,7 +317,7 @@
                 var data = this.formValidate;
                 data['status'] = 'save';
                 _this.$ajax({
-                    url: 'api/personal/jobSeekers.php',
+                    url: _this.API_ROOT + '/personal/jobSeekers.php',
                     method: 'POST',
                     data : data
                 }).then((response) => {

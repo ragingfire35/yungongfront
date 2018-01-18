@@ -15,7 +15,7 @@
 					我：<span>{{ JSON.parse(detail.job_addresscan).city }}</span>&nbsp;&nbsp;/&nbsp;<span>{{ JSON.parse(detail.job_exe)[0].value2}}</span>
 				</p>
 				<div class="about-me">
-					<img src="../../personal/Job/image/user.png" height="50" width="50" alt="" class="lt-img">
+					<img src="http://yungong.cow8.cn/static/image/user.png" height="50" width="50" alt="" class="lt-img">
 					<div class="rt-content">
 						<ul>
 							<li>
@@ -171,7 +171,7 @@
 		mounted(){
 	    	var _this = this;
 	        _this.$ajax({
-	            url: 'api/personal/jobSeekers.php',
+	            url: _this.API_ROOT + '/personal/jobSeekers.php',
 	            method: 'POST',
 	            data : {status : 'one', userid: _this.$route.query.userid}
 	        }).then((response) => {

@@ -3,7 +3,7 @@ exports.install = function (Vue, options) {
         var _this = this;
         _this.qs = require('querystring');
         _this.$ajax({
-            url: 'api/common/youtuQianMing.php',
+            url: _this.API_ROOT + '/common/youtuQianMing.php',
             method: 'POST',
             data : ""
         }).then((response) => {

@@ -5,6 +5,8 @@ import filter from "./filter";
 import axios from 'axios'
 import App from './app.vue';
 
+Vue.prototype.API_ROOT = process.env.API_ROOT;
+
 import '../static/my-theme/index.less';
 
 import commonJs from './components/common/commonJs/common.js';
