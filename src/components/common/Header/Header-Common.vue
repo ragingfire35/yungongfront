@@ -65,27 +65,35 @@
 					            </template>
 					            <div v-if="$store.state.userClassify.userClass">
 						            <Menu-group title="使用">
-						                <Menu-item name="/PartTime" v-if="$store.state.userClassify.userClass == 'personal'">我要兼职</Menu-item>
-						                <Menu-item name="/PublicJob" v-else>我要雇佣</Menu-item>
-
-						                <Menu-item name="/personalHome?name=personalPartTime" v-if="$store.state.userClassify.userClass == 'personal'">兼职详情</Menu-item>
-						            	<Menu-item name="/PublicJob" v-else>雇佣详情</Menu-item>
+						            	<div v-if="$store.state.userClassify.userClass == 'personal'">
+						            		 <Menu-item name="/PartTime">我要兼职</Menu-item>
+						            		 <Menu-item name="/personalHome?name=personalPartTime">兼职详情</Menu-item>
+						            	</div>
+						               	<div v-else>
+							                <Menu-item name="/PublicJob">我要雇佣</Menu-item>
+							            	<Menu-item name="/WebsiteHome?name=websiteHire">雇佣详情</Menu-item>
+							            	<Menu-item name="/WebsiteHome?name=websiteFollow">我的关注</Menu-item>
+						               	</div>
 						            </Menu-group>
 						            <Menu-group title="个人">
 
 						            	<Menu-item name="/Pay">
 						            		账户充值
 						            	</Menu-item>
-						            	<Menu-item name="/WebsiteHome?name=websiteInfo" v-if="$store.state.userClassify.userClass == 'website'">
-						            		修改账户资料
-						            	</Menu-item>
+						            	<div v-if="$store.state.userClassify.userClass == 'personal'">
+							            	<Menu-item name="/PersonalHome?name=personalInfo">
+							            		修改账户资料
+							            	</Menu-item>
+							            	<Menu-item name="/PersonalHome?name=personalLevel" >
+							            		职业等级
+							            	</Menu-item>
+						            	</div>
+						            	<div v-else>
+							            	<Menu-item name="/WebsiteHome?name=websiteInfo">
+							            		修改账户资料
+							            	</Menu-item>
+						            	</div>
 
-						            	<Menu-item name="/PersonalHome?name=personalInfo" v-else>
-						            		修改账户资料
-						            	</Menu-item>
-						            	<Menu-item name="/PersonalHome?name=personalLevel" v-if="$store.state.userClassify.userClass == 'personal'">
-						            		职业等级
-						            	</Menu-item>
 						                <Menu-item name="/" @click.native=" loginOut">退出</Menu-item>
 						            </Menu-group>
 					            </div>

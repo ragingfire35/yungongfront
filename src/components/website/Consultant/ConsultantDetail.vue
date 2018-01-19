@@ -15,7 +15,7 @@
 					我：<span>{{ JSON.parse(detail.job_addresscan).city }}</span>&nbsp;&nbsp;/&nbsp;<span>{{ JSON.parse(detail.job_exe)[0].value2}}</span>
 				</p>
 				<div class="about-me">
-					<img src="http://yungong.cow8.cn/static/image/user.png" height="50" width="50" alt="" class="lt-img">
+					<img :src="detail.userhead" height="50" width="50" alt="" class="lt-img">
 					<div class="rt-content">
 						<ul>
 							<li>
@@ -38,10 +38,11 @@
 							:type="focusOn === false ? 'default' : 'error'"
 							class="focusOn"
 							long
-							@click="focusOn = !focusOn"
-							v-html="focusOn === false ? '关注' : '已关注'"
+							@click="follow('save')"
+							:loading="loading"
 						>
-
+  							<span v-if="!loading" v-html="focusOn === false ? '关注' : '已关注'"></span>
+       						<span v-else>Loading...</span>
 						</Button>
 					</div>
 				</div>
@@ -155,12 +156,13 @@
 		data(){
 			return{
 				detail: '',
+				loading: false,
 				focusOn : false,
 				valueDisabled : 4.2,
 				value7 : "",
 				comments:[
 						{
-							head : "./src/components/personal/Job/image/user.png",
+							head : "",
 							name : "王鹏",
 							time : "2015-12-22 11:58",
 							content : "经验丰富，工作效率高，非常超值"
@@ -169,19 +171,51 @@
 			}
 		},
 		mounted(){
-	    	var _this = this;
-	        _this.$ajax({
-	            url: _this.API_ROOT + '/personal/jobSeekers.php',
-	            method: 'POST',
-	            data : {status : 'one', userid: _this.$route.query.userid}
-	        }).then((response) => {
-	            if(response.data.status == 'success'){
-	               _this.detail = response.data.info;
-	            };
-	        });
+			this.getInfo();
 		},
 		methods:{
+			getInfo(){
+		    	var _this = this;
+		        _this.$ajax({
+		            url: _this.API_ROOT + '/personal/jobSeekers.php',
+		            method: 'POST',
+		            data : {status : 'one', userid: _this.$route.query.userid}
+		        }).then((response) => {
+		            if(response.data.status == 'success'){
+		               _this.detail = response.data.info;
+		               _this.follow("get");
+		            };
+		        });
+			},
+			follow(status){
+		    	var _this = this;
+		    	_this.loading = true;
+		        _this.$ajax({
+		            url: _this.API_ROOT + '/website/follow.php',
+		            method: 'POST',
+		            data : {
+		            		"status" : status,
+		            		"follow" : !_this.focusOn,
+		            		"follow_userid" : _this.detail.userid
+		            }
+		        }).then((response) => {
+		            if(response.data.status == 'success'){
+		              	_this.focusOn = !_this.focusOn;
+		              	_this.loading = false;
+		              	if(status == 'save'){
+			              	var msg = _this.focusOn == true ? '我们将为您推送该用户的最新动态' : '已取消关注';
+				            _this.$Notice.success({
+				                 title: msg,
+				                 duration : 3,
+				                 key: 'follow'
+				            });
+		              	}
 
+		            } else {
+		            	_this.$Message.error(response.data.msg);
+		            }
+		        });
+			}
 		}
 	})
 </script>

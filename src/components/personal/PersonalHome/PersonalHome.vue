@@ -31,16 +31,16 @@
 		<h1 class="tt">个人主页</h1>
 		<Tabs type="card" class="personalHome" @on-click="info" :value="$route.query.name">
 			<Tab-pane label="账户资料" name="personalInfo">
-				<personal-info v-if="base.personalInfo" ></personal-info>
+				<personal-info v-if="showName == 'personalInfo'" ></personal-info>
 			</Tab-pane>
 			<Tab-pane label="职业等级" name="personalLevel">
-				<personal-level v-if="base.personalLevel"></personal-level>
+				<personal-level v-if="showName == 'personalLevel'"></personal-level>
 			</Tab-pane>
 			<Tab-pane label="真实信息" name="personalReal">
-				<personal-real v-if="base.personalReal"></personal-real>
+				<personal-real v-if="showName == 'personalReal'"></personal-real>
 			</Tab-pane>
 			<Tab-pane label="兼职详情" name="personalPartTime">
-				<personal-part-time v-if="base.personalPartTime"></personal-part-time>
+				<personal-part-time v-if="showName == 'personalPartTime'"></personal-part-time>
 			</Tab-pane>
 		</Tabs>
 
@@ -57,12 +57,12 @@
 	export default({
 		data(){
 			return{
-				base : {
-					personalInfo : this.$route.query.name == 'personalInfo' || false,
-					personalLevel : this.$route.query.name == 'personalLevel' || false,
-					personalReal : this.$route.query.name == 'personalReal' || false,
-					personalPartTime : this.$route.query.name == 'personalPartTime' || false
-				}
+				showName : this.$route.query.name
+			}
+		},
+		watch:{
+			$route(name){
+				this.showName = this.$route.query.name;
 			}
 		},
 		components:{
@@ -75,7 +75,6 @@
 		},
 		methods:{
 			info(name){
-				this.base[name] = true;
 				this.$router.push({path:'/PersonalHome', query: {name:name}})
 			}
 		}

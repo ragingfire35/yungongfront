@@ -44,7 +44,8 @@ const store = new Vuex.Store({
         },
         LOGOUT (state){
             state.is_login = sessionStorage.is_login = "false";
-            state.LoginedUser.name  = '';
+            state.LoginedUser.username  = '';
+            state.LoginedUser.userhead  = '';
             sessionStorage.clear();
             window.location.href = "/";
         },
