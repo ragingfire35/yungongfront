@@ -117,88 +117,18 @@
 
             </Card>
 
-            <Card class="card jobDetail"
-	              v-for="(item, index) in job_seekers"
-	              :key = index
-	              v-if="job_seekers.length != 0"
-            >
-				<Row type="flex" justify="center" class="detail-inner">
-					<Col
-						class="lt-det"
-						:xs="24"
-						:sm="24"
-						:md="16"
-						:lg="16"
-					>
-					<router-link :to="{ path: '/ConsultantDetail', query: { userid: item.userid }}">
-						<div class="user-info">
-							<img :src="item.userhead" alt="">
-							<span v-text="item.username"></span>
-							<span><Icon type="settings"></Icon>&nbsp;{{ JSON.parse(item.job_exe)[0].value2}}</span>
-							<span>高级顾问</span>
-							<span>{{item.job_timelimit}}年</span>
-						</div>
-						<div class="job-main">
-							<div class="title">
-								<h5>擅长技能</h5>
-							</div>
-							<Tag type="dot"
-								v-for="(tag, tagIndex) in JSON.parse(item.user_skills)"
-								:key="tagIndex"
-							>
-								{{tag}}
-							</Tag>
-							<p class="text" v-html="item.user_skillsexe"></p>
-						</div>
-					</router-link>
-
-					</Col>
-
-					<Col
-						class="rt-det"
-						:xs="24"
-						:sm="24"
-						:md="8"
-						:lg="8"
-					>
-						<hr class="split-line"/>
-						<div class="about-num">
-							<p><span>￥{{ item.job_priceday }}</span>&nbsp;/&nbsp;8小时</p>
-							<ol>
-								<li>
-									<span>被预约次数</span>
-									<span>2</span>
-								</li>
-								<li>
-									<span>可兼职时间</span>
-									<span
-										v-for="(time, timeIndex) in JSON.parse(item.job_timecan)"
-										:key="timeIndex"
-									>
-									 {{time+'&nbsp;'}}
-									</span>
-								</li>
-								<li>
-									<span>可兼职地点</span>
-									<span>{{ JSON.parse(item.job_addresscan).city + '&nbsp;' + JSON.parse(item.job_addresscan).area }}</span>
-								</li>
-							</ol>
-							<Button type="success" @click.native="yuyue(item.userid)">立即预约</Button>
-						</div>
-					</Col>
-				</Row>
-            </Card>
+			<job-seekers ref="jobSeekers"></job-seekers>
 		</Col>
 
 		<switch-process/>
 	</Row>
 </template>
 <script>
+  import JobSeekers from "@/components/common/JobSeekers/JobSeekers.vue";
   import switchProcess from "@/components/common/SwitchClass/switchProcess.vue";
   export default {
   	data(){
   		return {
-  			job_seekers : [],
   			spinShow : false,
   			formValidate:{
   				"city" : "不限",
@@ -251,6 +181,7 @@
     	this.getPersonal();
     },
     components:{
+    	JobSeekers : JobSeekers,
     	switchProcess : switchProcess
     },
     methods: {
@@ -267,7 +198,7 @@
 	            data : {status : 'get'}
 	        }).then((response) => {
 	            if(response.data.status == 'success'){
-	               _this.job_seekers = response.data.info;
+	               _this.$refs.jobSeekers.job_seekers = response.data.info;
 	            };
 	        });
     	},
@@ -283,7 +214,7 @@
 	        }).then((response) => {
 	        	_this.spinShow = false;
 	            if(response.data.status == 'success'){
-	               _this.job_seekers = response.data.info;
+	              _this.$refs.jobSeekers.job_seekers = response.data.info;
 	            };
 	        });
     	}

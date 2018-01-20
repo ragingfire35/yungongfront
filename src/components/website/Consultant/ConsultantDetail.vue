@@ -38,7 +38,7 @@
 							:type="focusOn === false ? 'default' : 'error'"
 							class="focusOn"
 							long
-							@click="follow('save')"
+							@click="follow('save', !focusOn)"
 							:loading="loading"
 						>
   							<span v-if="!loading" v-html="focusOn === false ? '关注' : '已关注'"></span>
@@ -183,11 +183,11 @@
 		        }).then((response) => {
 		            if(response.data.status == 'success'){
 		               _this.detail = response.data.info;
-		               _this.follow("get");
+		               _this.follow("get", '');
 		            };
 		        });
 			},
-			follow(status){
+			follow(status, follow){
 		    	var _this = this;
 		    	_this.loading = true;
 		        _this.$ajax({
@@ -195,14 +195,14 @@
 		            method: 'POST',
 		            data : {
 		            		"status" : status,
-		            		"follow" : !_this.focusOn,
+		            		"follow" : follow,
 		            		"follow_userid" : _this.detail.userid
 		            }
 		        }).then((response) => {
+		        	_this.loading = false;
 		            if(response.data.status == 'success'){
-		              	_this.focusOn = !_this.focusOn;
-		              	_this.loading = false;
 		              	if(status == 'save'){
+		              		_this.focusOn = !_this.focusOn;
 			              	var msg = _this.focusOn == true ? '我们将为您推送该用户的最新动态' : '已取消关注';
 				            _this.$Notice.success({
 				                 title: msg,
@@ -212,7 +212,10 @@
 		              	}
 
 		            } else {
-		            	_this.$Message.error(response.data.msg);
+		            	if(status == "save"){
+			            	_this.$Message.warning(response.data.msg);
+			            	_this.focusOn = false;
+		            	}
 		            }
 		        });
 			}
