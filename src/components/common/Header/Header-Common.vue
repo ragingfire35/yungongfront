@@ -33,12 +33,12 @@
 					        </Menu-item>
 				        </Col>
 				        <Col :xs="24" :sm="4" :md="3" :lg="3">
-					        <Menu-item name="3">
+					        <Menu-item name="/StandardService">
 					            标准服务
 					        </Menu-item>
 				        </Col>
 				        <Col :xs="24" :sm="4" :md="3" :lg="3">
-					        <Menu-item name="4">
+					        <Menu-item name="/StandardServiceF">
 					            成功案例
 					        </Menu-item>
 				        </Col>

@@ -50,7 +50,7 @@
             	value1 : true,
                 time : 3,
                 ltHref : "\ns自动跳转到个人信息页",
-                path : this.$store.state.userClassify.userClass == "personal" ? "/PersonalHome?name=personalInfo" : "/WebsiteHome?name=websiteCompany"
+                path : this.$store.state.userClassify.userClass == "personal" ? "/PersonalHome?name=personalReal" : "/WebsiteHome?name=websiteCompany"
             }
         },
         mounted(){

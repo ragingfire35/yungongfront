@@ -218,6 +218,13 @@
 			return{
 				job_seekers : []
 			}
+		},
+		methods:{
+	    	yuyue(userid){
+	    		//if (this.$store.dispatch("checklogin") == true){
+	    			this.$router.push({'path': '/GetTalent', query: { userid: userid }});
+	    		//};
+	    	}
 		}
 	})
 </script>

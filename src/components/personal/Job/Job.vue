@@ -145,7 +145,7 @@
 									<span v-text="item.workTimeStart"></span>
 								</li>
 							</ol>
-							<Button type="primary">投递职位</Button>
+							<Button type="primary" @click.native="toudi">投递职位</Button>
 						</div>
 					</Col>
 				</Row>
@@ -216,6 +216,13 @@
 	               _this.job_public = response.data.info;
 	            };
 	        });
+    	},
+    	toudi(){
+    		var _this = this;
+	        if(_this.$store.state.is_login == "false"){
+	        	 _this.$Message.error('请先登录');
+	        } else {
+	        }
     	}
     }
   }

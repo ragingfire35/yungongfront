@@ -185,11 +185,6 @@
     	switchProcess : switchProcess
     },
     methods: {
-    	yuyue(userid){
-    		//if (this.$store.dispatch("checklogin") == true){
-    			this.$router.push({'path': '/GetTalent', query: { userid: userid }});
-    		//};
-    	},
     	getPersonal(){
 	    	var _this = this;
 	        _this.$ajax({

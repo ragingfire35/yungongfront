@@ -26,7 +26,8 @@ const store = new Vuex.Store({
           if(state.is_login == "false"){
             this._vm.$Message.error('请先登录');
             return false;
-          } else if(!state.userClassify.userClass){
+          }
+/*          else if(!state.userClassify.userClass){
             this._vm.$Notice.open({
                  title: "请先选择一个版本进入",
                  desc: "预约人才 或 发布需求 请进入企业版<br/>投递职位 或 申请兼职 请进入个人版",
@@ -34,7 +35,8 @@ const store = new Vuex.Store({
                  key: 'bb'
             });
             return false;
-          } else {
+          }*/
+          else {
             return true;
           }
         },

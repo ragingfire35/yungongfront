@@ -209,6 +209,8 @@
 				                 duration : 3,
 				                 key: 'follow'
 				            });
+		              	} else {
+		              		_this.focusOn = true;
 		              	}
 
 		            } else {

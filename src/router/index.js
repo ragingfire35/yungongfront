@@ -129,6 +129,14 @@ const routes = [
               meta : {
                 title : "Comment"
               }
+            },
+            {
+              path: '/StandardService',
+              name: 'StandardService',
+              component: (resolve) => require(['@/components/StandardService/StandardService.vue'], resolve),
+              meta : {
+                title : "StandardService"
+              }
             }
           ]
         },
