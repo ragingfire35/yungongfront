@@ -145,7 +145,8 @@
 									<span v-text="item.workTimeStart"></span>
 								</li>
 							</ol>
-							<Button type="primary" @click.native="toudi">投递职位</Button>
+							<Button type="primary" @click.native="delivery('save', item)" v-if="!item.deliveryBool">投递职位</Button>
+							<Button disabled  v-else>已投递</Button>
 						</div>
 					</Col>
 				</Row>
@@ -179,7 +180,8 @@
   				"sortRule" : "默认"
   			},
 
-  			sortRule: ["默认",  "最新职位",  "无人投递",  "接受远程"]
+  			sortRule: ["默认",  "最新职位",  "无人投递",  "接受远程"],
+
   		}
   	},
     components:{
@@ -197,7 +199,11 @@
 	            data : {status : 'get'}
 	        }).then((response) => {
 	            if(response.data.status == 'success'){
+	            	for (var i in response.data.info){
+	            		response.data.info[i]['deliveryBool'] = false;
+	            	}
 	               _this.job_public = response.data.info;
+	               _this.delivery('get');
 	            };
 	        });
     	},
@@ -217,13 +223,44 @@
 	            };
 	        });
     	},
-    	toudi(){
+    	delivery(status, item={}){
     		var _this = this;
 	        if(_this.$store.state.is_login == "false"){
 	        	 _this.$Message.error('请先登录');
 	        } else {
+		        _this.$ajax({
+		            url: _this.API_ROOT + '/website/delivery.php',
+		            method: 'POST',
+		            data: {"status": status,"public_id" : item.public_id || '' }
+		        }).then((response) => {
+		        	if(status == 'save'){
+			            if(response.data.status == 'success'){
+							_this.$Message.success(response.data.msg);
+							item.deliveryBool = true;
+			            } else {
+			                _this.$Modal.confirm({
+			                    title: '温馨提示',
+			                    content: response.data.msg,
+			                    okText: '立即申请',
+			                    cancelText: '返回',
+			                    onOk: () => { _this.$router.push({path: "/PartTime"})}
+			                });
+			            };
+		        	} else {
+		        		if(response.data.status == 'success'){
+		        			for(var i in _this.job_public){
+		        				for( var j in response.data.deliveryArr ){
+		        					if (_this.job_public[i].public_id == response.data.deliveryArr[j]){
+		        						_this.job_public[i]['deliveryBool'] = true;
+		        					}
+		        				}
+		        			}
+		        		};
+		        	}
+
+		        });
 	        }
-    	}
+    	},
     }
   }
 </script>

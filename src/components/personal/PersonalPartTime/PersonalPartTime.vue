@@ -32,6 +32,40 @@
 		云工网提供支付中间担保，请在对方支付完成后，才开始工作，以保障您的劳动利益。
 		如有问题请联系客服。客服微信号 yungongteam
 	  	<Collapse v-model="value2" accordion class="inner">
+	        <Panel name="0">
+	            被预约
+	            <div slot="content">
+					<router-link to="" tag="Card" class="linkBlock">
+						<h6>交易平台功能完善</h6>
+						<p class="thumbnail">
+							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
+						</p>
+					</router-link>
+					<router-link to="" tag="Card" class="linkBlock">
+						<h6>交易平台功能完善</h6>
+						<p class="thumbnail">
+							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
+						</p>
+					</router-link>
+	            </div>
+	        </Panel>
+	        <Panel name="0">
+	            已投递职位
+	            <div slot="content">
+					<router-link to="" tag="Card" class="linkBlock">
+						<h6>交易平台功能完善</h6>
+						<p class="thumbnail">
+							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
+						</p>
+					</router-link>
+					<router-link to="" tag="Card" class="linkBlock">
+						<h6>交易平台功能完善</h6>
+						<p class="thumbnail">
+							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
+						</p>
+					</router-link>
+	            </div>
+	        </Panel>
 	        <Panel name="1">
 	            进行中
 	            <div slot="content">
