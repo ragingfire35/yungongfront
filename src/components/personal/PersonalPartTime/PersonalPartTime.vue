@@ -5,23 +5,6 @@
 			text-align: left;
 		}
 	}
-	.linkBlock{
-		cursor: pointer;
-		border: 1px solid #D1E5FA;
-		margin-bottom: 16px;
-		&:last-of-type{
-			margin-bottom: 0;
-		}
-		h6{
-			color: #3399FF;
-			font-weight: normal;
-			font-size: 14px;
-		}
-		.thumbnail{
-			color: #ccc;
-			font-size: 12px;
-		}
-	}
 	.not-style{
 		text-align: center;
 		color: #3399FF;
@@ -32,90 +15,60 @@
 		云工网提供支付中间担保，请在对方支付完成后，才开始工作，以保障您的劳动利益。
 		如有问题请联系客服。客服微信号 yungongteam
 	  	<Collapse v-model="value2" accordion class="inner">
-	        <Panel name="0">
-	            被预约
+
+	        <Panel
+	        	v-for="item, index in detail"
+	        	:key="index"
+	         	:name="item.ref"
+	        >
+	            {{item.text}}
 	            <div slot="content">
-					<router-link to="" tag="Card" class="linkBlock">
-						<h6>交易平台功能完善</h6>
-						<p class="thumbnail">
-							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
-						</p>
-					</router-link>
-					<router-link to="" tag="Card" class="linkBlock">
-						<h6>交易平台功能完善</h6>
-						<p class="thumbnail">
-							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
-						</p>
-					</router-link>
-	            </div>
-	        </Panel>
-	        <Panel name="0">
-	            已投递职位
-	            <div slot="content">
-					<router-link to="" tag="Card" class="linkBlock">
-						<h6>交易平台功能完善</h6>
-						<p class="thumbnail">
-							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
-						</p>
-					</router-link>
-					<router-link to="" tag="Card" class="linkBlock">
-						<h6>交易平台功能完善</h6>
-						<p class="thumbnail">
-							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
-						</p>
-					</router-link>
-	            </div>
-	        </Panel>
-	        <Panel name="1">
-	            进行中
-	            <div slot="content">
-					<router-link to="" tag="Card" class="linkBlock">
-						<h6>交易平台功能完善</h6>
-						<p class="thumbnail">
-							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
-						</p>
-					</router-link>
-					<router-link to="" tag="Card" class="linkBlock">
-						<h6>交易平台功能完善</h6>
-						<p class="thumbnail">
-							1、加多币种交易，前台同样显示（目前后台有加币种功能，前台无法显示）。...
-						</p>
-					</router-link>
-	            </div>
-	        </Panel>
-	        <Panel name="2">
-	            待确认完工
-	            <div slot="content">
-	            	<p class="not-style">暂时没有记录~</p>
-	            </div>
-	        </Panel>
-	        <Panel name="3">
-	            待退款
-	            <div slot="content">
-	            	<p class="not-style">暂时没有记录~</p>
-	            </div>
-	        </Panel>
-	        <Panel name="4">
-	            已取消
-	            <div slot="content">
-	            	<p class="not-style">暂时没有记录~</p>
+	            	<job-public :ref="item.ref"></job-public>
 	            </div>
 	        </Panel>
 	    </Collapse>
 	</Card>
 </template>
 <script>
+	import JobPublic from "@/components/common/JobPublic/JobPublic.vue";
 	export default({
 		data(){
 			return{
-				value2 : "1"
+				value2 : "job_p0",
+				detail:[
+					//{"ref":"job_p0", "status": -1, text: "暂时没有记录~"},
+					{"ref":"job_p0", "status": 0, text: "被预约"},
+					{"ref":"job_p1", "status": 1, text: "已投递"},
+					{"ref":"job_p2", "status": 2, text: "进行中"},
+					{"ref":"job_p3", "status": 3, text: "待确认完工"},
+					{"ref":"job_p4", "status": 4, text: "待退款"},
+					{"ref":"job_p5", "status": 5, text: "已取消"},
+				]
 			}
 		},
 		mounted(){
-
+	    	var _this = this;
+	        _this.$ajax({
+	            url: _this.API_ROOT + '/personal/partTimeDetail.php',
+	            method: 'POST'
+	        }).then((response) => {
+	            if(response.data.status == 'success'){
+	            	for(var i in response.data.detail){
+	            		var j = response.data.detail[i].partTime_status
+	            		switch (j){
+	            			case j :
+	            				_this['$refs']['job_p'+j][0]['job_public'].push(response.data.detail[i]);
+	            				break;
+	            		}
+	            	}
+	            };
+	        });
 		},
 		methods:{
 
+		},
+		components:{
+			JobPublic : JobPublic
 		}
 	})
 </script>

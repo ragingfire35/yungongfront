@@ -1,4 +1,4 @@
-<style lang="less" scoped>
+ <style lang="less" scoped>
 	@import "job.less";
 </style>
 <template>
@@ -85,83 +85,17 @@
 					</p>
 				</div>
             </Card>
-
-            <Card class="card jobDetail"
-	              v-for="(item, index) in job_public"
-	              :key = index
-            >
-				<Row type="flex" justify="center" class="detail-inner">
-					<Col
-						class="lt-det"
-						:xs="24"
-						:sm="24"
-						:md="16"
-						:lg="16"
-					>
-						<div class="job-main">
-							<router-link to="/JobDetail">
-								<div class="title">
-									<h5 v-text="item.projectName"></h5>
-									<Tag class="badge" v-text="item.payWay"></Tag>
-								</div>
-								<p class="text" v-html="item.projectDesc"></p>
-							</router-link>
-						</div>
-						<div class="user-info">
-							<router-link to="">
-								<img :src="item.userhead" alt="">
-								<span v-text="item.username"></span>
-								<i>{{item.timeAgo | timeAgo}}发布</i>
-							</router-link>
-						</div>
-
-					</Col>
-
-					<Col
-						class="rt-det"
-						:xs="24"
-						:sm="24"
-						:md="8"
-						:lg="8"
-					>
-						<hr class="split-line"/>
-						<div class="about-num">
-							<p>
-								预估&nbsp;
-								<span v-if="item.projectScheme!=''">{{ JSON.parse( item.projectScheme ).total }}&nbsp;元</span>
-								<span v-else>{{ JSON.parse( item.dailyWageSystem || "" ).oneDay }}&nbsp;元&nbsp;/&nbsp;天</span>
-							</p>
-							<ol>
-								<li>
-									<span>工期：</span>
-									<span>{{ JSON.parse( item.projectScheme || item.dailyWageSystem ).date }}天</span>
-								</li>
-								<li>
-									<span>预算：</span>
-									<span>{{ JSON.parse( item.projectScheme || item.dailyWageSystem ).total }}元</span>
-								</li>
-								<li>
-									<span>开工时间：</span>
-									<span v-text="item.workTimeStart"></span>
-								</li>
-							</ol>
-							<Button type="primary" @click.native="delivery('save', item)" v-if="!item.deliveryBool">投递职位</Button>
-							<Button disabled  v-else>已投递</Button>
-						</div>
-					</Col>
-				</Row>
-            </Card>
+			<job-public ref="job_p" @delivery="delivery"></job-public>
 		</Col>
-
 		<switch-process/>
 	</Row>
 </template>
 <script>
   import switchProcess from "@/components/common/SwitchClass/switchProcess.vue";
+  import JobPublic from "@/components/common/JobPublic/JobPublic.vue";
   export default {
   	data(){
   		return {
-  			job_public: [],
   			Place : {
   				cityJson : [{value:"", label:"不限",children:[]}].concat( this.cityJson ),
   				areaJson : {},
@@ -185,6 +119,7 @@
   		}
   	},
     components:{
+    	JobPublic : JobPublic,
     	switchProcess : switchProcess
     },
     mounted(){
@@ -202,8 +137,8 @@
 	            	for (var i in response.data.info){
 	            		response.data.info[i]['deliveryBool'] = false;
 	            	}
-	               _this.job_public = response.data.info;
-	               _this.delivery('get');
+	               _this.$refs.job_p.job_public = response.data.info;
+	               _this.delivery({"status":"get", "item": {"public_id" : ""}});
 	            };
 	        });
     	},
@@ -219,11 +154,11 @@
 	        }).then((response) => {
 	        	_this.spinShow = false;
 	            if(response.data.status == 'success'){
-	               _this.job_public = response.data.info;
+	               _this.$refs.job_p.job_public = response.data.info;
 	            };
 	        });
     	},
-    	delivery(status, item={}){
+    	delivery(arg){
     		var _this = this;
 	        if(_this.$store.state.is_login == "false"){
 	        	 _this.$Message.error('请先登录');
@@ -231,27 +166,36 @@
 		        _this.$ajax({
 		            url: _this.API_ROOT + '/website/delivery.php',
 		            method: 'POST',
-		            data: {"status": status,"public_id" : item.public_id || '' }
+		            data: {"status": arg.status,
+		            	   "public_id" : arg.item.public_id,//职位id
+		            	   "public_userid" : arg.item.userid//职位发布者id
+		            }
 		        }).then((response) => {
-		        	if(status == 'save'){
+		        	if(arg.status == 'save'){
 			            if(response.data.status == 'success'){
 							_this.$Message.success(response.data.msg);
-							item.deliveryBool = true;
+							arg.item.deliveryBool = true;
 			            } else {
-			                _this.$Modal.confirm({
-			                    title: '温馨提示',
-			                    content: response.data.msg,
-			                    okText: '立即申请',
-			                    cancelText: '返回',
-			                    onOk: () => { _this.$router.push({path: "/PartTime"})}
-			                });
+			            	var errCode = response.data.errCode
+			            	if(errCode == "01"){
+			            		_this.$Message.error(response.data.msg);
+			            	} else if (errCode == "02"){
+				                _this.$Modal.confirm({
+				                    title: '温馨提示',
+				                    content: response.data.msg,
+				                    okText: '立即申请',
+				                    cancelText: '返回',
+				                    onOk: () => { _this.$router.push({path: "/PartTime"})}
+				                });
+			            	};
+
 			            };
 		        	} else {
 		        		if(response.data.status == 'success'){
-		        			for(var i in _this.job_public){
+		        			for(var i in _this.$refs.job_p.job_public){
 		        				for( var j in response.data.deliveryArr ){
-		        					if (_this.job_public[i].public_id == response.data.deliveryArr[j]){
-		        						_this.job_public[i]['deliveryBool'] = true;
+		        					if (_this.$refs.job_p.job_public[i].public_id == response.data.deliveryArr[j]){
+		        						_this.$refs.job_p.job_public[i]['deliveryBool'] = true;
 		        					}
 		        				}
 		        			}
