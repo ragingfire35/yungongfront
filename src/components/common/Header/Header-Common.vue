@@ -24,12 +24,12 @@
 				    <Menu mode="horizontal" theme="primary" :active-name="$route.path" @on-select="locaHref">
 				    	<Col :xs="24" :sm="4" :md="4" :lg="3">
 					        <Menu-item name="/Consultant">
-					            我要雇佣
+					            兼职人才
 					        </Menu-item>
 				        </Col>
 				        <Col :xs="24" :sm="4" :md="3" :lg="3">
 					        <Menu-item name="/Job">
-					            我要兼职
+					            兼职机会
 					        </Menu-item>
 				        </Col>
 				        <Col :xs="24" :sm="4" :md="3" :lg="3">

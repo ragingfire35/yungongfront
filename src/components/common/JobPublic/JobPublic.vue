@@ -196,6 +196,7 @@
 			</Row>
         </Card>
 	</div>
+	
 </template>
 <script>
 	export default({

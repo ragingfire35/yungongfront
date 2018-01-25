@@ -37,8 +37,8 @@
 				value2 : "job_p0",
 				detail:[
 					//{"ref":"job_p0", "status": -1, text: "暂时没有记录~"},
-					{"ref":"job_p0", "status": 0, text: "被预约"},
-					{"ref":"job_p1", "status": 1, text: "已投递"},
+					{"ref":"job_p0", "status": 0, text: "已投递"},
+					{"ref":"job_p1", "status": 1, text: "被预约"},
 					{"ref":"job_p2", "status": 2, text: "进行中"},
 					{"ref":"job_p3", "status": 3, text: "待确认完工"},
 					{"ref":"job_p4", "status": 4, text: "待退款"},
@@ -54,11 +54,13 @@
 	        }).then((response) => {
 	            if(response.data.status == 'success'){
 	            	for(var i in response.data.detail){
-	            		var j = response.data.detail[i].partTime_status
-	            		switch (j){
+	            		var j = response.data.detail[i].partTime_status;
+	            		if(j == 0){
+	            			response.data.detail[i].deliveryBool = true;
+	            		}
+	            		switch(j){
 	            			case j :
-	            				_this['$refs']['job_p'+j][0]['job_public'].push(response.data.detail[i]);
-	            				break;
+								_this['$refs']['job_p'+j][0]['job_public'].push(response.data.detail[i]);
 	            		}
 	            	}
 	            };
