@@ -13,16 +13,16 @@
 			</Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
     			<router-link to="/Consultant">
-    				我要雇佣
+    				兼职人才
     			</router-link>
 	        </Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
     			<router-link to="/Job">
-    				我要兼职
+    				兼职机会
     			</router-link>
 	        </Col>
     		<Col :xs="24" :sm="6" :md="6" :lg="2" class="">
-    			<router-link to="/">
+    			<router-link to="/StandardService">
     				标准服务
     			</router-link>
 	        </Col>

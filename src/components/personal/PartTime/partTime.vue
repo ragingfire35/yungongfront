@@ -10,13 +10,13 @@
     {
         margin-bottom: 40px;
     }
-
 </style>
 <style lang="less">
     .job_exe,
     .job_timelimit,
     .job_addresscan,
-    .job_priceday{
+    .job_priceday,
+    .is_hr{
         .ivu-form-item-label{
             &:before{
                 content: '*';
@@ -26,6 +26,27 @@
                 font-family: SimSun;
                 font-size: 12px;
                 color: #ed3f14;
+            }
+        }
+    }
+    .is_hr{
+        .ivu-form-item-label{
+            font-size: 14px;
+            color: #E86C30;
+        }
+        .ivu-form-item-content,
+        .ivu-radio-group{
+            width: 100%;
+            text-align: center;
+        }
+        .ivu-radio-wrapper{
+            font-size: 16px;
+            color: #999;
+            &:nth-of-type(1){
+                margin-right: 10%;
+            }
+            &:nth-of-type(2){
+                margin-left: 10%;
             }
         }
     }
@@ -201,10 +222,28 @@
                 <Form-item label="项目经验" prop="user_projectexe">
                     <Input v-model="formValidate.user_projectexe" type="textarea" :autosize="{minRows: 5,maxRows: 20}" placeholder="请详细填写您在工作和业余时间参与过的项目，以及您在项目中所做的具体工作，有利于更多公司预约您。请不要小于70字。"></Input>
                 </Form-item>
+
+                <!-- <Form ref="formValidate_HR"
+                    :model="formValidate_HR"
+                    label-position="top"
+                    :rules="formValidate_HR"
+                    </Form>
+                > -->
+                <Form-item label="是否申请为面试专家,成为 ' 面试专家 ' , 完成预约任务可获得额外收入，平台收取5%服务费" class="is_hr">
+                    <Radio-group v-model ="formValidate.is_hr">
+                        <Radio label="false">取消</Radio>
+                        <Radio label="true">确定</Radio>
+                    </Radio-group>
+                </Form-item>
+
+
+
                 <Form-item label="发布兼职">
                     <Button size="large" type="success" long @click="handleSubmit('formValidate')">提交申请</Button>
                 </Form-item>
+
         	</Form>
+
 		</Card>
 		<perfect-info v-if="!perfectInfo"></perfect-info>
 
@@ -237,7 +276,8 @@
                     user_skills : ["js","css"],
                     user_skillsexe : "请详细填写您的技术经验和能力情况，展示您的实力，有利于更多公司预约您。请不要小于140字。",
                     user_projectexe : "请详细填写您在工作和业余时间参与过的项目，以及您在项目中所做的具体工作，有利于更多公司预约您。请不要小于70字。",
-				},
+				    is_hr : "false"
+                },
 				ruleValidate : {
        				now_status: [
                         { required: true, message: '请选择您现在的工作状态', trigger: 'change' }
@@ -257,7 +297,7 @@
                     user_projectexe :[
                         { required: true, min:7, message: '至少70字,1.xxx;\n2.xxx\n注意条理', trigger: 'blur' }
                     ]
-				}
+				},
 			}
 		},
 		components:{

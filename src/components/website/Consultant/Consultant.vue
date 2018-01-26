@@ -168,7 +168,7 @@
   					checkedIndex : 0
   				},
   				{
-  					sortName :  "自由职业者",
+  					sortName :  "面试专家",
   					optionName : ["不限", "优先"],
   					checkedIndex : 0
   				}

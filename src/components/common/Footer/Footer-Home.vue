@@ -97,10 +97,10 @@
 					<em><img class="logo_f" src="../Header/image/logo.png" height="348" width="600" alt=""></em>
 					<span>云工网</span>
 				</p>
-				<p>©Copyright 2016 空心科技 鄂ICP备 16003656 号 </p>
+				<p>©Copyright 2016 烈火天使科技 京ICP备 16003656 号 </p>
 				<p>
 					<em><img src="./image/beian.png" height="20" width="20" alt="" style="margin-top:15px;"></em>
-					<span>鄂公网安备 42018502000531 号</span>
+					<span>京公网安备 42018502000531 号</span>
 				</p>
 			</div>
 		</div>

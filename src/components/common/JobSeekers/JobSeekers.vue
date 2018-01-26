@@ -136,14 +136,42 @@
 			}
 		}
 	}
+	.hrBlock{
+		position: relative;
+		&:before{
+			content: "";
+			display: block;
+			background: #000;
+		 	width: 0;
+		    height: 0;
+		    border-top: 40px solid #FCB28E;
+		    border-right: 40px solid #FCB28E;
+		    border-bottom: 40px solid #fff;
+		    border-left: 40px solid #fff;
+		    position: absolute;
+		    right: 0;
+		    top: 0;
+		}
+		&:after{
+			content: "面试专家";
+			display: block;
+			transform: rotate(45deg) translate(14px, 10px);
+			color: #fff;
+		    position: absolute;
+		    right: 0;
+		    top: 0;
+		}
+	}
 </style>
 <template>
 	<div class="job_seekers">
 	    <Card class="card"
 	          v-for="(item, index) in job_seekers"
+	          :class="{hrBlock : item.is_hr == 'true'}"
 	          :key = index
 	          v-if="job_seekers.length != 0"
 	    >
+
 			<Row type="flex" justify="center" class="detail-inner">
 				<Col
 					class="lt-det"

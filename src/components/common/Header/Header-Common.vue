@@ -70,7 +70,7 @@
 						            		 <Menu-item name="/personalHome?name=personalPartTime">兼职详情</Menu-item>
 						            	</div>
 						               	<div v-else>
-							                <Menu-item name="/PublicJob">我要雇佣</Menu-item>
+							                <Menu-item name="/PublicJob">发布兼职机会</Menu-item>
 							            	<Menu-item name="/WebsiteHome?name=websiteHire">雇佣详情</Menu-item>
 							            	<Menu-item name="/WebsiteHome?name=websiteFollow">我的关注</Menu-item>
 						               	</div>
