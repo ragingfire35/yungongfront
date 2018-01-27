@@ -37,9 +37,12 @@
 				<i-button type="primary" style="width:80%;" @click.narive="publicJob">发布用人需求</i-button>
 			</div>
 		</Card>
+		<rewards>
+		</rewards>
 	</Col>
 </template>
 <script>
+	import Rewards from "@/components/common/Rewards/Rewards.vue";
 	export default({
 		data(){
 			return{
@@ -75,6 +78,9 @@
 					this.$router.push({path: "/PublicJob"});
 				}
 			}
+		},
+		components:{
+			Rewards : Rewards
 		}
 	})
 </script>

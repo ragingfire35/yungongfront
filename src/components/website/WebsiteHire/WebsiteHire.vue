@@ -64,7 +64,7 @@
 		mounted(){
 	    	var _this = this;
 	        _this.$ajax({
-	            url: _this.API_ROOT + '/website/WebsiteHire.php',
+	            url: _this.API_ROOT + '/website/websiteHire.php',
 	            method: 'POST'
 	        }).then((response) => {
 	            if(response.data.status == 'success'){
