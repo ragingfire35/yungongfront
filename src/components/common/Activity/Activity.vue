@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-	.Rewards{
+	.Activity{
 		margin-top: 30px;
 		.inner{
 			h2.tt{
@@ -45,7 +45,7 @@
 	}
 </style>
 <template>
-	<div class="Rewards">
+	<div class="Activity">
 		<Card class="inner" v-if="$store.state.userClassify.userClass == 'personal'">
 			<h2 class="tt">悬赏任务</h2>
 
@@ -66,7 +66,7 @@
 					<div class="desc">
 						我这儿有一些bug，希望你来帮忙解决。
 					</div>
-					<Button class="Forward_btn" type="dashed" long>
+					<Button class="Forward_btn" type="dashed" long @click="$router.push({'path':'/BugReward'})">
 						立即前往&nbsp;
 			            <Icon type="chevron-right"></Icon>
 			        </Button>
@@ -93,7 +93,7 @@
 					<div class="desc">
 						你这儿有一些bug，希望有人来帮忙解决？
 					</div>
-					<Button class="Forward_btn" type="dashed" long>
+					<Button class="Forward_btn" type="dashed" long @click="$router.push({'path':'/PublicBug'})">
 						立即前往&nbsp;
 			            <Icon type="chevron-right"></Icon>
 			        </Button>

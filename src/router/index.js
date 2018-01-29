@@ -137,6 +137,22 @@ const routes = [
               meta : {
                 title : "StandardService"
               }
+            },
+            {
+              path: '/PublicBug',
+              name: 'PublicBug',
+              component: (resolve) => require(['@/components/activity/public/PublicBug.vue'], resolve),
+              meta : {
+                title : "PublicBug"
+              }
+            },
+            {
+              path: '/BugReward',
+              name: 'BugReward',
+              component: (resolve) => require(['@/components/activity/show/BugReward.vue'], resolve),
+              meta : {
+                title : "BugReward"
+              }
             }
           ]
         },

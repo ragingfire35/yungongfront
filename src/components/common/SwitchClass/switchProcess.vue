@@ -37,12 +37,12 @@
 				<i-button type="primary" style="width:80%;" @click.narive="publicJob">发布用人需求</i-button>
 			</div>
 		</Card>
-		<rewards>
-		</rewards>
+		<Activity>
+		</Activity>
 	</Col>
 </template>
 <script>
-	import Rewards from "@/components/common/Rewards/Rewards.vue";
+	import Activity from "@/components/common/Activity/Activity.vue";
 	export default({
 		data(){
 			return{
@@ -80,7 +80,7 @@
 			}
 		},
 		components:{
-			Rewards : Rewards
+			Activity : Activity
 		}
 	})
 </script>
