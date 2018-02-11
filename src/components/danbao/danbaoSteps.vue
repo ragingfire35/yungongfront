@@ -1,72 +1,48 @@
 <style lang="less" scoped>
-.dbSteps{
-	width: 100%;
-	background: #fff;
+    .dbSteps{
+    	width: 100%;
+    	background: #fff;
 
-    .nextSteps{
-        width: 70%;
-        margin: 0 auto;
-        text-align: justify;
-        padding: 50px 0;
-        transform :  scale(1.2);
-        .ivu-steps-item{
-            line-height: 26px;
+        .nextSteps{
+            width: 70%;
+            margin: 0 auto;
+            text-align: justify;
+            padding: 50px 0;
+            transform :  scale(1.2);
+            .ivu-steps-item{
+                line-height: 26px;
+            }
+        }
+        .fileInput{
+            text-align: left;
+        }
+        .form-steps{
+            margin: 0 8%;
         }
     }
-    .fileInput{
-        text-align: left;
-    }
-    .form-steps{
-        margin: 0 8%;
-    }
-}
 </style>
 <template>
 	<div class="dbSteps">
 	    <Steps :current="current" class="nextSteps">
-	        <Step title="签订合同"></Step>
 	        <Step title="提供项目资料"></Step>
+            <Step title="等待乙方确认资料"></Step>
 	        <Step title="项目进行中"></Step>
-	        <Step title="项目交付"></Step>
-            <Step title="付款，交易完成"></Step>
-
+            <Step title="甲乙双方交易完成"></Step>
 	    </Steps>
-        <Form class="form-steps" label-position="top" v-if="current == 0">
-            <Form-item class="fileInput" label="甲方上传合同，指定格式为*.dot, *.doc">
-                <Upload
-                    type="drag"
-                    action="//jsonplaceholder.typicode.com/posts/"
-                    accept="application/msword"
-                >
-                    <div style="padding: 20px 0;">
-                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                        <p>点击或将合同拖拽到这里上传</p>
-                    </div>
-                </Upload>
-                <Button
-                    :type="sendHT === true ? 'default' : sendHT === '' ? 'success' : 'warning'"
-                    long
-                    size="large"
-                    @click="sendHT = true"
-                    v-html="sendHT === true ? '等待乙方签订中...' : sendHT === '' ? '合同生效' : '确认无误，发送给乙方'"
-                    :disabled="sendHT === true ? true : false"
-                >
-                </Button>
-            </Form-item>
-            <Button @click="sendHT = ''">激活下一步（临时）</Button>
-            <i-button type="primary" @click="next" :disabled="sendHT === '' ? false : true">下一步</i-button>
-        </Form>
 
-        <Form class="form-steps" label-position="top" v-if="current == 1">
+        <Form class="form-steps" label-position="top" v-if="current == 0">
+
             <Form-item class="fileInput" label="请将项目资料打包压缩，指定格式为*.zip">
                 <Upload
                     type="drag"
-                    action="//jsonplaceholder.typicode.com/posts/"
+                    action=""
                     accept="aplication/zip"
+                    :format= "['zip']"
+                    :on-format-error="handleFormatError"
                 >
                     <div style="padding: 20px 0;">
                         <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                        <p>点击或将项目资料拖拽到这里上传</p>
+                        <p>点击或将项目资料拖拽到这里上传，指定格式为*.zip</p>
                     </div>
                 </Upload>
                 <Button
@@ -74,7 +50,7 @@
                     long
                     size="large"
                     @click="sendZL = true"
-                    v-html="sendZL === true ? '等待乙方接收...' : sendZL === '' ? '乙方已确认接收' : '确认无误，发送给乙方'"
+                    v-html="sendZL === true ? '已提交项目资料' ? '已提交项目资料' : '确认无误，提交'"
                     :disabled="sendZL === true ? true : false"
                 >
                 </Button>
@@ -82,11 +58,13 @@
             <Button @click="sendZL = ''">激活下一步（临时）</Button>
             <i-button type="primary" @click="next" :disabled="sendZL === '' ? false : true">下一步</i-button>
         </Form>
-        <Form class="form-steps" label-position="top" v-if="current == 2">
+
+        <Form class="form-steps" label-position="top" v-if="current == 1">
             云工app正在制作中...<br/>
             <i-button type="primary" @click="next" :disabled="sendZL === '' ? false : true">下一步</i-button>
         </Form>
-        <Form class="form-steps" label-position="top" v-if="current == 3">
+
+        <Form class="form-steps" label-position="top" v-if="current == 2">
             <Form-item class="fileInput" label="请将已完成的项进行打包，指定格式为*.zip">
                 <Upload
                     type="drag"
@@ -111,7 +89,9 @@
             <Button @click="sendXM = ''">激活下一步（临时）</Button>
             <i-button type="primary" @click="next" :disabled="sendXM === '' ? false : true">下一步</i-button>
         </Form>
-        <Form class="form-steps" label-position="top" v-if="current == 4">
+
+
+        <Form class="form-steps" label-position="top" v-if="current == 3">
             <Button
                 :type="pay === true ? 'default' : pay === '' ? 'success' : 'warning'"
                 long
@@ -139,6 +119,12 @@
             }
         },
         methods: {
+            handleFormatError(file){
+                this.$Notice.warning({
+                    title: '文件格式不正确',
+                    desc: '文件 ' + file.name + ' 格式不正确，请上传 *.zip的项目资料。'
+                });
+            },
             next () {
                 if (this.current == 5) {
                     this.current = 5;

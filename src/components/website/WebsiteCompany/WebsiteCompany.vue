@@ -123,6 +123,7 @@
 		        this.formValidate.license.uploadImg = '';
 		        this.formValidate.license.hasValue = false;
 		    },
+
 			handleMaxSize(){
 				this.$Message.error('文件最大2m, 请压缩或更换图片!');
 				this.handleRemove();

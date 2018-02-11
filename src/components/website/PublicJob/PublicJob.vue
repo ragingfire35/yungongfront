@@ -280,7 +280,6 @@
                 })
             },
             saveInfo(){
-                console.log(this.formValidate);
                 var _this = this;
                 var data = JSON.parse(JSON.stringify(this.formValidate));
                 data['status'] = 'save';
