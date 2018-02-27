@@ -71,7 +71,10 @@
             </Form>
             <div slot="footer">
                 <Button type="text" size="large" @click="cancel">重置</Button>
-                <Button type="primary" size="large" @click="ok">确定</Button>
+                <Button type="primary" size="large" @click="ok">
+                    <span v-if="!loading">确定</span>
+                    <span v-else>Loading...</span>
+                </Button>
             </div>
 	    </Modal>
 	</div>
@@ -93,6 +96,7 @@
                 }
             };
             return {
+                loading: false,
                 isPhoneRule : true,
                 firstPassError : false,
                 formInline: {
@@ -150,6 +154,7 @@
             loginIn() {
                 const _this = this;
                 const bcrypt = _this.bcrypt();
+                _this.loading = true;
                 _this.qs = require('querystring')
                  _this.$ajax.post(
                     _this.API_ROOT + '/loginIn.php',

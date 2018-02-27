@@ -45,7 +45,10 @@
             </Form>
             <div slot="footer">
                 <Button type="text" size="large" @click="cancel">重置</Button>
-                <Button type="primary" size="large" @click="ok">确定</Button>
+                <Button type="primary" size="large" @click="ok">
+                    <span v-if="!loading">确定</span>
+                    <span v-else>Loading...</span>
+                </Button>
             </div>
 	    </Modal>
 	</div>
@@ -75,6 +78,7 @@
                 }
             };
             return {
+                loading : false,
                 formInline: {
                     user: '',
                     passwd: '',
@@ -126,10 +130,12 @@
             loginUp() {
                 const _this = this;
                 var qs = require('querystring');
+                _this.loading = true;
                  _this.$ajax.post(
                     _this.API_ROOT + '/loginUp.php',
                     qs.stringify({"username": _this.formInline.user, "pass" : _this.bcrypt() })
                 ).then((response) => {
+                    _this.loading = false;
                     if(response.data.status == "repeat"){
                         _this.$Message.error(response.data.msg)
                     } else{
