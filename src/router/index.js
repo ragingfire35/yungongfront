@@ -123,6 +123,14 @@ const routes = [
               }
             },
             {
+              path: '/danbaoDetail',
+              name: 'danbaoDetail',
+              component: (resolve) => require(['@/components/danbao/danbaoDetail.vue'], resolve),
+              meta : {
+                title : "danbaoDetail"
+              }
+            },
+            {
               path: '/Comment',
               name: 'Comment',
               component: (resolve) => require(['@/components/common/Comments/Comments.vue'], resolve),

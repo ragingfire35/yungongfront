@@ -288,7 +288,7 @@
     export default {
         data () {
             return {
-                current: 2,//当前进度
+                current: 0,//当前进度
                 sendZL : false,//甲方发送项目资料
                 saveZL : false,//乙方确认资料
                 sendXM : false,//乙方发送项目

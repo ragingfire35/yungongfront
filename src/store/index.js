@@ -18,7 +18,8 @@ const store = new Vuex.Store({
         LoginedUser: {
           username: sessionStorage.username || 'http://yungong.cow8.cn/static/image/user.png',
           userhead :  sessionStorage.userhead
-        },
+        },//用户信息
+        Notice : false // 获取全局信息
     },
 
     mutations: {

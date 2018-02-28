@@ -69,20 +69,27 @@
 
     },
     mounted(){
-      let t = this.$store.state.userClassify.text1;
+      var _this = this;
+      var t = _this.$store.state.userClassify.text1;
       switch (t){
         case undefined :
-              this.$Notice.warning({
+              _this.$Notice.warning({
                   title: "选择一个版本进入",
                   duration : 1,
-                  key: 'bb'
+                  key: 'bb',
+                  onClose(){
+                    _this.$store.state.Notice = true;
+                  }
               });
               break;
         default :
-              this.$Notice.success({
+              _this.$Notice.success({
                   title: t,
                   duration : 1,
-                  key: 'cc'
+                  key: 'cc',
+                  onClose(){
+                    _this.$store.state.Notice = true;
+                  }
               });
               break;
       }

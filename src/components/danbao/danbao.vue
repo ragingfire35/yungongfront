@@ -152,6 +152,9 @@
 				<Button type="dashed" size="large" @click="$router.push({path: '/DBsteps'})">
 					申请担保交易
 				</Button>
+				<Button type="dashed" size="large" @click="$router.push({path: '/danbaoDetail'})">
+					我的担保交易
+				</Button>
 			</div>
 		</div>
 		<div class="advantage">
